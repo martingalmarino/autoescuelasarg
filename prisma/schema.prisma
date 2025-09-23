@@ -1,0 +1,129 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Province {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  slug        String   @unique
+  schoolsCount Int     @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  schools     DrivingSchool[]
+  cities      City[]
+
+  @@map("provinces")
+}
+
+model City {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String
+  provinceId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  province  Province       @relation(fields: [provinceId], references: [id], onDelete: Cascade)
+  schools   DrivingSchool[]
+
+  @@unique([name, provinceId])
+  @@map("cities")
+}
+
+model DrivingSchool {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  description String?
+  address     String?
+  phone       String?
+  website     String?
+  email       String?
+  
+  // Location
+  cityId      String
+  provinceId  String
+  
+  // Ratings and reviews
+  rating      Float    @default(0)
+  reviewsCount Int     @default(0)
+  
+  // Pricing
+  priceMin    Int?
+  priceMax    Int?
+  
+  // Images
+  imageUrl    String?
+  logoUrl     String?
+  
+  // Status
+  isActive    Boolean  @default(true)
+  isVerified  Boolean  @default(false)
+  
+  // Timestamps
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  city        City     @relation(fields: [cityId], references: [id], onDelete: Cascade)
+  province    Province @relation(fields: [provinceId], references: [id], onDelete: Cascade)
+  reviews     Review[]
+  courses     Course[]
+
+  @@map("driving_schools")
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  rating    Int      // 1-5 stars
+  comment   String?
+  author    String   // Name of the reviewer
+  email     String?  // Optional email
+  schoolId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  school    DrivingSchool @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+
+  @@map("reviews")
+}
+
+model Course {
+  id          String   @id @default(cuid())
+  name        String   // e.g., "Licencia B", "Licencia A", etc.
+  description String?
+  duration    Int?     // Duration in hours
+  price       Int?     // Price in ARS
+  schoolId    String
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  school      DrivingSchool @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+
+  @@map("courses")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  phone     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
