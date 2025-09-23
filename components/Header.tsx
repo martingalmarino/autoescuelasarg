@@ -32,6 +32,12 @@ export default function Header() {
           >
             Por provincia
           </Link>
+          <Link 
+            href="/buscar" 
+            className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Búsqueda avanzada
+          </Link>
         </nav>
 
         {/* Search placeholder - future implementation */}
