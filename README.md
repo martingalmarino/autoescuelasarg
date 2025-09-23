@@ -25,8 +25,8 @@ Un directorio completo de escuelas de manejo en Argentina, construido con Next.j
 
 1. **Clona el repositorio**
    ```bash
-   git clone https://github.com/tu-usuario/autoescuelas-ar.git
-   cd autoescuelas-ar
+   git clone https://github.com/martingalmarino/autoescuelasarg.git
+   cd autoescuelasarg
    ```
 
 2. **Instala las dependencias**
