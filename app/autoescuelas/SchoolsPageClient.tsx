@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { 
   Search, 
@@ -116,7 +117,7 @@ export default function SchoolsPageClient({ schools, provinces, searchParams }: 
     const provinceSchools = schools.filter(school => 
       school.province.toLowerCase() === selectedProvince.toLowerCase()
     )
-    return [...new Set(provinceSchools.map(school => school.city))].sort()
+    return Array.from(new Set(provinceSchools.map(school => school.city))).sort()
   }, [selectedProvince, schools])
 
   const updateURL = (params: Record<string, string>) => {
@@ -356,10 +357,12 @@ export default function SchoolsPageClient({ schools, provinces, searchParams }: 
                         {/* Image */}
                         <div className="relative h-48 w-full overflow-hidden rounded-t-lg">
                           {school.imageUrl ? (
-                            <img
+                            <Image
                               src={school.imageUrl}
                               alt={school.name}
-                              className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-105"
+                              fill
+                              className="object-cover transition-transform duration-200 group-hover:scale-105"
+                              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                             />
                           ) : (
                             <div className="flex h-full items-center justify-center bg-muted">
