@@ -49,9 +49,9 @@ async function indexData() {
       id: province.id,
       name: province.name,
       slug: province.slug,
-      description: province.description,
+      description: province.description || null,
       schoolsCount: province.schoolsCount,
-      imageUrl: province.imageUrl
+      imageUrl: province.imageUrl || null
     }))
 
     const searchCities: SearchCity[] = cities.map(city => ({
