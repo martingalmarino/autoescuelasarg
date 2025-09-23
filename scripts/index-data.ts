@@ -42,7 +42,7 @@ async function indexData() {
       phone: school.phone,
       email: school.email,
       website: school.website,
-      services: school.services as string[] | null
+      services: school.services || []
     }))
 
     const searchProvinces: SearchProvince[] = provinces.map(province => ({

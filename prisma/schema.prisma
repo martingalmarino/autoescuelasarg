@@ -67,6 +67,9 @@ model DrivingSchool {
   imageUrl    String?
   logoUrl     String?
   
+  // Services
+  services    String[] @default([])
+  
   // Status
   isActive    Boolean  @default(true)
   isVerified  Boolean  @default(false)

@@ -97,7 +97,8 @@ async function main() {
           address: 'Av. Colón 1234, Córdoba Capital',
           phone: '+54 351 234-5678',
           email: 'info@autoescuelapremium.com',
-          website: 'https://autoescuelapremium.com'
+          website: 'https://autoescuelapremium.com',
+          services: ['Licencia B', 'Licencia A', 'Clases particulares', 'Simulador']
         },
         {
           name: 'Escuela de Manejo del Centro',
@@ -112,7 +113,8 @@ async function main() {
           description: 'Ubicada en el corazón de Córdoba Capital, ofrecemos una formación integral para conductores con más de 10 años de experiencia en el mercado.',
           address: 'San Martín 567, Córdoba Capital',
           phone: '+54 351 345-6789',
-          email: 'info@manejocentro.com'
+          email: 'info@manejocentro.com',
+          services: ['Licencia B', 'Clases particulares']
         },
         {
           name: 'Autoescuela Villa María',
@@ -127,7 +129,8 @@ async function main() {
           description: 'Autoescuela familiar en Villa María, especializada en formar conductores responsables con más de 8 años de experiencia.',
           address: 'Av. Sabattini 890, Villa María',
           phone: '+54 353 456-7890',
-          email: 'info@autoescuelavm.com'
+          email: 'info@autoescuelavm.com',
+          services: ['Licencia B', 'Licencia A', 'Clases particulares']
         }
       ]
 

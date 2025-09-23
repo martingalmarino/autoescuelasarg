@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
+import Image from 'next/image'
 import { Search, MapPin, Star, DollarSign, Filter, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -274,12 +275,14 @@ export default function AdvancedSearch({ provinces, cities }: AdvancedSearchProp
                   >
                     <div className="flex gap-4">
                       {/* Imagen */}
-                      <div className="w-16 h-16 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
+                      <div className="w-16 h-16 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0 relative">
                         {school.imageUrl ? (
-                          <img
+                          <Image
                             src={school.imageUrl}
                             alt={school.name}
-                            className="w-full h-full object-cover"
+                            fill
+                            className="object-cover"
+                            sizes="64px"
                           />
                         ) : (
                           <div className="w-full h-full flex items-center justify-center text-2xl">
