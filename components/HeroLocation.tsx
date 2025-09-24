@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
+import { createPortal } from 'react-dom'
 import { MapPin, ChevronDown } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { analyticsEvents } from '@/lib/analytics'
@@ -37,7 +38,9 @@ const PROVINCES = [
 export default function HeroLocation() {
   const [selectedProvince, setSelectedProvince] = useState<string>('Argentina')
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 })
   const dropdownRef = useRef<HTMLDivElement>(null)
+  const buttonRef = useRef<HTMLButtonElement>(null)
   const router = useRouter()
 
   // Close dropdown when clicking outside
@@ -87,6 +90,13 @@ export default function HeroLocation() {
   }
 
   const handleDropdownToggle = () => {
+    if (!isDropdownOpen && buttonRef.current) {
+      const rect = buttonRef.current.getBoundingClientRect()
+      setDropdownPosition({
+        top: rect.bottom + window.scrollY + 8,
+        left: rect.left + window.scrollX + (rect.width / 2)
+      })
+    }
     setIsDropdownOpen(!isDropdownOpen)
   }
 
@@ -117,52 +127,13 @@ export default function HeroLocation() {
           <div className="mb-6 sm:mb-8 flex justify-center">
             <div className="relative" ref={dropdownRef}>
               <button
+                ref={buttonRef}
                 onClick={handleDropdownToggle}
                 className="flex items-center justify-center space-x-2 bg-white/10 backdrop-blur-sm rounded-lg px-4 sm:px-6 py-3 border border-white/20 hover:bg-white/20 transition-colors min-w-[200px] sm:min-w-[250px]"
               >
                 <span className="text-white font-medium text-sm sm:text-base">{selectedProvince}</span>
                 <ChevronDown className={`h-4 w-4 text-white transition-transform flex-shrink-0 ${isDropdownOpen ? 'rotate-180' : ''}`} />
               </button>
-
-              {/* Dropdown Menu */}
-              {isDropdownOpen && (
-                <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 bg-white rounded-lg shadow-2xl border border-gray-200 w-[500px] sm:w-[600px] md:w-[700px] max-w-[95vw] max-h-[600px] z-[9999]">
-                  {/* Provinces List - Sin buscador para más espacio */}
-                  <div className="max-h-[550px] overflow-y-auto">
-                    {PROVINCES.length > 0 ? (
-                      <div className="p-6">
-                        <div className="grid grid-cols-3 gap-3">
-                          {PROVINCES.map((province, index) => (
-                            <button
-                              key={province}
-                              onClick={() => handleProvinceSelect(province)}
-                              className={`text-left px-4 py-3 text-sm transition-colors hover:bg-gray-50 rounded ${
-                                selectedProvince === province
-                                  ? 'text-black font-medium underline bg-blue-50'
-                                  : 'text-gray-600 hover:text-gray-900'
-                              }`}
-                              title={`${index + 1}. ${province}`}
-                            >
-                              {province}
-                            </button>
-                          ))}
-                        </div>
-                        
-                        {/* Footer con contador */}
-                        <div className="mt-4 pt-4 border-t border-gray-100 text-center">
-                          <p className="text-xs text-gray-500">
-                            {PROVINCES.length} provincias de Argentina
-                          </p>
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="p-8 text-center text-gray-500">
-                        <p className="text-sm">No hay provincias disponibles</p>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              )}
             </div>
           </div>
 
@@ -182,6 +153,56 @@ export default function HeroLocation() {
           </div>
         </div>
       </div>
+
+      {/* Dropdown Portal */}
+      {isDropdownOpen && typeof window !== 'undefined' && createPortal(
+        <div 
+          ref={dropdownRef}
+          className="fixed bg-white rounded-lg shadow-2xl border border-gray-200 w-[500px] sm:w-[600px] md:w-[700px] max-w-[95vw] max-h-[700px]"
+          style={{ 
+            zIndex: 999999,
+            top: `${dropdownPosition.top}px`,
+            left: `${dropdownPosition.left}px`,
+            transform: 'translateX(-50%)'
+          }}
+        >
+          {/* Provinces List - Sin buscador para más espacio */}
+          <div className="max-h-[650px] overflow-y-auto">
+            {PROVINCES.length > 0 ? (
+              <div className="p-6 pb-8">
+                <div className="grid grid-cols-3 gap-3">
+                  {PROVINCES.map((province, index) => (
+                    <button
+                      key={province}
+                      onClick={() => handleProvinceSelect(province)}
+                      className={`text-left px-4 py-3 text-sm transition-colors hover:bg-gray-50 rounded ${
+                        selectedProvince === province
+                          ? 'text-black font-medium underline bg-blue-50'
+                          : 'text-gray-600 hover:text-gray-900'
+                      }`}
+                      title={`${index + 1}. ${province}`}
+                    >
+                      {province}
+                    </button>
+                  ))}
+                </div>
+                
+                {/* Footer con contador */}
+                <div className="mt-6 pt-4 border-t border-gray-100 text-center pb-4">
+                  <p className="text-xs text-gray-500">
+                    {PROVINCES.length} provincias de Argentina
+                  </p>
+                </div>
+              </div>
+            ) : (
+              <div className="p-8 text-center text-gray-500">
+                <p className="text-sm">No hay provincias disponibles</p>
+              </div>
+            )}
+          </div>
+        </div>,
+        document.body
+      )}
     </section>
   )
 }
