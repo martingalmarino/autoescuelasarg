@@ -31,7 +31,7 @@ export async function getActiveProvinces() {
     slug: province.slug,
     description: province.description || undefined,
     imageUrl: province.imageUrl || undefined,
-    schoolsCount: province._count.schools, // Usar el conteo real
+    schoolsCount: province._count.schools, // Usar el conteo real de la base de datos
   }))
 }
 

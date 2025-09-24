@@ -22,7 +22,8 @@
     "cleanup:duplicates": "tsx scripts/cleanup-duplicate-schools.ts",
     "check:duplicates": "tsx scripts/check-duplicate-schools.ts",
     "diagnose:schools": "tsx scripts/diagnose-deleted-schools.ts",
-    "normalize:slugs": "tsx scripts/normalize-slugs.ts"
+    "normalize:slugs": "tsx scripts/normalize-slugs.ts",
+    "update:counts": "tsx scripts/update-school-counts.ts"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.10.0",

@@ -2,7 +2,8 @@ import { Metadata } from 'next'
 import { getActiveProvinces } from '@/lib/database'
 import ProvincesPageClient from './ProvincesPageClient'
 
-// Force new deploy
+// Force dynamic rendering to get fresh data
+export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: 'Todas las Provincias - Autoescuelas.ar',
