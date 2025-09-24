@@ -187,17 +187,22 @@ export async function DELETE(
       where: { id: params.id }
     })
 
-    // Actualizar contadores
-    await Promise.all([
-      prisma.city.update({
-        where: { id: existingSchool.cityId },
-        data: { schoolsCount: { decrement: 1 } }
-      }),
-      prisma.province.update({
-        where: { id: existingSchool.provinceId },
-        data: { schoolsCount: { decrement: 1 } }
-      })
-    ])
+      // Actualizar contadores - obtener el conteo actual y decrementar
+      const [cityCount, provinceCount] = await Promise.all([
+        prisma.drivingSchool.count({ where: { cityId: existingSchool.cityId, isActive: true } }),
+        prisma.drivingSchool.count({ where: { provinceId: existingSchool.provinceId, isActive: true } })
+      ])
+
+      await Promise.all([
+        prisma.city.update({
+          where: { id: existingSchool.cityId },
+          data: { schoolsCount: cityCount }
+        }),
+        prisma.province.update({
+          where: { id: existingSchool.provinceId },
+          data: { schoolsCount: provinceCount }
+        })
+      ])
 
     return NextResponse.json({ 
       success: true, 
