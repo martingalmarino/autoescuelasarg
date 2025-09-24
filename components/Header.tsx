@@ -48,8 +48,8 @@ export default function Header() {
           </Link>
         </nav>
 
-        {/* Search and Admin */}
-        <div className="flex items-center space-x-2">
+        {/* Search */}
+        <div className="flex items-center">
           {/* Search - Always visible */}
           <form onSubmit={handleSearch} className="flex items-center space-x-2">
             <Input
@@ -63,13 +63,6 @@ export default function Header() {
               <Search className="h-4 w-4" />
             </Button>
           </form>
-          
-          {/* Admin */}
-          <Link href="/admin">
-            <Button variant="outline" size="sm" className="h-9">
-              Admin
-            </Button>
-          </Link>
         </div>
       </div>
     </header>
