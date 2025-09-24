@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { X, Plus, Trash2 } from 'lucide-react'
 import ImageUpload from '@/components/ImageUpload'
+import RichTextEditor from '@/components/RichTextEditor'
 
 interface Province {
   id: string
@@ -235,12 +236,10 @@ export default function EditSchoolForm({ school, onClose, onSuccess }: EditSchoo
                   <label className="block text-sm font-medium mb-1">
                     Descripción
                   </label>
-                  <textarea
-                    value={formData.description}
-                    onChange={(e) => handleInputChange('description', e.target.value)}
+                  <RichTextEditor
+                    content={formData.description}
+                    onChange={(content) => handleInputChange('description', content)}
                     placeholder="Describe los servicios y características de la autoescuela..."
-                    className="w-full p-2 border border-gray-300 rounded-md resize-none"
-                    rows={3}
                   />
                 </div>
 
