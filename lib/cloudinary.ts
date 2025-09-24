@@ -20,7 +20,7 @@ export async function uploadImage(
       folder,
       publicId,
       fileType: typeof file,
-      fileSize: file instanceof Buffer ? file.length : file.size
+      fileSize: file instanceof Buffer ? file.length : (file as File).size
     })
 
     const result = await cloudinary.uploader.upload(
