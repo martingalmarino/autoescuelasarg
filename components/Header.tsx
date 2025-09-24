@@ -1,10 +1,17 @@
 "use client"
 
 import Link from 'next/link'
-import { Car, Search } from 'lucide-react'
+import { useSession, signOut } from 'next-auth/react'
+import { Car, Search, User, LogOut } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 export default function Header() {
+  const { data: session, status } = useSession()
+
+  const handleSignOut = () => {
+    signOut({ callbackUrl: '/' })
+  }
+
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-14 sm:h-16 items-center justify-between px-4 sm:px-6">
@@ -47,9 +54,34 @@ export default function Header() {
             <span className="sr-only">Buscar</span>
           </Button>
           
-          <Button variant="outline" size="sm" className="hidden sm:flex text-xs sm:text-sm px-2 sm:px-3 h-8 sm:h-9">
-            Suma tu Autoescuela
-          </Button>
+          {session ? (
+            <div className="flex items-center space-x-2">
+              <Button asChild variant="outline" className="h-8 px-3 sm:h-10 sm:px-4 text-xs sm:text-sm">
+                <Link href="/dashboard">
+                  <User className="h-4 w-4 mr-1" />
+                  Dashboard
+                </Link>
+              </Button>
+              <Button 
+                onClick={handleSignOut}
+                variant="ghost" 
+                size="icon" 
+                className="h-8 w-8 sm:h-10 sm:w-10"
+                title="Cerrar sesión"
+              >
+                <LogOut className="h-4 w-4 sm:h-5 sm:w-5" />
+              </Button>
+            </div>
+          ) : (
+            <div className="flex items-center space-x-2">
+              <Button asChild variant="outline" className="h-8 px-3 sm:h-10 sm:px-4 text-xs sm:text-sm">
+                <Link href="/auth/signin">Iniciar Sesión</Link>
+              </Button>
+              <Button asChild className="h-8 px-3 sm:h-10 sm:px-4 text-xs sm:text-sm">
+                <Link href="/sumar-autoescuela">Suma tu Autoescuela</Link>
+              </Button>
+            </div>
+          )}
           
           {/* Mobile menu button placeholder */}
           <Button variant="ghost" size="icon" className="sm:hidden h-8 w-8">
