@@ -8,10 +8,9 @@ export default function AdminPage() {
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    // Verificar variables de entorno
+    // Verificar variables de entorno (solo las públicas)
     const checkEnv = () => {
       const requiredVars = [
-        'DATABASE_URL',
         'NEXT_PUBLIC_SUPABASE_URL',
         'NEXT_PUBLIC_SUPABASE_ANON_KEY'
       ]
@@ -148,7 +147,7 @@ export default function AdminPage() {
                 {error || 'No se pudo conectar a la base de datos'}
               </div>
               <div className="text-xs text-gray-500">
-                Verifica que la DATABASE_URL esté configurada correctamente en Vercel
+                Verifica que las variables de entorno estén configuradas correctamente en Vercel
               </div>
             </div>
           )}
