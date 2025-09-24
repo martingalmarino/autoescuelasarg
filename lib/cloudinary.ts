@@ -23,16 +23,41 @@ export async function uploadImage(
       fileSize: file instanceof Buffer ? file.length : (file as File).size
     })
 
-    const result = await cloudinary.uploader.upload(
-      file as any,
-      {
-        folder,
-        public_id: publicId,
-        resource_type: 'auto',
-        quality: 'auto',
-        fetch_format: 'auto',
-      }
-    )
+    // Convertir Buffer a stream para Cloudinary
+    let uploadData: any
+    if (file instanceof Buffer) {
+      // Para Buffer, usar upload_stream
+      uploadData = new Promise((resolve, reject) => {
+        const uploadStream = cloudinary.uploader.upload_stream(
+          {
+            folder,
+            public_id: publicId,
+            resource_type: 'auto',
+            quality: 'auto',
+            fetch_format: 'auto',
+          },
+          (error, result) => {
+            if (error) reject(error)
+            else resolve(result)
+          }
+        )
+        uploadStream.end(file)
+      })
+    } else {
+      // Para File, usar upload normal
+      uploadData = cloudinary.uploader.upload(
+        file as any,
+        {
+          folder,
+          public_id: publicId,
+          resource_type: 'auto',
+          quality: 'auto',
+          fetch_format: 'auto',
+        }
+      )
+    }
+
+    const result = await uploadData
     
     console.log('✅ Cloudinary upload exitoso:', {
       url: result.secure_url,
