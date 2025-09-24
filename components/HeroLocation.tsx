@@ -98,7 +98,7 @@ export default function HeroLocation() {
   }
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-[70vh] sm:min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image */}
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat sm:bg-center"
@@ -113,22 +113,22 @@ export default function HeroLocation() {
       <div className="absolute inset-0 bg-black/30 sm:bg-black/40" />
       
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-4 text-center py-8 sm:py-0">
+      <div className="relative z-10 container mx-auto px-4 text-center py-6 sm:py-8 md:py-0">
         <div className="max-w-4xl mx-auto">
           {/* Main Heading */}
-          <h1 className="mb-4 sm:mb-6 md:mb-8 text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tight text-white leading-tight">
+          <h1 className="mb-3 sm:mb-4 md:mb-6 lg:mb-8 text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-bold tracking-tight text-white leading-tight">
             Encontrá tu autoescuela{' '}
             <span className="text-yellow-400">estés donde estés</span>
             <span className="text-white/80">…</span>
           </h1>
 
           {/* Location Selector */}
-          <div className="mb-4 sm:mb-6 md:mb-8 flex justify-center">
+          <div className="mb-3 sm:mb-4 md:mb-6 lg:mb-8 flex justify-center">
             <div className="relative">
               <button
                 ref={buttonRef}
                 onClick={handleDropdownToggle}
-                className="flex items-center justify-center space-x-2 bg-white/10 backdrop-blur-sm rounded-lg px-3 sm:px-4 md:px-6 py-2 sm:py-3 border border-white/20 hover:bg-white/20 transition-colors min-w-[180px] sm:min-w-[200px] md:min-w-[250px]"
+                className="flex items-center justify-center space-x-2 bg-white/10 backdrop-blur-sm rounded-lg px-3 sm:px-4 md:px-6 py-2 sm:py-3 border border-white/20 hover:bg-white/20 transition-colors min-w-[140px] sm:min-w-[180px] md:min-w-[200px] lg:min-w-[250px]"
               >
                 <span className="text-white font-medium text-xs sm:text-sm md:text-base">{selectedProvince}</span>
                 <ChevronDown className={`h-3 w-3 sm:h-4 sm:w-4 text-white transition-transform flex-shrink-0 ${isDropdownOpen ? 'rotate-180' : ''}`} />
@@ -182,7 +182,7 @@ export default function HeroLocation() {
             <Button
               size="lg"
               onClick={handleViewAll}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg font-semibold rounded-lg shadow-lg transition-all duration-200 hover:shadow-xl w-full sm:w-auto"
+              className="bg-blue-600 hover:bg-blue-700 text-white px-6 sm:px-8 md:px-10 py-2.5 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg font-semibold rounded-lg shadow-lg transition-all duration-200 hover:shadow-xl w-auto mx-auto block sm:inline-block"
             >
               <MapPin className="mr-1 sm:mr-2 h-3 w-3 sm:h-4 sm:w-4 md:h-5 md:w-5" />
               VER TODAS
