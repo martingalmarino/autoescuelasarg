@@ -69,6 +69,7 @@ export async function getFeaturedSchools(limit: number = 8) {
     ...school,
     city: school.city.name,
     province: school.city.province.name,
+    hours: school.hours || undefined,
   }))
 }
 
@@ -103,6 +104,7 @@ export async function getSchoolsByProvince(provinceId: string, limit: number = 2
     ...school,
     city: school.city.name,
     province: school.city.province.name,
+    hours: school.hours || undefined,
   }))
 }
 
@@ -137,6 +139,7 @@ export async function getSchoolsByCity(cityId: string, limit: number = 20) {
     ...school,
     city: school.city.name,
     province: school.city.province.name,
+    hours: school.hours || undefined,
   }))
 }
 
@@ -229,6 +232,7 @@ export async function searchSchools(query: string, filters?: {
     ...school,
     city: school.city.name,
     province: school.city.province.name,
+    hours: school.hours || undefined,
   }))
 }
 
