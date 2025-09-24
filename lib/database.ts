@@ -16,7 +16,7 @@ export async function getActiveProvinces() {
       imageUrl: true,
       _count: {
         select: {
-          drivingSchools: {
+          schools: {
             where: { isActive: true }
           }
         }
@@ -31,7 +31,7 @@ export async function getActiveProvinces() {
     slug: province.slug,
     description: province.description || undefined,
     imageUrl: province.imageUrl || undefined,
-    schoolsCount: province._count.drivingSchools, // Usar el conteo real
+    schoolsCount: province._count.schools, // Usar el conteo real
   }))
 }
 
@@ -48,7 +48,7 @@ export async function getActiveCitiesByProvince(provinceId: string) {
       slug: true,
       _count: {
         select: {
-          drivingSchools: {
+          schools: {
             where: { isActive: true }
           }
         }
@@ -60,7 +60,7 @@ export async function getActiveCitiesByProvince(provinceId: string) {
     id: city.id,
     name: city.name,
     slug: city.slug,
-    schoolsCount: city._count.drivingSchools, // Usar el conteo real
+    schoolsCount: city._count.schools, // Usar el conteo real
   }))
 }
 
