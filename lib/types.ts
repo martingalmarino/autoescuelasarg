@@ -6,28 +6,24 @@ export interface DrivingSchool {
   reviewsCount: number
   city: string
   province: string
-  imageUrl?: string
-  priceRange?: {
-    min: number
-    max: number
-  }
-  description?: string
-  address?: string
-  phone?: string
-  email?: string
-  website?: string
-  hours?: {
-    monday: string
-    tuesday: string
-    wednesday: string
-    thursday: string
-    friday: string
-    saturday: string
-    sunday: string
-  }
+  imageUrl?: string | null
+  priceMin?: number | null
+  priceMax?: number | null
+  description?: string | null
+  address?: string | null
+  phone?: string | null
+  email?: string | null
+  website?: string | null
+  hours?: string
   services?: string[]
   courses?: Course[]
   reviews?: Review[]
+  isActive?: boolean
+  isVerified?: boolean
+  isFeatured?: boolean
+  sortOrder?: number
+  metaTitle?: string | null
+  metaDescription?: string | null
   createdAt: Date
   updatedAt: Date
 }

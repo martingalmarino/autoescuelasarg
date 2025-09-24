@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useRef } from 'react'
+import Image from 'next/image'
 import { Upload, X, Image as ImageIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
@@ -101,10 +102,12 @@ export default function ImageUpload({
       {preview ? (
         <div className="relative">
           <div className="relative w-full h-48 rounded-lg overflow-hidden border-2 border-dashed border-gray-300">
-            <img
+            <Image
               src={preview}
               alt="Preview"
-              className="w-full h-full object-cover"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 50vw"
             />
             {!disabled && (
               <button

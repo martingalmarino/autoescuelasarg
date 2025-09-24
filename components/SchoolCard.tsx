@@ -70,9 +70,9 @@ export default function SchoolCard({ school }: SchoolCardProps) {
             </div>
 
             {/* Price Range */}
-            {school.priceRange && (
+            {school.priceMin && school.priceMax && (
               <div className="text-xs sm:text-sm font-medium text-primary">
-                {formatPrice(school.priceRange.min)} - {formatPrice(school.priceRange.max)}
+                {formatPrice(school.priceMin)} - {formatPrice(school.priceMax)}
               </div>
             )}
           </div>
