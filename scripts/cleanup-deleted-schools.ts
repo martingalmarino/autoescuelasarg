@@ -43,12 +43,12 @@ async function cleanupDeletedSchools() {
 
     // Verificar contadores
     const cities = await prisma.city.findMany({
-      select: { id: true, name: true, schoolsCount: true, _count: { drivingSchools: true } }
+      select: { id: true, name: true, schoolsCount: true, _count: { schools: true } }
     })
 
     console.log('🔍 Verificando contadores de ciudades...')
     for (const city of cities) {
-      const actualCount = city._count.drivingSchools
+      const actualCount = city._count.schools
       if (city.schoolsCount !== actualCount) {
         console.log(`⚠️ Ciudad ${city.name}: contador=${city.schoolsCount}, real=${actualCount}`)
         await prisma.city.update({
@@ -61,12 +61,12 @@ async function cleanupDeletedSchools() {
 
     // Verificar contadores de provincias
     const provinces = await prisma.province.findMany({
-      select: { id: true, name: true, schoolsCount: true, _count: { drivingSchools: true } }
+      select: { id: true, name: true, schoolsCount: true, _count: { schools: true } }
     })
 
     console.log('🔍 Verificando contadores de provincias...')
     for (const province of provinces) {
-      const actualCount = province._count.drivingSchools
+      const actualCount = province._count.schools
       if (province.schoolsCount !== actualCount) {
         console.log(`⚠️ Provincia ${province.name}: contador=${province.schoolsCount}, real=${actualCount}`)
         await prisma.province.update({
