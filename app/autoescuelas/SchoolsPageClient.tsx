@@ -213,10 +213,10 @@ export default function SchoolsPageClient({ schools, provinces, searchParams }: 
       <section className="py-6 sm:py-8 bg-muted/30">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="bg-white rounded-lg shadow-sm border p-4 sm:p-6">
-            {/* Mobile: Stack vertically, Desktop: Horizontal */}
-            <div className="space-y-4 sm:space-y-0 sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:gap-4">
-              {/* Search - Full width on mobile, spans 2 columns on desktop */}
-              <div className="sm:col-span-2 lg:col-span-1">
+            {/* Mobile: Stack vertically, Desktop: Grid */}
+            <div className="flex flex-col space-y-4 md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-4 md:space-y-0">
+              {/* Search - Full width on all devices */}
+              <div className="w-full md:col-span-2 lg:col-span-1">
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                   <Input
@@ -234,7 +234,7 @@ export default function SchoolsPageClient({ schools, provinces, searchParams }: 
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Todas las provincias" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="max-h-[200px] overflow-y-auto">
                     <SelectItem value="all">Todas las provincias</SelectItem>
                     {provinces.map((province) => (
                       <SelectItem key={province.id} value={province.name}>
@@ -255,7 +255,7 @@ export default function SchoolsPageClient({ schools, provinces, searchParams }: 
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Todas las ciudades" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="max-h-[200px] overflow-y-auto">
                     <SelectItem value="all">Todas las ciudades</SelectItem>
                     {availableCities.map((city) => (
                       <SelectItem key={city} value={city}>
@@ -286,44 +286,46 @@ export default function SchoolsPageClient({ schools, provinces, searchParams }: 
 
             {/* Active Filters */}
             {(searchTerm || (selectedProvince && selectedProvince !== 'all') || (selectedCity && selectedCity !== 'all')) && (
-              <div className="mt-4 space-y-2">
-                <div className="flex flex-wrap gap-2">
-                  {searchTerm && (
-                    <Badge variant="secondary" className="flex items-center gap-1 text-xs">
-                      <span className="truncate max-w-[120px] sm:max-w-none">Búsqueda: {searchTerm}</span>
-                      <X 
-                        className="h-3 w-3 cursor-pointer flex-shrink-0" 
-                        onClick={() => handleSearch('')}
-                      />
-                    </Badge>
-                  )}
-                  {selectedProvince && selectedProvince !== 'all' && (
-                    <Badge variant="secondary" className="flex items-center gap-1 text-xs">
-                      <span className="truncate max-w-[100px] sm:max-w-none">Provincia: {selectedProvince}</span>
-                      <X 
-                        className="h-3 w-3 cursor-pointer flex-shrink-0" 
-                        onClick={() => handleProvinceChange('all')}
-                      />
-                    </Badge>
-                  )}
-                  {selectedCity && selectedCity !== 'all' && (
-                    <Badge variant="secondary" className="flex items-center gap-1 text-xs">
-                      <span className="truncate max-w-[100px] sm:max-w-none">Ciudad: {selectedCity}</span>
-                      <X 
-                        className="h-3 w-3 cursor-pointer flex-shrink-0" 
-                        onClick={() => handleCityChange('all')}
-                      />
-                    </Badge>
-                  )}
+              <div className="mt-4 pt-4 border-t border-gray-100">
+                <div className="flex flex-col space-y-3">
+                  <div className="flex flex-wrap gap-2">
+                    {searchTerm && (
+                      <Badge variant="secondary" className="flex items-center gap-1 text-xs px-2 py-1">
+                        <span className="truncate max-w-[100px] sm:max-w-[150px]">Búsqueda: {searchTerm}</span>
+                        <X 
+                          className="h-3 w-3 cursor-pointer flex-shrink-0 hover:text-red-500" 
+                          onClick={() => handleSearch('')}
+                        />
+                      </Badge>
+                    )}
+                    {selectedProvince && selectedProvince !== 'all' && (
+                      <Badge variant="secondary" className="flex items-center gap-1 text-xs px-2 py-1">
+                        <span className="truncate max-w-[80px] sm:max-w-[120px]">Provincia: {selectedProvince}</span>
+                        <X 
+                          className="h-3 w-3 cursor-pointer flex-shrink-0 hover:text-red-500" 
+                          onClick={() => handleProvinceChange('all')}
+                        />
+                      </Badge>
+                    )}
+                    {selectedCity && selectedCity !== 'all' && (
+                      <Badge variant="secondary" className="flex items-center gap-1 text-xs px-2 py-1">
+                        <span className="truncate max-w-[80px] sm:max-w-[120px]">Ciudad: {selectedCity}</span>
+                        <X 
+                          className="h-3 w-3 cursor-pointer flex-shrink-0 hover:text-red-500" 
+                          onClick={() => handleCityChange('all')}
+                        />
+                      </Badge>
+                    )}
+                  </div>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={clearFilters}
+                    className="text-xs w-full sm:w-auto self-start"
+                  >
+                    Limpiar todos los filtros
+                  </Button>
                 </div>
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
-                  onClick={clearFilters}
-                  className="text-xs w-full sm:w-auto"
-                >
-                  Limpiar todos los filtros
-                </Button>
               </div>
             )}
           </div>
@@ -331,18 +333,16 @@ export default function SchoolsPageClient({ schools, provinces, searchParams }: 
       </section>
 
       {/* Results Section */}
-      <section className="py-8">
+      <section className="py-6 sm:py-8">
         <div className="container mx-auto px-4 sm:px-6">
           {/* Results Header */}
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
-            <div>
-              <h2 className="text-xl sm:text-2xl font-bold">
-                {filteredAndSortedSchools.length} autoescuelas encontradas
-              </h2>
-              <p className="text-muted-foreground">
-                Página {currentPage} de {totalPages}
-              </p>
-            </div>
+          <div className="mb-4 sm:mb-6">
+            <h2 className="text-lg sm:text-xl md:text-2xl font-bold mb-1">
+              {filteredAndSortedSchools.length} autoescuelas encontradas
+            </h2>
+            <p className="text-sm sm:text-base text-muted-foreground">
+              Página {currentPage} de {totalPages}
+            </p>
           </div>
 
           {/* Schools Grid */}
