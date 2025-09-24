@@ -14,7 +14,14 @@ function normalizeSlug(text: string): string {
 }
 
 export function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl
+  const { pathname, hostname } = request.nextUrl
+
+  // Redirigir de autoescuelas.ar a www.autoescuelas.ar
+  if (hostname === 'autoescuelas.ar') {
+    const url = request.nextUrl.clone()
+    url.hostname = 'www.autoescuelas.ar'
+    return NextResponse.redirect(url, 301)
+  }
 
   // Manejar URLs con acentos en provincias
   if (pathname.startsWith('/provincias/')) {
@@ -83,8 +90,6 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    '/admin/:path*',
-    '/provincias/:path*',
-    '/autoescuelas/:path*',
+    '/((?!api|_next/static|_next/image|favicon.ico).*)',
   ],
 }

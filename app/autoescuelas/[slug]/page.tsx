@@ -23,9 +23,13 @@ export async function generateMetadata({ params }: SchoolPageProps): Promise<Met
     title: `${school.name} - Autoescuelas.ar`,
     description: `${school.description || `Autoescuela en ${school.city}, ${school.province}. ${formatRating(school.rating)} estrellas con ${formatReviews(school.reviewsCount)} reseñas.`}`,
     keywords: `autoescuela, ${school.name}, ${school.city}, ${school.province}, escuela de manejo, licencia de conducir`,
+    alternates: {
+      canonical: `/autoescuelas/${school.slug}`,
+    },
     openGraph: {
       title: school.name,
       description: school.description || `Autoescuela en ${school.city}, ${school.province}`,
+      url: `https://www.autoescuelas.ar/autoescuelas/${school.slug}`,
       images: school.imageUrl ? [school.imageUrl] : [],
     },
   }

@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL('https://autoescuelas.ar'),
+  metadataBase: new URL('https://www.autoescuelas.ar'),
   alternates: {
     canonical: '/',
   },
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Autoescuelas.ar - Encuentra tu escuela de manejo en Argentina',
     description: 'El directorio más completo de escuelas de manejo en Argentina. Encuentra la autoescuela perfecta para obtener tu licencia de conducir.',
-    url: 'https://autoescuelas.ar',
+    url: 'https://www.autoescuelas.ar',
     siteName: 'Autoescuelas.ar',
     locale: 'es_AR',
     type: 'website',
