@@ -85,6 +85,12 @@ export default function HeroLocation() {
     setSelectedProvince(province)
     setIsDropdownOpen(false)
     analyticsEvents.selectLocation(province)
+    
+    // Navegar directamente a la provincia seleccionada
+    if (province !== 'Argentina') {
+      const provinceSlug = createSlug(province)
+      router.push(`/provincias/${provinceSlug}`)
+    }
   }
 
   const handleDropdownToggle = () => {
