@@ -14,20 +14,29 @@ export async function getActiveProvinces() {
       slug: true,
       description: true,
       imageUrl: true,
-      schoolsCount: true,
+      _count: {
+        select: {
+          drivingSchools: {
+            where: { isActive: true }
+          }
+        }
+      }
     },
   })
 
   // Transform to match Province interface
   return provinces.map(province => ({
-    ...province,
+    id: province.id,
+    name: province.name,
+    slug: province.slug,
     description: province.description || undefined,
     imageUrl: province.imageUrl || undefined,
+    schoolsCount: province._count.drivingSchools, // Usar el conteo real
   }))
 }
 
 export async function getActiveCitiesByProvince(provinceId: string) {
-  return prisma.city.findMany({
+  const cities = await prisma.city.findMany({
     where: { 
       provinceId,
       isActive: true 
@@ -37,9 +46,22 @@ export async function getActiveCitiesByProvince(provinceId: string) {
       id: true,
       name: true,
       slug: true,
-      schoolsCount: true,
+      _count: {
+        select: {
+          drivingSchools: {
+            where: { isActive: true }
+          }
+        }
+      }
     },
   })
+
+  return cities.map(city => ({
+    id: city.id,
+    name: city.name,
+    slug: city.slug,
+    schoolsCount: city._count.drivingSchools, // Usar el conteo real
+  }))
 }
 
 export async function getFeaturedSchools(limit: number = 8) {

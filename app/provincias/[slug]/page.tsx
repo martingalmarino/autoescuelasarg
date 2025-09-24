@@ -12,7 +12,7 @@ interface ProvincePageProps {
 }
 
 export async function generateMetadata({ params }: ProvincePageProps): Promise<Metadata> {
-  const province = getProvinceBySlug(params.slug)
+  const province = await getProvinceBySlugFromDB(params.slug)
   
   if (!province) {
     return {
