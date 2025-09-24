@@ -5,7 +5,7 @@ const prisma = new PrismaClient()
 // Funciones optimizadas para consultas frecuentes
 
 export async function getActiveProvinces() {
-  return prisma.province.findMany({
+  const provinces = await prisma.province.findMany({
     where: { isActive: true },
     orderBy: { sortOrder: 'asc' },
     select: {
@@ -17,6 +17,13 @@ export async function getActiveProvinces() {
       schoolsCount: true,
     },
   })
+
+  // Transform to match Province interface
+  return provinces.map(province => ({
+    ...province,
+    description: province.description || undefined,
+    imageUrl: province.imageUrl || undefined,
+  }))
 }
 
 export async function getActiveCitiesByProvince(provinceId: string) {
