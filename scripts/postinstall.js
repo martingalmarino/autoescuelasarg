@@ -39,14 +39,14 @@ try {
       console.log('🌱 Seeding database...')
       execSync('npm run db:seed', { stdio: 'inherit' })
     
-    // Normalize slugs after seeding
-    console.log('🔄 Normalizing slugs...')
-    try {
-      execSync('npx tsx scripts/fix-cordoba-slug.ts', { stdio: 'inherit' })
-      console.log('✅ Slug normalization completed!')
-    } catch (error) {
-      console.error('❌ Slug normalization failed:', error.message)
-    }
+      // Normalize all slugs after seeding
+      console.log('🔄 Normalizing all slugs...')
+      try {
+        execSync('npx tsx scripts/normalize-slugs.ts', { stdio: 'inherit' })
+        console.log('✅ Slug normalization completed!')
+      } catch (error) {
+        console.error('❌ Slug normalization failed:', error.message)
+      }
     
     // Clean up inactive schools after seeding (YA NO ES NECESARIO SI NO SE SIEMBRAN AUTOESCUELAS)
     // console.log('🧹 Cleaning up inactive schools...')

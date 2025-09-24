@@ -19,9 +19,10 @@
     "cleanup:inactive": "tsx cleanup-inactive-schools.ts",
     "cleanup:seeding": "tsx scripts/cleanup-seeding.ts",
     "cleanup:pre-seeding": "tsx scripts/pre-seeding-cleanup.ts",
-    "cleanup:duplicates": "tsx scripts/cleanup-duplicate-schools.ts",
-    "check:duplicates": "tsx scripts/check-duplicate-schools.ts",
-    "diagnose:schools": "tsx scripts/diagnose-deleted-schools.ts"
+      "cleanup:duplicates": "tsx scripts/cleanup-duplicate-schools.ts",
+      "check:duplicates": "tsx scripts/check-duplicate-schools.ts",
+      "diagnose:schools": "tsx scripts/diagnose-deleted-schools.ts",
+      "normalize:slugs": "tsx scripts/normalize-slugs.ts"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.10.0",

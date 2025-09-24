@@ -5,7 +5,7 @@ const prisma = new PrismaClient()
 async function main() {
   console.log('🌱 Starting database seeding...')
 
-    // Crear provincias con orden y estado
+    // Crear provincias con orden y estado (slugs sin acentos)
     const provinces = [
       { name: 'Buenos Aires', slug: 'buenos-aires', schoolsCount: 245, description: 'La provincia más poblada de Argentina con una gran oferta de autoescuelas', sortOrder: 1 },
       { name: 'CABA', slug: 'caba', schoolsCount: 89, description: 'Ciudad Autónoma de Buenos Aires, capital del país', sortOrder: 2 },
