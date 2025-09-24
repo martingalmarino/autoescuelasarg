@@ -6,14 +6,14 @@ import SchoolsPageClient from './SchoolsPageClient'
 export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
-  title: 'Todas las Autoescuelas - Autoescuelas.ar',
+  title: 'Las mejores Autoescuelas de Argentina',
   description: 'Encuentra todas las autoescuelas de Argentina. Filtra por provincia, ciudad y calificación. Compara precios y lee reseñas de estudiantes.',
   keywords: 'autoescuelas, Argentina, escuela de manejo, licencia de conducir, clases de manejo, todas las autoescuelas',
   alternates: {
     canonical: '/autoescuelas',
   },
   openGraph: {
-    title: 'Todas las Autoescuelas - Autoescuelas.ar',
+    title: 'Las mejores Autoescuelas de Argentina',
     description: 'Encuentra todas las autoescuelas de Argentina. Filtra por provincia, ciudad y calificación.',
     url: 'https://www.autoescuelas.ar/autoescuelas',
   },

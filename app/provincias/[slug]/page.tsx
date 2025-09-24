@@ -21,14 +21,14 @@ export async function generateMetadata({ params }: ProvincePageProps): Promise<M
   }
 
   return {
-    title: `Autoescuelas en ${province.name} - Autoescuelas.ar`,
+    title: `Autoescuelas y Cursos de Manejo en ${province.name}`,
     description: `Encuentra las mejores autoescuelas en ${province.name}. ${province.schoolsCount} escuelas de manejo disponibles con precios, reseñas y contacto directo.`,
     keywords: `autoescuelas, ${province.name}, escuela de manejo, licencia de conducir, clases de manejo`,
     alternates: {
       canonical: `/provincias/${province.slug}`,
     },
     openGraph: {
-      title: `Autoescuelas en ${province.name}`,
+      title: `Autoescuelas y Cursos de Manejo en ${province.name}`,
       description: `Encuentra las mejores autoescuelas en ${province.name}`,
       url: `https://www.autoescuelas.ar/provincias/${province.slug}`,
       images: province.imageUrl ? [province.imageUrl] : [],
