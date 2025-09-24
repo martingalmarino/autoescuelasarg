@@ -21,6 +21,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
+import ContactForm from '@/components/ContactForm'
 import { getSchoolBySlug } from '@/lib/mock-data'
 import { formatPrice, formatRating, formatReviews } from '@/lib/utils'
 import { analyticsEvents } from '@/lib/analytics'
@@ -449,6 +450,14 @@ export default function SchoolPageClient({ params }: SchoolPageClientProps) {
                 </div>
               </CardContent>
             </Card>
+          </div>
+
+          {/* Contact Form Section */}
+          <div className="lg:col-span-1">
+            <ContactForm 
+              schoolName={school.name}
+              schoolId={school.id}
+            />
           </div>
         </div>
       </div>

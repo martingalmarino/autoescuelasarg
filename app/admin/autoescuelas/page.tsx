@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
-import { Plus, Edit, Trash2, Eye, Search, LogOut } from 'lucide-react'
+import { Plus, Edit, Trash2, Eye, Search, LogOut, Mail } from 'lucide-react'
 import Link from 'next/link'
 import AddSchoolForm from '@/components/AddSchoolForm'
 import EditSchoolForm from '@/components/EditSchoolForm'
@@ -146,28 +146,36 @@ export default function AutoescuelasAdminPage() {
       <div className="max-w-7xl mx-auto px-4">
         {/* Header */}
         <div className="mb-8">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                Gestión de Autoescuelas
-              </h1>
-              <p className="text-gray-600">
-                Administra todas las autoescuelas del directorio
-              </p>
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <div>
+                <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                  Gestión de Autoescuelas
+                </h1>
+                <p className="text-gray-600">
+                  Administra todas las autoescuelas del directorio
+                </p>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-2">
+                <Link href="/admin/contactos">
+                  <Button variant="outline" className="flex items-center gap-2">
+                    <Mail className="h-4 w-4" />
+                    Ver Contactos
+                  </Button>
+                </Link>
+                <Button
+                  onClick={handleLogout}
+                  variant="outline"
+                  className="flex items-center gap-2"
+                >
+                  <LogOut className="h-4 w-4" />
+                  Cerrar Sesión
+                </Button>
+                <Button onClick={() => setShowAddForm(true)} className="w-full sm:w-auto">
+                  <Plus className="h-4 w-4 mr-2" />
+                  Agregar Autoescuela
+                </Button>
+              </div>
             </div>
-            <Button
-              onClick={handleLogout}
-              variant="outline"
-              className="flex items-center gap-2"
-            >
-              <LogOut className="h-4 w-4" />
-              Cerrar Sesión
-            </Button>
-            <Button onClick={() => setShowAddForm(true)} className="w-full sm:w-auto">
-              <Plus className="h-4 w-4 mr-2" />
-              Agregar Autoescuela
-            </Button>
-          </div>
         </div>
 
         {/* Search */}

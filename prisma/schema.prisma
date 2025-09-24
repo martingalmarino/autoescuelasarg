@@ -101,6 +101,7 @@ model DrivingSchool {
   province    Province @relation(fields: [provinceId], references: [id], onDelete: Cascade)
   reviews     Review[]
   courses     Course[]
+  contacts    Contact[]
 
   @@index([provinceId, isActive])
   @@index([cityId, isActive])
@@ -141,6 +142,28 @@ model Course {
   school      DrivingSchool @relation(fields: [schoolId], references: [id], onDelete: Cascade)
 
   @@map("courses")
+}
+
+model Contact {
+  id          String   @id @default(cuid())
+  name        String
+  phone       String
+  message     String
+  schoolId    String
+  schoolName  String
+  status      String   @default("new") // new, contacted, closed
+  source      String   @default("website") // website, phone, etc.
+  notes       String?  // Admin notes
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  school      DrivingSchool @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+
+  @@index([schoolId])
+  @@index([status])
+  @@index([createdAt])
+  @@map("contacts")
 }
 
 // Modelos simplificados - solo para datos estáticos
