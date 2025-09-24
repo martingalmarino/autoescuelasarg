@@ -32,6 +32,7 @@ model City {
   name      String
   slug      String
   provinceId String
+  schoolsCount Int   @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
