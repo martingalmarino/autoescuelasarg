@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
 import { getProvinceBySlug } from '@/lib/mock-data'
-import { getProvinceBySlugFromDB, getSchoolsByProvinceSlug } from '@/lib/database'
+import { getProvinceBySlugFromDB, getSchoolsByProvince } from '@/lib/database'
 import ProvincePageClient from './ProvincePageClient'
 
 interface ProvincePageProps {
