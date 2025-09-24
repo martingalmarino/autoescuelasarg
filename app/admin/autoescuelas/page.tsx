@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
-import { Plus, Edit, Trash2, Eye, Search, LogOut, Mail } from 'lucide-react'
+import { Plus, Edit, Trash2, Eye, Search, LogOut, Mail, MapPin } from 'lucide-react'
 import Link from 'next/link'
 import AddSchoolForm from '@/components/AddSchoolForm'
 import EditSchoolForm from '@/components/EditSchoolForm'
@@ -160,6 +160,12 @@ export default function AutoescuelasAdminPage() {
                   <Button variant="outline" className="flex items-center gap-2">
                     <Mail className="h-4 w-4" />
                     Ver Contactos
+                  </Button>
+                </Link>
+                <Link href="/admin/ciudades">
+                  <Button variant="outline" className="flex items-center gap-2">
+                    <MapPin className="h-4 w-4" />
+                    Gestionar Ciudades
                   </Button>
                 </Link>
                 <Button
