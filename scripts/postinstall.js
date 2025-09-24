@@ -28,6 +28,15 @@ try {
       !process.env.DATABASE_URL.includes('[YOUR-PASSWORD]')) {
     console.log('🌱 Seeding database...')
     execSync('npm run db:seed', { stdio: 'inherit' })
+    
+    // Normalize slugs after seeding
+    console.log('🔄 Normalizing slugs...')
+    try {
+      execSync('npx tsx scripts/fix-cordoba-slug.ts', { stdio: 'inherit' })
+      console.log('✅ Slug normalization completed!')
+    } catch (error) {
+      console.error('❌ Slug normalization failed:', error.message)
+    }
   } else {
     console.log('⚠️ DATABASE_URL not configured or invalid, skipping database seeding')
   }

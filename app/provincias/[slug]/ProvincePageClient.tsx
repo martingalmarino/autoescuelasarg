@@ -160,7 +160,7 @@ export default function ProvincePageClient({ params, province, schools }: Provin
                 Autoescuelas en {province.name}
               </h2>
               <p className="text-muted-foreground">
-                {schools.length} escuelas de manejo disponibles
+                {schools?.length || 0} escuelas de manejo disponibles
               </p>
             </div>
             <div className="mt-4 sm:mt-0">
@@ -172,7 +172,7 @@ export default function ProvincePageClient({ params, province, schools }: Provin
             </div>
           </div>
 
-          {schools.length > 0 ? (
+          {schools && schools.length > 0 ? (
             <div className="grid gap-6 sm:gap-8 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
               {schools.map((school) => (
                 <Link
