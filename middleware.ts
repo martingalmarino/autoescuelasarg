@@ -25,7 +25,7 @@ export function middleware(request: NextRequest) {
       
       // Si el slug tiene acentos o caracteres especiales, redirigir a la versión normalizada
       if (provinceSlug !== normalizedSlug) {
-        const newPath = `/provincias/${normalizedSlug}`
+        let newPath = `/provincias/${normalizedSlug}`
         if (pathParts.length > 3) {
           // Incluir ciudad si existe
           newPath += '/' + pathParts.slice(3).join('/')
