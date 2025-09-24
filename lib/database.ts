@@ -36,7 +36,7 @@ export async function getActiveCitiesByProvince(provinceId: string) {
 }
 
 export async function getFeaturedSchools(limit: number = 8) {
-  return prisma.drivingSchool.findMany({
+  const schools = await prisma.drivingSchool.findMany({
     where: { 
       isActive: true,
       isFeatured: true 
@@ -56,10 +56,17 @@ export async function getFeaturedSchools(limit: number = 8) {
       },
     },
   })
+
+  // Transform to match DrivingSchool interface
+  return schools.map(school => ({
+    ...school,
+    city: school.city.name,
+    province: school.city.province.name,
+  }))
 }
 
 export async function getSchoolsByProvince(provinceId: string, limit: number = 20) {
-  return prisma.drivingSchool.findMany({
+  const schools = await prisma.drivingSchool.findMany({
     where: { 
       provinceId,
       isActive: true 
@@ -74,14 +81,26 @@ export async function getSchoolsByProvince(provinceId: string, limit: number = 2
       city: {
         select: {
           name: true,
+          province: {
+            select: {
+              name: true,
+            },
+          },
         },
       },
     },
   })
+
+  // Transform to match DrivingSchool interface
+  return schools.map(school => ({
+    ...school,
+    city: school.city.name,
+    province: school.city.province.name,
+  }))
 }
 
 export async function getSchoolsByCity(cityId: string, limit: number = 20) {
-  return prisma.drivingSchool.findMany({
+  const schools = await prisma.drivingSchool.findMany({
     where: { 
       cityId,
       isActive: true 
@@ -105,6 +124,13 @@ export async function getSchoolsByCity(cityId: string, limit: number = 20) {
       },
     },
   })
+
+  // Transform to match DrivingSchool interface
+  return schools.map(school => ({
+    ...school,
+    city: school.city.name,
+    province: school.city.province.name,
+  }))
 }
 
 export async function getSchoolBySlug(slug: string) {
@@ -169,7 +195,7 @@ export async function searchSchools(query: string, filters?: {
     where.priceMin = { gte: filters.minPrice }
   }
 
-  return prisma.drivingSchool.findMany({
+  const schools = await prisma.drivingSchool.findMany({
     where,
     orderBy: [
       { isFeatured: 'desc' },
@@ -190,6 +216,13 @@ export async function searchSchools(query: string, filters?: {
       },
     },
   })
+
+  // Transform to match DrivingSchool interface
+  return schools.map(school => ({
+    ...school,
+    city: school.city.name,
+    province: school.city.province.name,
+  }))
 }
 
 export async function getDatabaseStats() {
