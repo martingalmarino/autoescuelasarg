@@ -31,6 +31,29 @@ interface SchoolPageClientProps {
   }
 }
 
+interface Course {
+  id: string
+  name: string
+  description?: string | null
+  duration?: number | null
+  price?: number | null
+  schoolId: string
+  isActive: boolean
+  createdAt: Date
+  updatedAt: Date
+}
+
+interface Review {
+  id: string
+  rating: number
+  comment?: string | null
+  author: string
+  email?: string | null
+  schoolId: string
+  createdAt: Date
+  updatedAt: Date
+}
+
 interface DrivingSchool {
   id: string
   name: string
@@ -52,6 +75,8 @@ interface DrivingSchool {
   isActive?: boolean
   isVerified?: boolean
   isFeatured?: boolean
+  courses?: Course[]
+  reviews?: Review[]
   createdAt: Date
   updatedAt: Date
 }

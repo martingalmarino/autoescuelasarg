@@ -236,6 +236,46 @@ export async function searchSchools(query: string, filters?: {
   }))
 }
 
+export async function getSchoolBySlugFromDB(slug: string) {
+  try {
+    const school = await prisma.drivingSchool.findUnique({
+      where: { slug },
+      include: {
+        city: {
+          select: {
+            name: true,
+            province: {
+              select: {
+                name: true,
+              },
+            },
+          },
+        },
+        courses: {
+          where: { isActive: true },
+          orderBy: { name: 'asc' },
+        },
+        reviews: {
+          orderBy: { createdAt: 'desc' },
+          take: 10,
+        },
+      },
+    })
+
+    if (!school) return null
+
+    return {
+      ...school,
+      city: school.city.name,
+      province: school.city.province.name,
+      hours: school.hours || undefined,
+    }
+  } catch (error) {
+    console.error(`Error fetching school ${slug}:`, error)
+    return null
+  }
+}
+
 export async function getProvinceBySlugFromDB(slug: string) {
   try {
     const province = await prisma.province.findUnique({
