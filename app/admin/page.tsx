@@ -169,30 +169,32 @@ export default function AdminPage() {
             </CardContent>
           </Card>
 
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center">
-                <Plus className="h-5 w-5 mr-2" />
-                Gestión de Datos
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                <Button variant="outline" className="w-full justify-start">
-                  <Upload className="h-4 w-4 mr-2" />
-                  Importar desde Excel/CSV
-                </Button>
-                <Button variant="outline" className="w-full justify-start">
-                  <Edit className="h-4 w-4 mr-2" />
-                  Editar Autoescuelas
-                </Button>
-                <Button variant="outline" className="w-full justify-start">
-                  <Trash2 className="h-4 w-4 mr-2" />
-                  Limpiar Datos
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center">
+                  <Plus className="h-5 w-5 mr-2" />
+                  Gestión de Datos
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3">
+                  <Button asChild variant="outline" className="w-full justify-start">
+                    <Link href="/admin/autoescuelas">
+                      <Edit className="h-4 w-4 mr-2" />
+                      Gestionar Autoescuelas
+                    </Link>
+                  </Button>
+                  <Button variant="outline" className="w-full justify-start">
+                    <Upload className="h-4 w-4 mr-2" />
+                    Importar desde Excel/CSV
+                  </Button>
+                  <Button variant="outline" className="w-full justify-start">
+                    <Trash2 className="h-4 w-4 mr-2" />
+                    Limpiar Datos
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
         </div>
       </div>
     </div>
