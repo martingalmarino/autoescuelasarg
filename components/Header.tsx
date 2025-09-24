@@ -3,27 +3,18 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { Car, Search, X } from 'lucide-react'
+import { Car, Search } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 
 export default function Header() {
   const [searchQuery, setSearchQuery] = useState('')
-  const [isSearchOpen, setIsSearchOpen] = useState(false)
   const router = useRouter()
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
     if (searchQuery.trim()) {
       router.push(`/autoescuelas?search=${encodeURIComponent(searchQuery.trim())}`)
-      setSearchQuery('')
-      setIsSearchOpen(false)
-    }
-  }
-
-  const toggleSearch = () => {
-    setIsSearchOpen(!isSearchOpen)
-    if (isSearchOpen) {
       setSearchQuery('')
     }
   }
@@ -59,42 +50,19 @@ export default function Header() {
 
         {/* Search and Admin */}
         <div className="flex items-center space-x-2">
-          {/* Search */}
-          <div className="relative">
-            {isSearchOpen ? (
-              <form onSubmit={handleSearch} className="flex items-center space-x-2">
-                <Input
-                  type="text"
-                  placeholder="Buscar autoescuelas..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-64 h-9"
-                  autoFocus
-                />
-                <Button type="submit" size="sm" className="h-9">
-                  <Search className="h-4 w-4" />
-                </Button>
-                <Button 
-                  type="button" 
-                  variant="ghost" 
-                  size="sm" 
-                  onClick={toggleSearch}
-                  className="h-9"
-                >
-                  <X className="h-4 w-4" />
-                </Button>
-              </form>
-            ) : (
-              <Button 
-                variant="ghost" 
-                size="icon" 
-                onClick={toggleSearch}
-                className="h-9 w-9"
-              >
-                <Search className="h-4 w-4" />
-              </Button>
-            )}
-          </div>
+          {/* Search - Always visible */}
+          <form onSubmit={handleSearch} className="flex items-center space-x-2">
+            <Input
+              type="text"
+              placeholder="Buscar autoescuelas..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-48 sm:w-64 h-9"
+            />
+            <Button type="submit" size="sm" className="h-9">
+              <Search className="h-4 w-4" />
+            </Button>
+          </form>
           
           {/* Admin */}
           <Link href="/admin">
