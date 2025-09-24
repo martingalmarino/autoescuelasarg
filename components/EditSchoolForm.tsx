@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { X, Plus, Trash2 } from 'lucide-react'
+import ImageUpload from '@/components/ImageUpload'
 
 interface Province {
   id: string
@@ -74,6 +75,8 @@ export default function EditSchoolForm({ school, onClose, onSuccess }: EditSchoo
     reviewsCount: school.reviewsCount?.toString() || '0',
     cityId: school.cityId || '',
     provinceId: school.provinceId || '',
+    imageUrl: school.imageUrl || '',
+    logoUrl: school.logoUrl || '',
     isActive: school.isActive || true,
     isVerified: school.isVerified || false,
     isFeatured: school.isFeatured || false,
@@ -135,6 +138,22 @@ export default function EditSchoolForm({ school, onClose, onSuccess }: EditSchoo
     if (services.length > 1) {
       setServices(services.filter((_, i) => i !== index))
     }
+  }
+
+  const handleImageUpload = (url: string, publicId: string) => {
+    setFormData(prev => ({ ...prev, imageUrl: url }))
+  }
+
+  const handleLogoUpload = (url: string, publicId: string) => {
+    setFormData(prev => ({ ...prev, logoUrl: url }))
+  }
+
+  const handleImageRemove = () => {
+    setFormData(prev => ({ ...prev, imageUrl: '' }))
+  }
+
+  const handleLogoRemove = () => {
+    setFormData(prev => ({ ...prev, logoUrl: '' }))
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -233,6 +252,7 @@ export default function EditSchoolForm({ school, onClose, onSuccess }: EditSchoo
                       value={selectedProvince}
                       onChange={(e) => handleProvinceChange(e.target.value)}
                       className="w-full p-2 border border-gray-300 rounded-md"
+                      aria-label="Seleccionar provincia"
                       required
                     >
                       <option value="">Seleccionar provincia</option>
@@ -252,6 +272,7 @@ export default function EditSchoolForm({ school, onClose, onSuccess }: EditSchoo
                       value={formData.cityId || ''}
                       onChange={(e) => handleInputChange('cityId', e.target.value)}
                       className="w-full p-2 border border-gray-300 rounded-md"
+                      aria-label="Seleccionar ciudad"
                       required
                       disabled={!selectedProvince}
                     >
@@ -328,6 +349,38 @@ export default function EditSchoolForm({ school, onClose, onSuccess }: EditSchoo
                     value={formData.hours}
                     onChange={(e) => handleInputChange('hours', e.target.value)}
                     placeholder="Ej: Lunes a Viernes: 08:00 - 18:00, Sábados: 08:00 - 14:00"
+                  />
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Imágenes */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Imágenes</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div>
+                  <label className="block text-sm font-medium mb-2">
+                    Imagen principal
+                  </label>
+                  <ImageUpload
+                    onUpload={handleImageUpload}
+                    onRemove={handleImageRemove}
+                    currentImage={formData.imageUrl}
+                    folder="autoescuelas"
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium mb-2">
+                    Logo
+                  </label>
+                  <ImageUpload
+                    onUpload={handleLogoUpload}
+                    onRemove={handleLogoRemove}
+                    currentImage={formData.logoUrl}
+                    folder="autoescuelas/logos"
                   />
                 </div>
               </CardContent>
