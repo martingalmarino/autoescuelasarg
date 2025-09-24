@@ -2,8 +2,10 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
 export function middleware(request: NextRequest) {
-  // Verificar si la ruta es /admin
-  if (request.nextUrl.pathname.startsWith('/admin')) {
+  // Verificar si la ruta es /admin pero NO es /admin/login ni /api/admin/auth
+  if (request.nextUrl.pathname.startsWith('/admin') && 
+      request.nextUrl.pathname !== '/admin/login' && 
+      !request.nextUrl.pathname.startsWith('/api/admin/auth')) {
     // Verificar si hay credenciales en las cookies
     const authCookie = request.cookies.get('admin-auth')
     
