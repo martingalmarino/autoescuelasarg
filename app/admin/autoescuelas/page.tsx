@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
 import { Plus, Edit, Trash2, Eye, Search } from 'lucide-react'
 import Link from 'next/link'
+import AddSchoolForm from '@/components/AddSchoolForm'
 
 interface DrivingSchool {
   id: string
@@ -282,32 +283,13 @@ export default function AutoescuelasAdminPage() {
 
         {/* Add Form Modal */}
         {showAddForm && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-            <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-              <div className="p-6">
-                <h2 className="text-2xl font-bold mb-4">Agregar Nueva Autoescuela</h2>
-                <p className="text-gray-600 mb-6">
-                  Completa el formulario para agregar una nueva autoescuela al directorio.
-                </p>
-                <div className="text-center">
-                  <div className="text-gray-500 mb-4">
-                    🚧 Formulario en desarrollo
-                  </div>
-                  <p className="text-sm text-gray-600 mb-4">
-                    Por ahora, puedes agregar autoescuelas directamente en la base de datos o usar el script de seeding.
-                  </p>
-                  <div className="flex gap-2 justify-center">
-                    <Button onClick={() => setShowAddForm(false)} variant="outline">
-                      Cerrar
-                    </Button>
-                    <Button asChild>
-                      <Link href="/admin">Volver al Panel</Link>
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <AddSchoolForm
+            onClose={() => setShowAddForm(false)}
+            onSuccess={() => {
+              fetchSchools()
+              setShowAddForm(false)
+            }}
+          />
         )}
       </div>
     </div>
