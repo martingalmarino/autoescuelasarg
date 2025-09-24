@@ -105,6 +105,8 @@ export async function PATCH(
     if (body.isVerified !== undefined) updateData.isVerified = body.isVerified
     if (body.isFeatured !== undefined) updateData.isFeatured = body.isFeatured
     if (body.sortOrder !== undefined) updateData.sortOrder = parseInt(body.sortOrder)
+    if (body.imageUrl !== undefined) updateData.imageUrl = body.imageUrl
+    if (body.logoUrl !== undefined) updateData.logoUrl = body.logoUrl
 
     // Si se cambia el nombre, actualizar el slug
     if (body.name && body.name !== existingSchool.name) {

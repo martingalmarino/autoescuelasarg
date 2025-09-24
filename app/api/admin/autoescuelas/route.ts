@@ -100,6 +100,8 @@ export async function POST(request: NextRequest) {
         isVerified: false,
         isFeatured: false,
         sortOrder: 0,
+        imageUrl: body.imageUrl || null,
+        logoUrl: body.logoUrl || null,
       },
       include: {
         city: {
