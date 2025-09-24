@@ -126,25 +126,33 @@ export default function HeroLocation() {
 
               {/* Dropdown Menu */}
               {isDropdownOpen && (
-                <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 bg-white rounded-lg shadow-2xl border border-gray-200 w-[400px] sm:w-[500px] md:w-[600px] max-w-[90vw] max-h-[500px] z-[9999]">
+                <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 bg-white rounded-lg shadow-2xl border border-gray-200 w-[500px] sm:w-[600px] md:w-[700px] max-w-[95vw] max-h-[600px] z-[9999]">
                   {/* Provinces List - Sin buscador para más espacio */}
-                  <div className="max-h-[450px] overflow-y-auto">
+                  <div className="max-h-[550px] overflow-y-auto">
                     {PROVINCES.length > 0 ? (
-                      <div className="p-4">
-                        <div className="grid grid-cols-3 gap-2">
-                          {PROVINCES.map((province) => (
+                      <div className="p-6">
+                        <div className="grid grid-cols-3 gap-3">
+                          {PROVINCES.map((province, index) => (
                             <button
                               key={province}
                               onClick={() => handleProvinceSelect(province)}
-                              className={`text-left px-3 py-2 text-sm transition-colors hover:bg-gray-50 ${
+                              className={`text-left px-4 py-3 text-sm transition-colors hover:bg-gray-50 rounded ${
                                 selectedProvince === province
-                                  ? 'text-black font-medium underline'
+                                  ? 'text-black font-medium underline bg-blue-50'
                                   : 'text-gray-600 hover:text-gray-900'
                               }`}
+                              title={`${index + 1}. ${province}`}
                             >
                               {province}
                             </button>
                           ))}
+                        </div>
+                        
+                        {/* Footer con contador */}
+                        <div className="mt-4 pt-4 border-t border-gray-100 text-center">
+                          <p className="text-xs text-gray-500">
+                            {PROVINCES.length} provincias de Argentina
+                          </p>
                         </div>
                       </div>
                     ) : (
