@@ -157,9 +157,9 @@ export default function HeroLocation() {
 
               {/* Dropdown Menu */}
               {isDropdownOpen && (
-                <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 bg-white rounded-lg shadow-xl border border-gray-200 w-[320px] sm:w-[400px] md:w-[500px] max-w-[90vw] max-h-[500px] z-50">
+                <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 bg-white rounded-lg shadow-xl border border-gray-200 w-[400px] sm:w-[500px] md:w-[600px] max-w-[90vw] max-h-[500px] z-50">
                   {/* Search Header */}
-                  <div className="p-3 border-b border-gray-100">
+                  <div className="p-4 border-b border-gray-100">
                     <div className="relative">
                       <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
                       <Input
@@ -168,7 +168,7 @@ export default function HeroLocation() {
                         placeholder="Buscar provincia..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="pl-10 pr-10 h-9 text-sm"
+                        className="pl-10 pr-10 h-10 text-sm border-gray-200 focus:border-blue-500 focus:ring-blue-500"
                         autoComplete="off"
                       />
                       {searchTerm && (
@@ -183,51 +183,31 @@ export default function HeroLocation() {
                   </div>
 
                   {/* Provinces List */}
-                  <div className="max-h-[350px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 relative">
+                  <div className="max-h-[400px] overflow-y-auto">
                     {filteredProvinces.length > 0 ? (
-                      <div className="p-3">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-1 sm:gap-2">
+                      <div className="p-4">
+                        <div className="grid grid-cols-3 gap-2">
                           {filteredProvinces.map((province) => (
                             <button
                               key={province}
                               onClick={() => handleProvinceSelect(province)}
-                              className={`text-left px-2 sm:px-3 py-2 rounded text-xs sm:text-sm transition-colors hover:scale-105 transform ${
+                              className={`text-left px-3 py-2 text-sm transition-colors hover:bg-gray-50 ${
                                 selectedProvince === province
-                                  ? 'bg-blue-100 text-blue-800 font-semibold border border-blue-200'
-                                  : 'text-gray-700 hover:bg-gray-100 border border-transparent'
+                                  ? 'text-black font-medium underline'
+                                  : 'text-gray-600 hover:text-gray-900'
                               }`}
                             >
                               {province}
                             </button>
                           ))}
                         </div>
-                        
-                        {/* Scroll indicator */}
-                        {filteredProvinces.length > 12 && (
-                          <div className="mt-2 text-center">
-                            <div className="inline-flex items-center text-xs text-gray-400">
-                              <div className="animate-bounce mr-1">↓</div>
-                              Desplázate para ver más provincias
-                            </div>
-                          </div>
-                        )}
                       </div>
                     ) : (
-                      <div className="p-6 text-center text-gray-500">
+                      <div className="p-8 text-center text-gray-500">
                         <p className="text-sm">No se encontraron provincias</p>
                         <p className="text-xs text-gray-400 mt-1">Intenta con otro término de búsqueda</p>
                       </div>
                     )}
-                  </div>
-
-                  {/* Footer */}
-                  <div className="p-3 border-t border-gray-100 bg-gray-50">
-                    <div className="flex items-center justify-between text-xs text-gray-500">
-                      <span>{filteredProvinces.length} de {PROVINCES.length} provincias</span>
-                      {filteredProvinces.length > 12 && (
-                        <span className="text-blue-500">↑↓ Desplázate</span>
-                      )}
-                    </div>
                   </div>
                 </div>
               )}
