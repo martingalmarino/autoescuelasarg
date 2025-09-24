@@ -79,6 +79,9 @@ model DrivingSchool {
   // Services
   services    String[] @default([])
   
+  // Business hours
+  hours       String?
+  
   // Status and ordering
   isActive    Boolean  @default(true)
   isVerified  Boolean  @default(false)
