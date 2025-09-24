@@ -13,6 +13,7 @@
     "db:studio": "prisma studio",
     "db:seed": "tsx prisma/seed.ts",
     "db:setup": "node scripts/setup-database.js",
+    "db:setup-neon": "node scripts/setup-neon.js",
     "search:index": "tsx scripts/index-data.ts"
   },
   "dependencies": {
