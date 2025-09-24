@@ -230,9 +230,11 @@ export default function SchoolPageClient({ params }: SchoolPageClientProps) {
                       <div key={course.id} className="border rounded-lg p-4">
                         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3">
                           <h3 className="font-semibold text-lg">{course.name}</h3>
-                          <Badge variant="secondary" className="w-fit">
-                            {formatPrice(course.price)}
-                          </Badge>
+                          {course.price && (
+                            <Badge variant="secondary" className="w-fit">
+                              {formatPrice(course.price)}
+                            </Badge>
+                          )}
                         </div>
                         <p className="text-muted-foreground mb-3">{course.description}</p>
                         <div className="flex items-center space-x-4 text-sm text-muted-foreground mb-3">
