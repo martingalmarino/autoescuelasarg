@@ -6,7 +6,6 @@ import Link from 'next/link'
 import { MapPin, Star, Users, Clock, Phone, Mail, Globe, ArrowLeft } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import { getProvinceBySlug, getSchoolsByProvince } from '@/lib/mock-data'
 import { formatPrice, formatRating, formatReviews } from '@/lib/utils'
 import { analyticsEvents } from '@/lib/analytics'
 
@@ -60,10 +59,7 @@ interface ProvincePageClientProps {
   schools?: DrivingSchool[]
 }
 
-export default function ProvincePageClient({ params, province: dbProvince, schools: dbSchools }: ProvincePageClientProps) {
-  // Usar datos de la base de datos si están disponibles, sino usar mock data
-  const province = dbProvince || getProvinceBySlug(params.slug)
-  const schools = dbSchools || getSchoolsByProvince(params.slug)
+export default function ProvincePageClient({ params, province, schools }: ProvincePageClientProps) {
 
   if (!province) {
     notFound()

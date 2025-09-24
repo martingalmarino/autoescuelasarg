@@ -3,157 +3,10 @@ import TopRatedGrid from '@/components/TopRatedGrid'
 import FAQAccordion from '@/components/FAQAccordion'
 import ProvincesIndex from '@/components/ProvincesIndex'
 import JsonLd from '@/components/SEO/JsonLd'
-import { DrivingSchool, FAQ } from '@/lib/types'
+import { FAQ } from '@/lib/types'
 import { getActiveProvinces, getFeaturedSchools } from '@/lib/database'
 
-// Mock data - En un entorno real, esto vendría de la base de datos
-const mockSchools: DrivingSchool[] = [
-  {
-    id: '1',
-    name: 'Autoescuela Central',
-    slug: 'autoescuela-central',
-    rating: 4.8,
-    reviewsCount: 1247,
-    city: 'Buenos Aires',
-    province: 'CABA',
-    imageUrl: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=400&h=300&fit=crop',
-    priceMin: 25000,
-    priceMax: 35000,
-    description: 'Autoescuela con más de 20 años de experiencia',
-    address: 'Av. Corrientes 1234',
-    phone: '+54 11 1234-5678',
-    website: 'https://autoescuelacentral.com',
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: '2',
-    name: 'Escuela de Manejo del Norte',
-    slug: 'escuela-manejo-norte',
-    rating: 4.6,
-    reviewsCount: 892,
-    city: 'Rosario',
-    province: 'Santa Fe',
-    imageUrl: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop',
-    priceMin: 22000,
-    priceMax: 30000,
-    description: 'Especialistas en clases para principiantes',
-    address: 'Av. Pellegrini 5678',
-    phone: '+54 341 123-4567',
-    website: 'https://escuelanorte.com',
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: '3',
-    name: 'Autoescuela Premium',
-    slug: 'autoescuela-premium',
-    rating: 4.9,
-    reviewsCount: 1563,
-    city: 'Córdoba',
-    province: 'Córdoba',
-    imageUrl: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop',
-    priceMin: 30000,
-    priceMax: 40000,
-    description: 'Clases personalizadas y vehículos modernos',
-    address: 'Av. Colón 9012',
-    phone: '+54 351 234-5678',
-    website: 'https://autoescuelapremium.com',
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: '4',
-    name: 'Escuela de Conducción Sur',
-    slug: 'escuela-conduccion-sur',
-    rating: 4.5,
-    reviewsCount: 734,
-    city: 'La Plata',
-    province: 'Buenos Aires',
-    imageUrl: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=400&h=300&fit=crop',
-    priceMin: 20000,
-    priceMax: 28000,
-    description: 'Instructores certificados y horarios flexibles',
-    address: 'Calle 7 3456',
-    phone: '+54 221 345-6789',
-    website: 'https://escuelasur.com',
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: '5',
-    name: 'Autoescuela Express',
-    slug: 'autoescuela-express',
-    rating: 4.3,
-    reviewsCount: 456,
-    city: 'Mendoza',
-    province: 'Mendoza',
-    imageUrl: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=300&fit=crop',
-    priceMin: 18000,
-    priceMax: 25000,
-    description: 'Cursos intensivos y preparación para examen',
-    address: 'Av. San Martín 7890',
-    phone: '+54 261 456-7890',
-    website: 'https://autoescuelaexpress.com',
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: '6',
-    name: 'Escuela de Manejo Profesional',
-    slug: 'escuela-manejo-profesional',
-    rating: 4.7,
-    reviewsCount: 1023,
-    city: 'Tucumán',
-    province: 'Tucumán',
-    imageUrl: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop',
-    priceMin: 24000,
-    priceMax: 32000,
-    description: 'Formación integral para conductores profesionales',
-    address: 'Av. Sarmiento 1234',
-    phone: '+54 381 567-8901',
-    website: 'https://escuelaprofesional.com',
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: '7',
-    name: 'Autoescuela Familiar',
-    slug: 'autoescuela-familiar',
-    rating: 4.4,
-    reviewsCount: 678,
-    city: 'Mar del Plata',
-    province: 'Buenos Aires',
-    imageUrl: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400&h=300&fit=crop',
-    priceMin: 21000,
-    priceMax: 29000,
-    description: 'Ambiente familiar y enseñanza personalizada',
-    address: 'Av. Constitución 5678',
-    phone: '+54 223 678-9012',
-    website: 'https://autoescuelafamiliar.com',
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: '8',
-    name: 'Escuela de Conducción Moderna',
-    slug: 'escuela-conduccion-moderna',
-    rating: 4.6,
-    reviewsCount: 845,
-    city: 'Salta',
-    province: 'Salta',
-    imageUrl: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=400&h=300&fit=crop',
-    priceMin: 23000,
-    priceMax: 31000,
-    description: 'Tecnología moderna y métodos de enseñanza actualizados',
-    address: 'Av. Belgrano 9012',
-    phone: '+54 387 789-0123',
-    website: 'https://escuelamoderna.com',
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-]
-
+// FAQ data - contenido estático que puede quedarse hardcodeado
 const faqData: FAQ[] = [
   {
     id: 'faq-1',
@@ -183,21 +36,41 @@ const faqData: FAQ[] = [
 ]
 
 export default async function HomePage() {
+  // Obtener datos reales de la base de datos
   const [provinces, featuredSchools] = await Promise.all([
     getActiveProvinces(),
-    getFeaturedSchools(8)
+    getFeaturedSchools(8) // Obtener 8 autoescuelas destacadas
   ])
-  
+
   return (
-    <>
-      <JsonLd type="FAQPage" data={faqData} />
-      <JsonLd type="LocalBusiness" data={{}} />
-      <JsonLd type="Organization" data={{}} />
-      
+    <main className="min-h-screen">
+      {/* Hero Section */}
       <HeroLocation />
-        <TopRatedGrid schools={featuredSchools} />
+      
+      {/* Top Rated Schools */}
+      <TopRatedGrid schools={featuredSchools} />
+      
+      {/* FAQ Section */}
       <FAQAccordion faqs={faqData} />
+      
+      {/* Provinces Index */}
       <ProvincesIndex provinces={provinces} />
-    </>
+      
+      {/* JSON-LD Structured Data */}
+      <JsonLd 
+        faqs={faqData}
+        organization={{
+          name: 'Autoescuelas.ar',
+          description: 'El directorio más completo de escuelas de manejo en Argentina',
+          url: 'https://autoescuelas.ar',
+          logo: 'https://autoescuelas.ar/logo.png',
+          contactPoint: {
+            telephone: '+54-11-1234-5678',
+            contactType: 'customer service',
+            email: 'info@autoescuelas.ar'
+          }
+        }}
+      />
+    </main>
   )
 }

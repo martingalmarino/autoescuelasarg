@@ -1,5 +1,4 @@
 import { Metadata } from 'next'
-import { getAllProvinces } from '@/lib/mock-data'
 import ProvincesPageClient from './ProvincesPageClient'
 
 export const metadata: Metadata = {

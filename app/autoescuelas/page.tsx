@@ -1,5 +1,4 @@
 import { Metadata } from 'next'
-import { getAllSchools, getAllProvinces } from '@/lib/mock-data'
 import { getActiveProvinces, getAllSchoolsFromDB } from '@/lib/database'
 import SchoolsPageClient from './SchoolsPageClient'
 
