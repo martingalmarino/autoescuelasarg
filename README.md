@@ -192,3 +192,5 @@ Hecho con ❤️ en Argentina 🇦🇷
 # DATABASE_URL updated Tue Sep 23 21:13:51 -03 2025
 # Testing database connection Tue Sep 23 21:17:45 -03 2025
 # DATABASE_URL password updated Tue Sep 23 21:43:48 -03 2025
+# Adding Supabase public variables Tue Sep 23 21:49:16 -03 2025
+# Force deploy without cache Tue Sep 23 21:55:42 -03 2025
