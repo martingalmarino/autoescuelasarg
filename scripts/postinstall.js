@@ -27,14 +27,14 @@ try {
         process.env.DATABASE_URL.includes('postgresql://') &&
         !process.env.DATABASE_URL.includes('[YOUR-PASSWORD]')) {
       
-      // Limpiar autoescuelas inactivas ANTES del seeding
-      console.log('🧹 Pre-seeding cleanup: Eliminando autoescuelas inactivas...')
-      try {
-        execSync('npx tsx scripts/pre-seeding-cleanup.ts', { stdio: 'inherit' })
-        console.log('✅ Pre-seeding cleanup completed!')
-      } catch (error) {
-        console.error('❌ Pre-seeding cleanup failed:', error.message)
-      }
+    // Limpiar autoescuelas duplicadas ANTES del seeding
+    console.log('🧹 Pre-seeding cleanup: Limpiando autoescuelas duplicadas...')
+    try {
+      execSync('npx tsx scripts/cleanup-duplicate-schools.ts', { stdio: 'inherit' })
+      console.log('✅ Pre-seeding cleanup completed!')
+    } catch (error) {
+      console.error('❌ Pre-seeding cleanup failed:', error.message)
+    }
       
       console.log('🌱 Seeding database...')
       execSync('npm run db:seed', { stdio: 'inherit' })

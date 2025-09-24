@@ -148,7 +148,7 @@ async function main() {
       ]
 
       for (const school of schools) {
-        // Solo crear si no existe, no actualizar
+        // Solo crear si no existe (ni activa ni inactiva)
         const existingSchool = await prisma.drivingSchool.findUnique({
           where: { slug: school.slug }
         })
@@ -157,6 +157,9 @@ async function main() {
           await prisma.drivingSchool.create({
             data: school
           })
+          console.log(`✅ Creada autoescuela: ${school.name}`)
+        } else {
+          console.log(`⏭️ Autoescuela ya existe: ${school.name} (${existingSchool.isActive ? 'activa' : 'inactiva'})`)
         }
       }
 
