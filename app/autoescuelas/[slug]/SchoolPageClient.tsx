@@ -322,6 +322,12 @@ export default function SchoolPageClient({ params }: SchoolPageClientProps) {
 
           {/* Sidebar */}
           <div className="space-y-6">
+            {/* Contact Form - Moved to top */}
+            <ContactForm 
+              schoolName={school.name}
+              schoolId={school.id}
+            />
+
             {/* Contact Card */}
             <Card>
               <CardHeader>
@@ -450,14 +456,6 @@ export default function SchoolPageClient({ params }: SchoolPageClientProps) {
                 </div>
               </CardContent>
             </Card>
-          </div>
-
-          {/* Contact Form Section */}
-          <div className="lg:col-span-1">
-            <ContactForm 
-              schoolName={school.name}
-              schoolId={school.id}
-            />
           </div>
         </div>
       </div>
