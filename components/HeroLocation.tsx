@@ -182,9 +182,9 @@ export default function HeroLocation() {
             <Button
               size="lg"
               onClick={handleViewAll}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-6 sm:px-8 md:px-10 py-4 sm:py-5 md:py-6 text-sm sm:text-base md:text-lg font-semibold rounded-lg shadow-lg transition-all duration-200 hover:shadow-xl w-auto mx-auto block sm:inline-block min-w-[140px] sm:min-w-[160px] h-auto min-h-[48px] sm:min-h-[52px] md:min-h-[56px] flex items-center justify-center"
+              className="bg-blue-600 hover:bg-blue-700 text-white px-6 sm:px-8 md:px-12 lg:px-16 py-4 sm:py-5 md:py-6 text-sm sm:text-base md:text-lg font-semibold rounded-lg shadow-lg transition-all duration-200 hover:shadow-xl w-auto mx-auto block sm:inline-block min-w-[140px] sm:min-w-[160px] md:min-w-[200px] lg:min-w-[240px] h-auto min-h-[48px] sm:min-h-[52px] md:min-h-[56px] flex items-center justify-center"
             >
-              <MapPin className="mr-2 sm:mr-3 h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 flex-shrink-0" />
+              <MapPin className="mr-2 sm:mr-3 md:mr-4 h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 flex-shrink-0" />
               <span>VER TODAS</span>
             </Button>
             <p className="text-white/90 text-xs sm:text-sm">
