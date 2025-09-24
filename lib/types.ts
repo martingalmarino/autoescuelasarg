@@ -7,6 +7,7 @@ export interface DrivingSchool {
   city: string
   province: string
   imageUrl?: string | null
+  logoUrl?: string | null
   priceMin?: number | null
   priceMax?: number | null
   description?: string | null
