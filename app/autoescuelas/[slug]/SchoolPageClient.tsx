@@ -37,6 +37,7 @@ interface Course {
   description?: string | null
   duration?: number | null
   price?: number | null
+  includes?: string[]
   schoolId: string
   isActive: boolean
   createdAt: Date
@@ -244,15 +245,19 @@ export default function SchoolPageClient({ params }: SchoolPageClientProps) {
                           </div>
                         </div>
                         <div>
-                          <h4 className="font-medium mb-2">Incluye:</h4>
-                          <ul className="grid gap-1 sm:grid-cols-2">
-                            {course.includes.map((item, index) => (
-                              <li key={index} className="flex items-center space-x-2 text-sm">
-                                <CheckCircle className="h-3 w-3 text-green-500" />
-                                <span>{item}</span>
-                              </li>
-                            ))}
-                          </ul>
+                          {course.includes && course.includes.length > 0 && (
+                            <>
+                              <h4 className="font-medium mb-2">Incluye:</h4>
+                              <ul className="grid gap-1 sm:grid-cols-2">
+                                {course.includes.map((item, index) => (
+                                  <li key={index} className="flex items-center space-x-2 text-sm">
+                                    <CheckCircle className="h-3 w-3 text-green-500" />
+                                    <span>{item}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </>
+                          )}
                         </div>
                       </div>
                     ))}
