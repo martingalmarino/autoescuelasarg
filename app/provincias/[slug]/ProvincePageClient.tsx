@@ -14,11 +14,14 @@ interface ProvincePageClientProps {
   params: {
     slug: string
   }
+  province?: any
+  schools?: any[]
 }
 
-export default function ProvincePageClient({ params }: ProvincePageClientProps) {
-  const province = getProvinceBySlug(params.slug)
-  const schools = getSchoolsByProvince(params.slug)
+export default function ProvincePageClient({ params, province: dbProvince, schools: dbSchools }: ProvincePageClientProps) {
+  // Usar datos de la base de datos si están disponibles, sino usar mock data
+  const province = dbProvince || getProvinceBySlug(params.slug)
+  const schools = dbSchools || getSchoolsByProvince(params.slug)
 
   if (!province) {
     notFound()

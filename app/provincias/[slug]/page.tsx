@@ -30,6 +30,15 @@ export async function generateMetadata({ params }: ProvincePageProps): Promise<M
   }
 }
 
-export default function ProvincePage({ params }: ProvincePageProps) {
-  return <ProvincePageClient params={params} />
+export default async function ProvincePage({ params }: ProvincePageProps) {
+  const [province, schools] = await Promise.all([
+    getProvinceBySlugFromDB(params.slug),
+    getSchoolsByProvince(params.slug)
+  ])
+  
+  return <ProvincePageClient 
+    params={params} 
+    province={province}
+    schools={schools}
+  />
 }
