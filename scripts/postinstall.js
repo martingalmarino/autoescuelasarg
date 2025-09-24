@@ -10,19 +10,26 @@ try {
   execSync('npx prisma generate', { stdio: 'inherit' })
   
   // Push database schema (only if DATABASE_URL is configured)
-  if (process.env.DATABASE_URL && process.env.DATABASE_URL.includes('postgresql://')) {
+  if (process.env.DATABASE_URL && 
+      process.env.DATABASE_URL.trim() !== '' && 
+      process.env.DATABASE_URL.includes('postgresql://') &&
+      !process.env.DATABASE_URL.includes('[YOUR-PASSWORD]')) {
     console.log('🗄️ Pushing database schema...')
     execSync('npx prisma db push', { stdio: 'inherit' })
   } else {
-    console.log('⚠️ DATABASE_URL not configured, skipping database setup')
+    console.log('⚠️ DATABASE_URL not configured or invalid, skipping database setup')
+    console.log('   DATABASE_URL:', process.env.DATABASE_URL ? 'Set but invalid' : 'Not set')
   }
   
   // Seed database (only if DATABASE_URL is configured)
-  if (process.env.DATABASE_URL && process.env.DATABASE_URL.includes('postgresql://')) {
+  if (process.env.DATABASE_URL && 
+      process.env.DATABASE_URL.trim() !== '' && 
+      process.env.DATABASE_URL.includes('postgresql://') &&
+      !process.env.DATABASE_URL.includes('[YOUR-PASSWORD]')) {
     console.log('🌱 Seeding database...')
     execSync('npm run db:seed', { stdio: 'inherit' })
   } else {
-    console.log('⚠️ DATABASE_URL not configured, skipping database seeding')
+    console.log('⚠️ DATABASE_URL not configured or invalid, skipping database seeding')
   }
   
   console.log('✅ Post-install setup completed!')

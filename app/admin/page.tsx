@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 
 export default function AdminPage() {
-  const [stats, setStats] = useState(null)
+  const [stats, setStats] = useState<{provinces: number, schools: number, cities: number} | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
