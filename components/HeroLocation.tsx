@@ -179,14 +179,14 @@ export default function HeroLocation() {
 
           {/* CTA Button */}
           <div className="space-y-2 sm:space-y-3 md:space-y-4">
-            <button
+            <Button
+              size="lg"
               onClick={handleViewAll}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-8 sm:px-10 md:px-12 lg:px-16 py-4 sm:py-5 md:py-6 text-sm sm:text-base md:text-lg font-semibold rounded-lg shadow-lg transition-all duration-200 hover:shadow-xl w-auto mx-auto block sm:inline-block min-w-[160px] sm:min-w-[180px] md:min-w-[220px] lg:min-w-[260px] h-auto min-h-[48px] sm:min-h-[52px] md:min-h-[56px] flex items-center justify-center"
-              style={{ flexDirection: 'row' }}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg font-semibold rounded-lg shadow-lg transition-all duration-200 hover:shadow-xl w-full sm:w-auto"
             >
-              <MapPin className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 flex-shrink-0 mr-2 sm:mr-3" />
-              <span>VER TODAS</span>
-            </button>
+              <MapPin className="mr-1 sm:mr-2 h-3 w-3 sm:h-4 sm:w-4 md:h-5 md:w-5" />
+              VER TODAS
+            </Button>
             <p className="text-white/90 text-xs sm:text-sm">
               ¡Sí, es 100% gratis!
             </p>
