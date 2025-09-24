@@ -2,9 +2,8 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
-import { MapPin, ChevronDown, Search, X } from 'lucide-react'
+import { MapPin, ChevronDown } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import { analyticsEvents } from '@/lib/analytics'
 import { createSlug } from '@/lib/utils'
 
@@ -38,39 +37,14 @@ const PROVINCES = [
 export default function HeroLocation() {
   const [selectedProvince, setSelectedProvince] = useState<string>('Argentina')
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
-  const [searchTerm, setSearchTerm] = useState('')
-  const [filteredProvinces, setFilteredProvinces] = useState(PROVINCES)
   const dropdownRef = useRef<HTMLDivElement>(null)
-  const searchInputRef = useRef<HTMLInputElement>(null)
   const router = useRouter()
-
-  // Filter provinces based on search term
-  useEffect(() => {
-    if (searchTerm.trim() === '') {
-      setFilteredProvinces(PROVINCES)
-    } else {
-      const filtered = PROVINCES.filter(province =>
-        province.toLowerCase().includes(searchTerm.toLowerCase())
-      )
-      setFilteredProvinces(filtered)
-    }
-  }, [searchTerm])
-
-  // Focus search input when dropdown opens
-  useEffect(() => {
-    if (isDropdownOpen && searchInputRef.current) {
-      setTimeout(() => {
-        searchInputRef.current?.focus()
-      }, 100)
-    }
-  }, [isDropdownOpen])
 
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsDropdownOpen(false)
-        setSearchTerm('')
       }
     }
 
@@ -87,7 +61,6 @@ export default function HeroLocation() {
 
       if (event.key === 'Escape') {
         setIsDropdownOpen(false)
-        setSearchTerm('')
       }
     }
 
@@ -110,15 +83,11 @@ export default function HeroLocation() {
   const handleProvinceSelect = (province: string) => {
     setSelectedProvince(province)
     setIsDropdownOpen(false)
-    setSearchTerm('')
     analyticsEvents.selectLocation(province)
   }
 
   const handleDropdownToggle = () => {
     setIsDropdownOpen(!isDropdownOpen)
-    if (!isDropdownOpen) {
-      setSearchTerm('')
-    }
   }
 
   return (
@@ -149,45 +118,21 @@ export default function HeroLocation() {
             <div className="relative" ref={dropdownRef}>
               <button
                 onClick={handleDropdownToggle}
-                className="flex items-center space-x-2 bg-white/10 backdrop-blur-sm rounded-lg px-3 sm:px-4 py-2 border border-white/20 hover:bg-white/20 transition-colors min-w-[200px] sm:min-w-[250px]"
+                className="flex items-center justify-center space-x-2 bg-white/10 backdrop-blur-sm rounded-lg px-4 sm:px-6 py-3 border border-white/20 hover:bg-white/20 transition-colors min-w-[200px] sm:min-w-[250px]"
               >
-                <span className="text-white font-medium text-sm sm:text-base truncate">{selectedProvince}</span>
+                <span className="text-white font-medium text-sm sm:text-base">{selectedProvince}</span>
                 <ChevronDown className={`h-4 w-4 text-white transition-transform flex-shrink-0 ${isDropdownOpen ? 'rotate-180' : ''}`} />
               </button>
 
               {/* Dropdown Menu */}
               {isDropdownOpen && (
-                <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 bg-white rounded-lg shadow-xl border border-gray-200 w-[400px] sm:w-[500px] md:w-[600px] max-w-[90vw] max-h-[500px] z-50">
-                  {/* Search Header */}
-                  <div className="p-4 border-b border-gray-100">
-                    <div className="relative">
-                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-                      <Input
-                        ref={searchInputRef}
-                        type="text"
-                        placeholder="Buscar provincia..."
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        className="pl-10 pr-10 h-10 text-sm border-gray-200 focus:border-blue-500 focus:ring-blue-500"
-                        autoComplete="off"
-                      />
-                      {searchTerm && (
-                        <button
-                          onClick={() => setSearchTerm('')}
-                          className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                        >
-                          <X className="h-4 w-4" />
-                        </button>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Provinces List */}
-                  <div className="max-h-[400px] overflow-y-auto">
-                    {filteredProvinces.length > 0 ? (
+                <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 bg-white rounded-lg shadow-2xl border border-gray-200 w-[400px] sm:w-[500px] md:w-[600px] max-w-[90vw] max-h-[500px] z-[9999]">
+                  {/* Provinces List - Sin buscador para más espacio */}
+                  <div className="max-h-[450px] overflow-y-auto">
+                    {PROVINCES.length > 0 ? (
                       <div className="p-4">
                         <div className="grid grid-cols-3 gap-2">
-                          {filteredProvinces.map((province) => (
+                          {PROVINCES.map((province) => (
                             <button
                               key={province}
                               onClick={() => handleProvinceSelect(province)}
@@ -204,8 +149,7 @@ export default function HeroLocation() {
                       </div>
                     ) : (
                       <div className="p-8 text-center text-gray-500">
-                        <p className="text-sm">No se encontraron provincias</p>
-                        <p className="text-xs text-gray-400 mt-1">Intenta con otro término de búsqueda</p>
+                        <p className="text-sm">No hay provincias disponibles</p>
                       </div>
                     )}
                   </div>
