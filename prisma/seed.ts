@@ -80,91 +80,9 @@ async function main() {
 
     console.log('✅ Cities created')
 
-    // Crear autoescuelas de ejemplo
-    const cordobaCapital = await prisma.city.findFirst({
-      where: { slug: 'cordoba-capital' }
-    })
-
-    const villaMaria = await prisma.city.findFirst({
-      where: { slug: 'villa-maria' }
-    })
-
-    if (cordobaCapital && villaMaria) {
-      const schools = [
-        {
-          name: 'Autoescuela Premium Córdoba',
-          slug: 'autoescuela-premium-cordoba',
-          rating: 4.9,
-          reviewsCount: 1563,
-          cityId: cordobaCapital.id,
-          provinceId: cordoba.id,
-          imageUrl: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=600&fit=crop',
-          priceMin: 30000,
-          priceMax: 40000,
-          description: 'Autoescuela Premium Córdoba es la institución líder en formación de conductores en la provincia. Con más de 15 años de experiencia, ofrecemos clases personalizadas con instructores certificados y vehículos modernos.',
-          address: 'Av. Colón 1234, Córdoba Capital',
-          phone: '+54 351 234-5678',
-          email: 'info@autoescuelapremium.com',
-          website: 'https://autoescuelapremium.com',
-          services: ['Licencia B', 'Licencia A', 'Clases particulares', 'Simulador'],
-          isFeatured: true,
-          isVerified: true,
-          sortOrder: 1,
-          metaTitle: 'Autoescuela Premium Córdoba - Licencia de Conducir',
-          metaDescription: 'La mejor autoescuela de Córdoba. Clases personalizadas, instructores certificados y vehículos modernos. Obtén tu licencia de conducir con nosotros.'
-        },
-        {
-          name: 'Escuela de Manejo del Centro',
-          slug: 'escuela-manejo-centro',
-          rating: 4.6,
-          reviewsCount: 892,
-          cityId: cordobaCapital.id,
-          provinceId: cordoba.id,
-          imageUrl: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop',
-          priceMin: 25000,
-          priceMax: 32000,
-          description: 'Ubicada en el corazón de Córdoba Capital, ofrecemos una formación integral para conductores con más de 10 años de experiencia en el mercado.',
-          address: 'San Martín 567, Córdoba Capital',
-          phone: '+54 351 345-6789',
-          email: 'info@manejocentro.com',
-          services: ['Licencia B', 'Clases particulares']
-        },
-        {
-          name: 'Autoescuela Villa María',
-          slug: 'autoescuela-villa-maria',
-          rating: 4.4,
-          reviewsCount: 234,
-          cityId: villaMaria.id,
-          provinceId: cordoba.id,
-          imageUrl: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=800&h=600&fit=crop',
-          priceMin: 22000,
-          priceMax: 28000,
-          description: 'Autoescuela familiar en Villa María, especializada en formar conductores responsables con más de 8 años de experiencia.',
-          address: 'Av. Sabattini 890, Villa María',
-          phone: '+54 353 456-7890',
-          email: 'info@autoescuelavm.com',
-          services: ['Licencia B', 'Licencia A', 'Clases particulares']
-        }
-      ]
-
-      for (const school of schools) {
-        // Solo crear si no existe (ni activa ni inactiva)
-        const existingSchool = await prisma.drivingSchool.findUnique({
-          where: { slug: school.slug }
-        })
-        
-        if (!existingSchool) {
-          await prisma.drivingSchool.create({
-            data: school
-          })
-          console.log(`✅ Creada autoescuela: ${school.name}`)
-        } else {
-          console.log(`⏭️ Autoescuela ya existe: ${school.name} (${existingSchool.isActive ? 'activa' : 'inactiva'})`)
-        }
-      }
-
-      console.log('✅ Driving schools created')
-    }
+    // ELIMINAR ESTA SECCIÓN DE CREACIÓN DE AUTOESCUELAS
+    // Las autoescuelas ahora se gestionan únicamente a través del panel de administración
+    // No se crean automáticamente en el seeding para evitar regeneración
   }
 
   console.log('🎉 Database seeding completed!')

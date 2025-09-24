@@ -27,14 +27,14 @@ try {
         process.env.DATABASE_URL.includes('postgresql://') &&
         !process.env.DATABASE_URL.includes('[YOUR-PASSWORD]')) {
       
-    // Limpiar autoescuelas duplicadas ANTES del seeding
-    console.log('🧹 Pre-seeding cleanup: Limpiando autoescuelas duplicadas...')
-    try {
-      execSync('npx tsx scripts/cleanup-duplicate-schools.ts', { stdio: 'inherit' })
-      console.log('✅ Pre-seeding cleanup completed!')
-    } catch (error) {
-      console.error('❌ Pre-seeding cleanup failed:', error.message)
-    }
+    // Limpiar autoescuelas duplicadas ANTES del seeding (YA NO ES NECESARIO SI NO SE SIEMBRAN AUTOESCUELAS)
+    // console.log('🧹 Pre-seeding cleanup: Limpiando autoescuelas duplicadas...')
+    // try {
+    //   execSync('npx tsx scripts/cleanup-duplicate-schools.ts', { stdio: 'inherit' })
+    //   console.log('✅ Pre-seeding cleanup completed!')
+    // } catch (error) {
+    //   console.error('❌ Pre-seeding cleanup failed:', error.message)
+    // }
       
       console.log('🌱 Seeding database...')
       execSync('npm run db:seed', { stdio: 'inherit' })
@@ -48,14 +48,14 @@ try {
       console.error('❌ Slug normalization failed:', error.message)
     }
     
-    // Clean up inactive schools after seeding
-    console.log('🧹 Cleaning up inactive schools...')
-    try {
-      execSync('npx tsx scripts/cleanup-seeding.ts', { stdio: 'inherit' })
-      console.log('✅ Cleanup completed!')
-    } catch (error) {
-      console.error('❌ Cleanup failed:', error.message)
-    }
+    // Clean up inactive schools after seeding (YA NO ES NECESARIO SI NO SE SIEMBRAN AUTOESCUELAS)
+    // console.log('🧹 Cleaning up inactive schools...')
+    // try {
+    //   execSync('npx tsx scripts/cleanup-seeding.ts', { stdio: 'inherit' })
+    //   console.log('✅ Cleanup completed!')
+    // } catch (error) {
+    //   console.error('❌ Cleanup failed:', error.message)
+    // }
   } else {
     console.log('⚠️ DATABASE_URL not configured or invalid, skipping database seeding')
   }

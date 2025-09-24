@@ -45,3 +45,5 @@ cleanup-inactive-schools.ts
 debug-schools.ts
 test-cloudinary.ts
 scripts/diagnose-deleted-schools.ts
+scripts/check-duplicate-schools.ts
+scripts/cleanup-duplicate-schools.ts
