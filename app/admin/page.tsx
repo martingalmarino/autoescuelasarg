@@ -31,7 +31,11 @@ export default function AdminPage() {
         const response = await fetch('/api/admin/stats')
         if (response.ok) {
           const data = await response.json()
-          setStats(data)
+          if (data.success && data.stats) {
+            setStats(data.stats)
+          } else {
+            setError('Error en la respuesta de la API')
+          }
         } else {
           setError('Error al obtener estadísticas de la base de datos')
         }
@@ -65,7 +69,9 @@ export default function AdminPage() {
         const statsResponse = await fetch('/api/admin/stats')
         if (statsResponse.ok) {
           const data = await statsResponse.json()
-          setStats(data)
+          if (data.success && data.stats) {
+            setStats(data.stats)
+          }
         }
       } else {
         alert('❌ Error: ' + result.error)
