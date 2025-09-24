@@ -22,6 +22,16 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/',
   },
+  icons: {
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
+  },
   openGraph: {
     title: 'Autoescuelas.ar - Encuentra tu escuela de manejo en Argentina',
     description: 'El directorio más completo de escuelas de manejo en Argentina. Encuentra la autoescuela perfecta para obtener tu licencia de conducir.',
