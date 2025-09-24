@@ -73,6 +73,54 @@ export async function getFeaturedSchools(limit: number = 8) {
   }))
 }
 
+export async function getSchoolsByProvinceSlug(provinceSlug: string, limit: number = 20) {
+  try {
+    const province = await prisma.province.findUnique({
+      where: { slug: provinceSlug },
+    })
+
+    if (!province) {
+      return []
+    }
+
+    const schools = await prisma.drivingSchool.findMany({
+      where: { 
+        provinceId: province.id,
+        isActive: true 
+      },
+      orderBy: [
+        { isFeatured: 'desc' },
+        { sortOrder: 'asc' },
+        { rating: 'desc' },
+      ],
+      take: limit,
+      include: {
+        city: {
+          select: {
+            name: true,
+            province: {
+              select: {
+                name: true,
+              },
+            },
+          },
+        },
+      },
+    })
+
+    // Transform to match DrivingSchool interface
+    return schools.map(school => ({
+      ...school,
+      city: school.city.name,
+      province: school.city.province.name,
+      hours: school.hours || undefined,
+    }))
+  } catch (error) {
+    console.error(`Error fetching schools for province ${provinceSlug}:`, error)
+    return []
+  }
+}
+
 export async function getSchoolsByProvince(provinceId: string, limit: number = 20) {
   const schools = await prisma.drivingSchool.findMany({
     where: { 

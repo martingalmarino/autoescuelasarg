@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
 import { getProvinceBySlug } from '@/lib/mock-data'
-import { getProvinceBySlugFromDB, getSchoolsByProvince } from '@/lib/database'
+import { getProvinceBySlugFromDB, getSchoolsByProvinceSlug } from '@/lib/database'
 import ProvincePageClient from './ProvincePageClient'
 
 interface ProvincePageProps {
@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: ProvincePageProps): Promise<M
 export default async function ProvincePage({ params }: ProvincePageProps) {
   const [province, schools] = await Promise.all([
     getProvinceBySlugFromDB(params.slug),
-    getSchoolsByProvince(params.slug)
+    getSchoolsByProvinceSlug(params.slug)
   ])
   
   return <ProvincePageClient 
