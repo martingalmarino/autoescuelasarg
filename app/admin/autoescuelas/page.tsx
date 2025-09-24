@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
-import { Plus, Edit, Trash2, Eye, Search } from 'lucide-react'
+import { Plus, Edit, Trash2, Eye, Search, LogOut } from 'lucide-react'
 import Link from 'next/link'
 import AddSchoolForm from '@/components/AddSchoolForm'
 import EditSchoolForm from '@/components/EditSchoolForm'
@@ -44,6 +44,18 @@ export default function AutoescuelasAdminPage() {
   const [searchTerm, setSearchTerm] = useState('')
   const [showAddForm, setShowAddForm] = useState(false)
   const [editingSchool, setEditingSchool] = useState<DrivingSchool | null>(null)
+
+  const handleLogout = async () => {
+    try {
+      await fetch('/api/admin/auth', {
+        method: 'DELETE',
+      })
+      // Redirigir a la página de login
+      window.location.href = '/admin/login'
+    } catch (error) {
+      console.error('Error al cerrar sesión:', error)
+    }
+  }
 
   useEffect(() => {
     fetchSchools()
@@ -143,6 +155,14 @@ export default function AutoescuelasAdminPage() {
                 Administra todas las autoescuelas del directorio
               </p>
             </div>
+            <Button
+              onClick={handleLogout}
+              variant="outline"
+              className="flex items-center gap-2"
+            >
+              <LogOut className="h-4 w-4" />
+              Cerrar Sesión
+            </Button>
             <Button onClick={() => setShowAddForm(true)} className="w-full sm:w-auto">
               <Plus className="h-4 w-4 mr-2" />
               Agregar Autoescuela
