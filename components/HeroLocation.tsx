@@ -101,35 +101,37 @@ export default function HeroLocation() {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image */}
       <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat sm:bg-center"
         style={{
-          backgroundImage: "url('/images/hero-image.jpg')"
+          backgroundImage: "url('/images/hero-image.jpg')",
+          backgroundPosition: "center top",
+          backgroundSize: "cover"
         }}
       />
       
       {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-black/40" />
+      <div className="absolute inset-0 bg-black/30 sm:bg-black/40" />
       
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-4 text-center">
+      <div className="relative z-10 container mx-auto px-4 text-center py-8 sm:py-0">
         <div className="max-w-4xl mx-auto">
           {/* Main Heading */}
-          <h1 className="mb-6 sm:mb-8 text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-white leading-tight">
+          <h1 className="mb-4 sm:mb-6 md:mb-8 text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tight text-white leading-tight">
             Encuentra tu autoescuela{' '}
             <span className="text-yellow-400">estés donde estés</span>
             <span className="text-white/80">…</span>
           </h1>
 
           {/* Location Selector */}
-          <div className="mb-6 sm:mb-8 flex justify-center">
+          <div className="mb-4 sm:mb-6 md:mb-8 flex justify-center">
             <div className="relative">
               <button
                 ref={buttonRef}
                 onClick={handleDropdownToggle}
-                className="flex items-center justify-center space-x-2 bg-white/10 backdrop-blur-sm rounded-lg px-4 sm:px-6 py-3 border border-white/20 hover:bg-white/20 transition-colors min-w-[200px] sm:min-w-[250px]"
+                className="flex items-center justify-center space-x-2 bg-white/10 backdrop-blur-sm rounded-lg px-3 sm:px-4 md:px-6 py-2 sm:py-3 border border-white/20 hover:bg-white/20 transition-colors min-w-[180px] sm:min-w-[200px] md:min-w-[250px]"
               >
-                <span className="text-white font-medium text-sm sm:text-base">{selectedProvince}</span>
-                <ChevronDown className={`h-4 w-4 text-white transition-transform flex-shrink-0 ${isDropdownOpen ? 'rotate-180' : ''}`} />
+                <span className="text-white font-medium text-xs sm:text-sm md:text-base">{selectedProvince}</span>
+                <ChevronDown className={`h-3 w-3 sm:h-4 sm:w-4 text-white transition-transform flex-shrink-0 ${isDropdownOpen ? 'rotate-180' : ''}`} />
               </button>
               
               {/* Dropdown - Ahora relativo al botón */}
@@ -176,13 +178,13 @@ export default function HeroLocation() {
           </div>
 
           {/* CTA Button */}
-          <div className="space-y-3 sm:space-y-4">
+          <div className="space-y-2 sm:space-y-3 md:space-y-4">
             <Button
               size="lg"
               onClick={handleViewAll}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-semibold rounded-lg shadow-lg transition-all duration-200 hover:shadow-xl w-full sm:w-auto"
+              className="bg-blue-600 hover:bg-blue-700 text-white px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg font-semibold rounded-lg shadow-lg transition-all duration-200 hover:shadow-xl w-full sm:w-auto"
             >
-              <MapPin className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
+              <MapPin className="mr-1 sm:mr-2 h-3 w-3 sm:h-4 sm:w-4 md:h-5 md:w-5" />
               VER TODAS
             </Button>
             <p className="text-white/90 text-xs sm:text-sm">
