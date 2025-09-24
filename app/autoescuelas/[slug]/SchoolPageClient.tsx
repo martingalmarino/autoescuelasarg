@@ -77,10 +77,10 @@ export default function SchoolPageClient({ params }: SchoolPageClientProps) {
                 <Star className="h-5 w-5 fill-yellow-400 text-yellow-400" />
                 <span>{formatRating(school.rating)} ({formatReviews(school.reviewsCount)} reseñas)</span>
               </div>
-              {school.priceRange && (
+              {school.priceMin && school.priceMax && (
                 <div className="flex items-center space-x-2">
                   <DollarSign className="h-5 w-5" />
-                  <span>{formatPrice(school.priceRange.min)} - {formatPrice(school.priceRange.max)}</span>
+                  <span>{formatPrice(school.priceMin)} - {formatPrice(school.priceMax)}</span>
                 </div>
               )}
             </div>

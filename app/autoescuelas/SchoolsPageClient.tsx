@@ -89,15 +89,15 @@ export default function SchoolsPageClient({ schools, provinces, searchParams }: 
         break
       case 'price_asc':
         filtered.sort((a, b) => {
-          const aPrice = a.priceRange?.min || 0
-          const bPrice = b.priceRange?.min || 0
+          const aPrice = a.priceMin || 0
+          const bPrice = b.priceMin || 0
           return aPrice - bPrice
         })
         break
       case 'price_desc':
         filtered.sort((a, b) => {
-          const aPrice = a.priceRange?.min || 0
-          const bPrice = b.priceRange?.min || 0
+          const aPrice = a.priceMin || 0
+          const bPrice = b.priceMin || 0
           return bPrice - aPrice
         })
         break
@@ -410,9 +410,9 @@ export default function SchoolsPageClient({ schools, provinces, searchParams }: 
                           )}
 
                           {/* Price Range */}
-                          {school.priceRange && (
+                          {school.priceMin && school.priceMax && (
                             <div className="text-sm font-medium text-primary mb-3">
-                              {formatPrice(school.priceRange.min)} - {formatPrice(school.priceRange.max)}
+                              {formatPrice(school.priceMin)} - {formatPrice(school.priceMax)}
                             </div>
                           )}
 

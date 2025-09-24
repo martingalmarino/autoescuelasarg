@@ -198,9 +198,9 @@ export default function ProvincePageClient({ params }: ProvincePageClientProps) 
                         )}
 
                         {/* Price Range */}
-                        {school.priceRange && (
+                        {school.priceMin && school.priceMax && (
                           <div className="text-sm font-medium text-primary">
-                            {formatPrice(school.priceRange.min)} - {formatPrice(school.priceRange.max)}
+                            {formatPrice(school.priceMin)} - {formatPrice(school.priceMax)}
                           </div>
                         )}
 
