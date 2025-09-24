@@ -16,6 +16,13 @@ export async function uploadImage(
   publicId?: string
 ): Promise<{ url: string; publicId: string }> {
   try {
+    console.log('☁️ Subiendo a Cloudinary:', {
+      folder,
+      publicId,
+      fileType: typeof file,
+      fileSize: file instanceof Buffer ? file.length : file.size
+    })
+
     const result = await cloudinary.uploader.upload(
       file as any,
       {
@@ -27,13 +34,24 @@ export async function uploadImage(
       }
     )
     
+    console.log('✅ Cloudinary upload exitoso:', {
+      url: result.secure_url,
+      publicId: result.public_id,
+      bytes: result.bytes
+    })
+    
     return {
       url: result.secure_url,
       publicId: result.public_id,
     }
-  } catch (error) {
-    console.error('Error uploading to Cloudinary:', error)
-    throw new Error('Error al subir la imagen')
+  } catch (error: any) {
+    console.error('❌ Error detallado en Cloudinary:', {
+      message: error.message,
+      http_code: error.http_code,
+      name: error.name,
+      error: error.error
+    })
+    throw new Error(`Error al subir la imagen: ${error.message}`)
   }
 }
 
