@@ -411,6 +411,107 @@ export async function getAllSchoolsFromDB() {
   }))
 }
 
+// Function to get city by province and city slugs
+export async function getCityBySlugFromDB(provinceSlug: string, citySlug: string) {
+  try {
+    const city = await prisma.city.findFirst({
+      where: {
+        slug: citySlug,
+        isActive: true,
+        province: {
+          slug: provinceSlug,
+          isActive: true
+        }
+      },
+      include: {
+        province: {
+          select: {
+            id: true,
+            name: true,
+            slug: true
+          }
+        },
+        _count: {
+          select: {
+            schools: {
+              where: { isActive: true }
+            }
+          }
+        }
+      }
+    })
+
+    if (!city) return null
+
+    return {
+      id: city.id,
+      name: city.name,
+      slug: city.slug,
+      schoolsCount: city._count.schools,
+      province: city.province
+    }
+  } catch (error) {
+    console.error(`Error fetching city ${citySlug} in province ${provinceSlug}:`, error)
+    return null
+  }
+}
+
+// Function to get schools by province and city slugs
+export async function getSchoolsByCitySlug(provinceSlug: string, citySlug: string, limit: number = 20) {
+  try {
+    const city = await prisma.city.findFirst({
+      where: {
+        slug: citySlug,
+        isActive: true,
+        province: {
+          slug: provinceSlug,
+          isActive: true
+        }
+      }
+    })
+
+    if (!city) {
+      return []
+    }
+
+    const schools = await prisma.drivingSchool.findMany({
+      where: { 
+        cityId: city.id,
+        isActive: true 
+      },
+      orderBy: [
+        { isFeatured: 'desc' },
+        { sortOrder: 'asc' },
+        { rating: 'desc' },
+      ],
+      take: limit,
+      include: {
+        city: {
+          select: {
+            name: true,
+            province: {
+              select: {
+                name: true,
+              },
+            },
+          },
+        },
+      },
+    })
+
+    // Transform to match DrivingSchool interface
+    return schools.map(school => ({
+      ...school,
+      city: school.city.name,
+      province: school.city.province.name,
+      hours: school.hours || undefined,
+    }))
+  } catch (error) {
+    console.error(`Error fetching schools for city ${citySlug} in province ${provinceSlug}:`, error)
+    return []
+  }
+}
+
 export async function getDatabaseStats() {
   const [provinces, cities, schools] = await Promise.all([
     prisma.province.count({ where: { isActive: true } }),
