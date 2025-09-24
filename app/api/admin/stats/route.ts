@@ -7,6 +7,9 @@ export const dynamic = 'force-dynamic'
 
 export async function GET() {
   try {
+    // Test connection first
+    await prisma.$connect()
+    
     const [provincesCount, schoolsCount, citiesCount] = await Promise.all([
       prisma.province.count(),
       prisma.drivingSchool.count(),
@@ -14,14 +17,21 @@ export async function GET() {
     ])
     
     return NextResponse.json({
-      provinces: provincesCount,
-      schools: schoolsCount,
-      cities: citiesCount
+      success: true,
+      stats: {
+        provinces: provincesCount,
+        schools: schoolsCount,
+        cities: citiesCount
+      }
     })
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error fetching stats:', error)
     return NextResponse.json(
-      { error: 'Database connection failed' },
+      { 
+        success: false,
+        error: error.message || 'Database connection failed',
+        details: process.env.NODE_ENV === 'development' ? error.stack : undefined
+      },
       { status: 500 }
     )
   } finally {
