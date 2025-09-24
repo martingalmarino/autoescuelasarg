@@ -17,6 +17,8 @@ model Province {
   description String?
   imageUrl    String?
   schoolsCount Int     @default(0)
+  isActive    Boolean  @default(true)
+  sortOrder   Int      @default(0)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
@@ -33,6 +35,8 @@ model City {
   slug      String
   provinceId String
   schoolsCount Int   @default(0)
+  isActive  Boolean  @default(true)
+  sortOrder Int      @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -41,6 +45,8 @@ model City {
   schools   DrivingSchool[]
 
   @@unique([name, provinceId])
+  @@index([provinceId, isActive])
+  @@index([sortOrder])
   @@map("cities")
 }
 
@@ -73,9 +79,15 @@ model DrivingSchool {
   // Services
   services    String[] @default([])
   
-  // Status
+  // Status and ordering
   isActive    Boolean  @default(true)
   isVerified  Boolean  @default(false)
+  isFeatured  Boolean  @default(false)
+  sortOrder   Int      @default(0)
+  
+  // SEO
+  metaTitle   String?
+  metaDescription String?
   
   // Timestamps
   createdAt   DateTime @default(now())
@@ -87,6 +99,11 @@ model DrivingSchool {
   reviews     Review[]
   courses     Course[]
 
+  @@index([provinceId, isActive])
+  @@index([cityId, isActive])
+  @@index([isFeatured, isActive])
+  @@index([rating])
+  @@index([sortOrder])
   @@map("driving_schools")
 }
 

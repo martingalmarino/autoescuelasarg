@@ -4,7 +4,7 @@ import FAQAccordion from '@/components/FAQAccordion'
 import ProvincesIndex from '@/components/ProvincesIndex'
 import JsonLd from '@/components/SEO/JsonLd'
 import { DrivingSchool, FAQ } from '@/lib/types'
-import { getAllProvinces } from '@/lib/mock-data'
+import { getActiveProvinces, getFeaturedSchools } from '@/lib/database'
 
 // Mock data - En un entorno real, esto vendría de la base de datos
 const mockSchools: DrivingSchool[] = [
@@ -174,8 +174,11 @@ const faqData: FAQ[] = [
   }
 ]
 
-export default function HomePage() {
-  const provinces = getAllProvinces()
+export default async function HomePage() {
+  const [provinces, featuredSchools] = await Promise.all([
+    getActiveProvinces(),
+    getFeaturedSchools(8)
+  ])
   
   return (
     <>
@@ -184,7 +187,7 @@ export default function HomePage() {
       <JsonLd type="Organization" data={{}} />
       
       <HeroLocation />
-      <TopRatedGrid schools={mockSchools} />
+        <TopRatedGrid schools={featuredSchools} />
       <FAQAccordion faqs={faqData} />
       <ProvincesIndex provinces={provinces} />
     </>
