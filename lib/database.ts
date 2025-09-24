@@ -45,10 +45,13 @@ export async function getActiveCitiesByProvince(provinceId: string) {
 export async function getFeaturedSchools(limit: number = 8) {
   const schools = await prisma.drivingSchool.findMany({
     where: { 
-      isActive: true,
-      isFeatured: true 
+      isActive: true
     },
-    orderBy: { sortOrder: 'asc' },
+    orderBy: [
+      { isFeatured: 'desc' },
+      { rating: 'desc' },
+      { sortOrder: 'asc' }
+    ],
     take: limit,
     include: {
       city: {

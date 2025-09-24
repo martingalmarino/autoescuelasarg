@@ -12,6 +12,15 @@ function normalizeSlug(slug: string): string {
     .replace(/^-|-$/g, '') // Quitar guiones al inicio y final
 }
 
+// Función para decodificar URLs con caracteres especiales
+function decodeSlug(slug: string): string {
+  try {
+    return decodeURIComponent(slug)
+  } catch {
+    return slug
+  }
+}
+
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
 
@@ -22,8 +31,11 @@ export function middleware(request: NextRequest) {
     if (pathSegments.length >= 3) {
       const [, routeType, slug] = pathSegments
       
+      // Decodificar el slug primero
+      const decodedSlug = decodeSlug(slug)
+      
       // Normalizar el slug
-      const normalizedSlug = normalizeSlug(slug)
+      const normalizedSlug = normalizeSlug(decodedSlug)
       
       // Si el slug cambió, redirigir a la versión normalizada
       if (slug !== normalizedSlug) {
