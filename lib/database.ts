@@ -160,7 +160,7 @@ export async function getSchoolBySlug(slug: string) {
       },
       courses: {
         where: { isActive: true },
-        orderBy: { sortOrder: 'asc' },
+        orderBy: { name: 'asc' },
       },
     },
   })
