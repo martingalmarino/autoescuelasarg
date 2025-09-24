@@ -278,7 +278,7 @@ export default function SchoolPageClient({ params }: SchoolPageClientProps) {
                       <div key={review.id} className="border-b pb-4 last:border-b-0">
                         <div className="flex items-center justify-between mb-2">
                           <div className="flex items-center space-x-2">
-                            <span className="font-medium">{review.userName}</span>
+                            <span className="font-medium">{review.author}</span>
                             <div className="flex items-center space-x-1">
                               {[...Array(5)].map((_, i) => (
                                 <Star
