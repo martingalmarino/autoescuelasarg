@@ -1,12 +1,35 @@
 "use client"
 
+import { useState } from 'react'
 import Link from 'next/link'
-import { Car, Search } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { Car, Search, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 
 export default function Header() {
+  const [searchQuery, setSearchQuery] = useState('')
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
+  const router = useRouter()
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (searchQuery.trim()) {
+      router.push(`/autoescuelas?search=${encodeURIComponent(searchQuery.trim())}`)
+      setSearchQuery('')
+      setIsSearchOpen(false)
+    }
+  }
+
+  const toggleSearch = () => {
+    setIsSearchOpen(!isSearchOpen)
+    if (isSearchOpen) {
+      setSearchQuery('')
+    }
+  }
+
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur-md supports-[backdrop-filter]:bg-white/80 shadow-sm">
       <div className="container flex h-14 sm:h-16 items-center justify-between px-4 sm:px-6">
         {/* Logo */}
         <Link href="/" className="flex items-center space-x-2">
@@ -32,26 +55,53 @@ export default function Header() {
           >
             Por provincia
           </Link>
-          <Link 
-            href="/buscar" 
-            className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-          >
-            Búsqueda avanzada
-          </Link>
         </nav>
 
         {/* Search and Admin */}
-        <div className="flex items-center space-x-2 sm:space-x-4">
-          <Button asChild variant="ghost" size="icon" className="h-8 w-8 sm:h-10 sm:w-10">
-            <Link href="/buscar">
-              <Search className="h-4 w-4" />
-              <span className="sr-only">Buscar</span>
-            </Link>
-          </Button>
+        <div className="flex items-center space-x-2">
+          {/* Search */}
+          <div className="relative">
+            {isSearchOpen ? (
+              <form onSubmit={handleSearch} className="flex items-center space-x-2">
+                <Input
+                  type="text"
+                  placeholder="Buscar autoescuelas..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-64 h-9"
+                  autoFocus
+                />
+                <Button type="submit" size="sm" className="h-9">
+                  <Search className="h-4 w-4" />
+                </Button>
+                <Button 
+                  type="button" 
+                  variant="ghost" 
+                  size="sm" 
+                  onClick={toggleSearch}
+                  className="h-9"
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              </form>
+            ) : (
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                onClick={toggleSearch}
+                className="h-9 w-9"
+              >
+                <Search className="h-4 w-4" />
+              </Button>
+            )}
+          </div>
           
-          <Button asChild variant="outline" className="h-8 px-3 sm:h-10 sm:px-4 text-xs sm:text-sm">
-            <Link href="/admin">Admin</Link>
-          </Button>
+          {/* Admin */}
+          <Link href="/admin">
+            <Button variant="outline" size="sm" className="h-9">
+              Admin
+            </Button>
+          </Link>
         </div>
       </div>
     </header>
