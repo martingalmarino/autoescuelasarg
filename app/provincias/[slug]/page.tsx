@@ -1,5 +1,5 @@
 import { Metadata } from 'next'
-import { getProvinceBySlugFromDB, getSchoolsByProvinceSlug } from '@/lib/database'
+import { getProvinceBySlugFromDB, getSchoolsByProvinceSlug, getActiveCitiesByProvince } from '@/lib/database'
 import ProvincePageClient from './ProvincePageClient'
 
 // Forzar revalidación dinámica
@@ -33,14 +33,19 @@ export async function generateMetadata({ params }: ProvincePageProps): Promise<M
 }
 
 export default async function ProvincePage({ params }: ProvincePageProps) {
-  const [province, schools] = await Promise.all([
+  const [province, schools, cities] = await Promise.all([
     getProvinceBySlugFromDB(params.slug),
-    getSchoolsByProvinceSlug(params.slug)
+    getSchoolsByProvinceSlug(params.slug),
+    getProvinceBySlugFromDB(params.slug).then(async (province) => {
+      if (!province) return []
+      return getActiveCitiesByProvince(province.id)
+    })
   ])
   
   return <ProvincePageClient 
     params={params} 
     province={province}
     schools={schools}
+    cities={cities}
   />
 }

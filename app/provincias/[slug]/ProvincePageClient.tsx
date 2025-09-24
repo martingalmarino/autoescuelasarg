@@ -57,9 +57,10 @@ interface ProvincePageClientProps {
   }
   province?: Province | null
   schools?: DrivingSchool[]
+  cities?: City[]
 }
 
-export default function ProvincePageClient({ params, province, schools }: ProvincePageClientProps) {
+export default function ProvincePageClient({ params, province, schools, cities }: ProvincePageClientProps) {
 
   if (!province) {
     notFound()
@@ -104,10 +105,10 @@ export default function ProvincePageClient({ params, province, schools }: Provin
                 <MapPin className="h-5 w-5" />
                 <span>{province.schoolsCount} autoescuelas</span>
               </div>
-              {province.cities && (
+              {cities && cities.length > 0 && (
                 <div className="flex items-center space-x-2">
                   <Users className="h-5 w-5" />
-                  <span>{province.cities.length} ciudades</span>
+                  <span>{cities.length} ciudades</span>
                 </div>
               )}
             </div>
@@ -116,14 +117,14 @@ export default function ProvincePageClient({ params, province, schools }: Provin
       </section>
 
       {/* Cities Section */}
-      {province.cities && province.cities.length > 0 && (
+      {cities && cities.length > 0 && (
         <section className="py-12 sm:py-16 bg-muted/30">
           <div className="container mx-auto px-4 sm:px-6">
             <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8">
               Ciudades en {province.name}
             </h2>
             <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-4xl mx-auto">
-              {province.cities.map((city) => (
+              {cities.map((city) => (
                 <Link
                   key={city.id}
                   href={`/provincias/${province.slug}/${city.slug}`}
