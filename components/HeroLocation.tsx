@@ -158,7 +158,7 @@ export default function HeroLocation() {
       {isDropdownOpen && typeof window !== 'undefined' && createPortal(
         <div 
           ref={dropdownRef}
-          className="fixed bg-white rounded-lg shadow-2xl border border-gray-200 w-[500px] sm:w-[600px] md:w-[700px] max-w-[95vw] max-h-[700px]"
+          className="fixed bg-white rounded-lg shadow-2xl border border-gray-200 w-[400px] sm:w-[450px] max-w-[90vw] max-h-[400px]"
           style={{ 
             zIndex: 999999,
             top: `${dropdownPosition.top}px`,
@@ -166,16 +166,16 @@ export default function HeroLocation() {
             transform: 'translateX(-50%)'
           }}
         >
-          {/* Provinces List - Sin buscador para más espacio */}
-          <div className="max-h-[650px] overflow-y-auto">
+          {/* Provinces List */}
+          <div className="max-h-[350px] overflow-y-auto">
             {PROVINCES.length > 0 ? (
-              <div className="p-6 pb-8">
-                <div className="grid grid-cols-3 gap-3">
+              <div className="p-4">
+                <div className="grid grid-cols-3 gap-2">
                   {PROVINCES.map((province, index) => (
                     <button
                       key={province}
                       onClick={() => handleProvinceSelect(province)}
-                      className={`text-left px-4 py-3 text-sm transition-colors hover:bg-gray-50 rounded ${
+                      className={`text-left px-2 py-2 text-xs transition-colors hover:bg-gray-50 rounded ${
                         selectedProvince === province
                           ? 'text-black font-medium underline bg-blue-50'
                           : 'text-gray-600 hover:text-gray-900'
@@ -186,16 +186,9 @@ export default function HeroLocation() {
                     </button>
                   ))}
                 </div>
-                
-                {/* Footer con contador */}
-                <div className="mt-6 pt-4 border-t border-gray-100 text-center pb-4">
-                  <p className="text-xs text-gray-500">
-                    {PROVINCES.length} provincias de Argentina
-                  </p>
-                </div>
               </div>
             ) : (
-              <div className="p-8 text-center text-gray-500">
+              <div className="p-6 text-center text-gray-500">
                 <p className="text-sm">No hay provincias disponibles</p>
               </div>
             )}
