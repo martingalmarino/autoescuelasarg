@@ -44,3 +44,4 @@ cleanup-deleted-schools.ts
 cleanup-inactive-schools.ts
 debug-schools.ts
 test-cloudinary.ts
+scripts/diagnose-deleted-schools.ts

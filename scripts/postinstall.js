@@ -21,13 +21,23 @@ try {
     console.log('   DATABASE_URL:', process.env.DATABASE_URL ? 'Set but invalid' : 'Not set')
   }
   
-  // Seed database (only if DATABASE_URL is configured)
-  if (process.env.DATABASE_URL && 
-      process.env.DATABASE_URL.trim() !== '' && 
-      process.env.DATABASE_URL.includes('postgresql://') &&
-      !process.env.DATABASE_URL.includes('[YOUR-PASSWORD]')) {
-    console.log('🌱 Seeding database...')
-    execSync('npm run db:seed', { stdio: 'inherit' })
+    // Seed database (only if DATABASE_URL is configured)
+    if (process.env.DATABASE_URL && 
+        process.env.DATABASE_URL.trim() !== '' && 
+        process.env.DATABASE_URL.includes('postgresql://') &&
+        !process.env.DATABASE_URL.includes('[YOUR-PASSWORD]')) {
+      
+      // Limpiar autoescuelas inactivas ANTES del seeding
+      console.log('🧹 Pre-seeding cleanup: Eliminando autoescuelas inactivas...')
+      try {
+        execSync('npx tsx scripts/pre-seeding-cleanup.ts', { stdio: 'inherit' })
+        console.log('✅ Pre-seeding cleanup completed!')
+      } catch (error) {
+        console.error('❌ Pre-seeding cleanup failed:', error.message)
+      }
+      
+      console.log('🌱 Seeding database...')
+      execSync('npm run db:seed', { stdio: 'inherit' })
     
     // Normalize slugs after seeding
     console.log('🔄 Normalizing slugs...')
