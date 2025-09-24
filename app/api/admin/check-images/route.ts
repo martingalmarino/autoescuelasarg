@@ -54,8 +54,8 @@ export async function GET(request: NextRequest) {
           logoUrl: school.logoUrl,
           imageAccessible: false,
           logoAccessible: false,
-          imageError: null,
-          logoError: null
+          imageError: null as string | null,
+          logoError: null as string | null
         }
 
         // Verificar imagen principal
