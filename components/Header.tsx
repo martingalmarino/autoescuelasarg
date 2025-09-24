@@ -50,19 +50,33 @@ export default function Header() {
 
         {/* Search */}
         <div className="flex items-center">
-          {/* Search - Always visible */}
-          <form onSubmit={handleSearch} className="flex items-center space-x-2">
-            <Input
-              type="text"
-              placeholder="Buscar autoescuelas..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-48 sm:w-64 h-9"
-            />
-            <Button type="submit" size="sm" className="h-9">
+          {/* Mobile: Icon only, Desktop: Full search */}
+          <div className="hidden sm:block">
+            <form onSubmit={handleSearch} className="flex items-center space-x-2">
+              <Input
+                type="text"
+                placeholder="Buscar autoescuelas..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-48 sm:w-64 h-9"
+              />
+              <Button type="submit" size="sm" className="h-9">
+                <Search className="h-4 w-4" />
+              </Button>
+            </form>
+          </div>
+          
+          {/* Mobile: Search icon only */}
+          <div className="block sm:hidden">
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="h-9 w-9 p-0"
+              onClick={() => router.push('/autoescuelas')}
+            >
               <Search className="h-4 w-4" />
             </Button>
-          </form>
+          </div>
         </div>
       </div>
     </header>
