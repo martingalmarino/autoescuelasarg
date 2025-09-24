@@ -169,6 +169,7 @@ export default function HeroLocation() {
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         className="pl-10 pr-10 h-9 text-sm"
+                        autoComplete="off"
                       />
                       {searchTerm && (
                         <button
