@@ -41,6 +41,7 @@ interface SchoolsPageClientProps {
 const ITEMS_PER_PAGE = 12
 
 export default function SchoolsPageClient({ schools, provinces, searchParams }: SchoolsPageClientProps) {
+  // Updated to use priceMin/priceMax instead of priceRange
   const router = useRouter()
   const urlSearchParams = useSearchParams()
   
