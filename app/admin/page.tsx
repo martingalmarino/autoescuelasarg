@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react'
 export default function AdminPage() {
   const [stats, setStats] = useState(null)
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     // Verificar variables de entorno
