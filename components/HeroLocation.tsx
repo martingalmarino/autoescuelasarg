@@ -181,9 +181,10 @@ export default function HeroLocation() {
           <div className="space-y-2 sm:space-y-3 md:space-y-4">
             <button
               onClick={handleViewAll}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-8 sm:px-10 md:px-12 lg:px-16 py-4 sm:py-5 md:py-6 text-sm sm:text-base md:text-lg font-semibold rounded-lg shadow-lg transition-all duration-200 hover:shadow-xl w-auto mx-auto block sm:inline-block min-w-[160px] sm:min-w-[180px] md:min-w-[220px] lg:min-w-[260px] h-auto min-h-[48px] sm:min-h-[52px] md:min-h-[56px] flex items-center justify-center gap-2 sm:gap-3"
+              className="bg-blue-600 hover:bg-blue-700 text-white px-8 sm:px-10 md:px-12 lg:px-16 py-4 sm:py-5 md:py-6 text-sm sm:text-base md:text-lg font-semibold rounded-lg shadow-lg transition-all duration-200 hover:shadow-xl w-auto mx-auto block sm:inline-block min-w-[160px] sm:min-w-[180px] md:min-w-[220px] lg:min-w-[260px] h-auto min-h-[48px] sm:min-h-[52px] md:min-h-[56px] flex items-center justify-center"
+              style={{ flexDirection: 'row' }}
             >
-              <MapPin className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 flex-shrink-0" />
+              <MapPin className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 flex-shrink-0 mr-2 sm:mr-3" />
               <span>VER TODAS</span>
             </button>
             <p className="text-white/90 text-xs sm:text-sm">
