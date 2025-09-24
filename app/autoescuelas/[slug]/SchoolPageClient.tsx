@@ -293,7 +293,7 @@ export default function SchoolPageClient({ params }: SchoolPageClientProps) {
                             </div>
                           </div>
                           <span className="text-sm text-muted-foreground">
-                            {new Date(review.date).toLocaleDateString('es-AR')}
+                            {new Date(review.createdAt).toLocaleDateString('es-AR')}
                           </span>
                         </div>
                         <p className="text-muted-foreground">{review.comment}</p>
