@@ -187,7 +187,7 @@ export async function DELETE(
       where: { id: params.id }
     })
 
-      // Actualizar contadores - obtener el conteo actual y decrementar
+      // Actualizar contadores - obtener el conteo actual después de la eliminación
       const [cityCount, provinceCount] = await Promise.all([
         prisma.drivingSchool.count({ where: { cityId: existingSchool.cityId, isActive: true } }),
         prisma.drivingSchool.count({ where: { provinceId: existingSchool.provinceId, isActive: true } })

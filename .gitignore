@@ -41,3 +41,5 @@ next-env.d.ts
 
 # cleanup scripts (not part of build)
 cleanup-deleted-schools.ts
+cleanup-inactive-schools.ts
+debug-schools.ts
