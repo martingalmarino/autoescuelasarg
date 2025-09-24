@@ -16,9 +16,11 @@ export async function GET(
       include: {
         city: {
           select: {
+            id: true,
             name: true,
             province: {
               select: {
+                id: true,
                 name: true,
               },
             },
