@@ -57,20 +57,8 @@ export default async function HomePage() {
       <ProvincesIndex provinces={provinces} />
       
       {/* JSON-LD Structured Data */}
-      <JsonLd 
-        faqs={faqData}
-        organization={{
-          name: 'Autoescuelas.ar',
-          description: 'El directorio más completo de escuelas de manejo en Argentina',
-          url: 'https://autoescuelas.ar',
-          logo: 'https://autoescuelas.ar/logo.png',
-          contactPoint: {
-            telephone: '+54-11-1234-5678',
-            contactType: 'customer service',
-            email: 'info@autoescuelas.ar'
-          }
-        }}
-      />
+      <JsonLd type="FAQPage" data={faqData} />
+      <JsonLd type="Organization" data={null} />
     </main>
   )
 }
