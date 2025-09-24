@@ -100,7 +100,7 @@ export default function ProvincePageClient({ params, province, schools, cities }
               Autoescuelas en {province.name}
             </h1>
             <p className="text-lg sm:text-xl text-white/90 max-w-2xl">
-              {province.description}
+              Encontrá las mejores autoescuelas en {province.name} con instructores profesionales, autos doble comando y clases prácticas en ciudad y ruta.
             </p>
             <div className="mt-6 flex items-center space-x-6 text-white/80">
               <div className="flex items-center space-x-2">

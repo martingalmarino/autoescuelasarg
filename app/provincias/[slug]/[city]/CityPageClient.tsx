@@ -85,7 +85,7 @@ export default function CityPageClient({ params, city, schools }: CityPageClient
               Autoescuelas en {city.name}
             </h1>
             <p className="text-lg sm:text-xl text-white/90 mb-6">
-              {city.name} es una ciudad en {city.province.name} con {city.schoolsCount} autoescuelas disponibles.
+              Aprendé a manejar en {city.name} con autoescuelas que ofrecen instructores capacitados, autos doble comando y clases prácticas adaptadas a tu ritmo.
             </p>
             <div className="mt-6 flex items-center space-x-6 text-white/80">
               <div className="flex items-center space-x-2">

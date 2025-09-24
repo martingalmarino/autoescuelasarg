@@ -23,14 +23,14 @@ export async function generateMetadata({ params }: CityPageProps): Promise<Metad
 
   return {
     title: `Aprende a Manejar en ${city.name}, ${city.province.name} | Autoescuelas.ar`,
-    description: `Encuentra las mejores autoescuelas en ${city.name}, ${city.province.name}. ${city.schoolsCount} escuelas de manejo disponibles con precios, reseñas y contacto directo.`,
-    keywords: `autoescuelas, ${city.name}, ${city.province.name}, escuela de manejo, licencia de conducir, clases de manejo`,
+    description: `Aprendé a manejar en ${city.name} con autoescuelas que ofrecen instructores capacitados, autos doble comando y clases prácticas adaptadas a tu ritmo. ${city.schoolsCount} escuelas de manejo disponibles.`,
+    keywords: `autoescuelas, ${city.name}, ${city.province.name}, escuela de manejo, licencia de conducir, clases de manejo, instructores capacitados, autos doble comando`,
     alternates: {
       canonical: `/provincias/${city.province.slug}/${city.slug}`,
     },
     openGraph: {
       title: `Aprende a Manejar en ${city.name}, ${city.province.name} | Autoescuelas.ar`,
-      description: `Encuentra las mejores autoescuelas en ${city.name}, ${city.province.name}`,
+      description: `Aprendé a manejar en ${city.name} con autoescuelas que ofrecen instructores capacitados, autos doble comando y clases prácticas adaptadas a tu ritmo.`,
       url: `https://www.autoescuelas.ar/provincias/${city.province.slug}/${city.slug}`,
     },
   }
