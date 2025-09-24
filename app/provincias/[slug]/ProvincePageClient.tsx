@@ -10,12 +10,54 @@ import { getProvinceBySlug, getSchoolsByProvince } from '@/lib/mock-data'
 import { formatPrice, formatRating, formatReviews } from '@/lib/utils'
 import { analyticsEvents } from '@/lib/analytics'
 
+interface City {
+  id: string
+  name: string
+  slug: string
+  schoolsCount: number
+}
+
+interface Province {
+  id: string
+  name: string
+  slug: string
+  description?: string
+  imageUrl?: string
+  schoolsCount: number
+  cities?: City[]
+}
+
+interface DrivingSchool {
+  id: string
+  name: string
+  slug: string
+  rating: number
+  reviewsCount: number
+  city: string
+  province: string
+  imageUrl?: string | null
+  priceMin?: number | null
+  priceMax?: number | null
+  description?: string | null
+  address?: string | null
+  phone?: string | null
+  email?: string | null
+  website?: string | null
+  hours?: string | null
+  services?: string[]
+  isActive?: boolean
+  isVerified?: boolean
+  isFeatured?: boolean
+  createdAt: Date
+  updatedAt: Date
+}
+
 interface ProvincePageClientProps {
   params: {
     slug: string
   }
-  province?: any
-  schools?: any[]
+  province?: Province | null
+  schools?: DrivingSchool[]
 }
 
 export default function ProvincePageClient({ params, province: dbProvince, schools: dbSchools }: ProvincePageClientProps) {
