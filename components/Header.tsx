@@ -1,17 +1,10 @@
 "use client"
 
 import Link from 'next/link'
-import { useSession, signOut } from 'next-auth/react'
-import { Car, Search, User, LogOut } from 'lucide-react'
+import { Car, Search } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 export default function Header() {
-  const { data: session, status } = useSession()
-
-  const handleSignOut = () => {
-    signOut({ callbackUrl: '/' })
-  }
-
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-14 sm:h-16 items-center justify-between px-4 sm:px-6">
@@ -47,46 +40,17 @@ export default function Header() {
           </Link>
         </nav>
 
-        {/* Search placeholder - future implementation */}
+        {/* Search and Admin */}
         <div className="flex items-center space-x-2 sm:space-x-4">
-          <Button variant="ghost" size="icon" className="hidden sm:flex h-8 w-8 sm:h-10 sm:w-10">
-            <Search className="h-4 w-4" />
-            <span className="sr-only">Buscar</span>
+          <Button asChild variant="ghost" size="icon" className="h-8 w-8 sm:h-10 sm:w-10">
+            <Link href="/buscar">
+              <Search className="h-4 w-4" />
+              <span className="sr-only">Buscar</span>
+            </Link>
           </Button>
           
-          {session ? (
-            <div className="flex items-center space-x-2">
-              <Button asChild variant="outline" className="h-8 px-3 sm:h-10 sm:px-4 text-xs sm:text-sm">
-                <Link href="/dashboard">
-                  <User className="h-4 w-4 mr-1" />
-                  Dashboard
-                </Link>
-              </Button>
-              <Button 
-                onClick={handleSignOut}
-                variant="ghost" 
-                size="icon" 
-                className="h-8 w-8 sm:h-10 sm:w-10"
-                title="Cerrar sesión"
-              >
-                <LogOut className="h-4 w-4 sm:h-5 sm:w-5" />
-              </Button>
-            </div>
-          ) : (
-            <div className="flex items-center space-x-2">
-              <Button asChild variant="outline" className="h-8 px-3 sm:h-10 sm:px-4 text-xs sm:text-sm">
-                <Link href="/auth/signin">Iniciar Sesión</Link>
-              </Button>
-              <Button asChild className="h-8 px-3 sm:h-10 sm:px-4 text-xs sm:text-sm">
-                <Link href="/sumar-autoescuela">Suma tu Autoescuela</Link>
-              </Button>
-            </div>
-          )}
-          
-          {/* Mobile menu button placeholder */}
-          <Button variant="ghost" size="icon" className="sm:hidden h-8 w-8">
-            <Search className="h-4 w-4" />
-            <span className="sr-only">Buscar</span>
+          <Button asChild variant="outline" className="h-8 px-3 sm:h-10 sm:px-4 text-xs sm:text-sm">
+            <Link href="/admin">Admin</Link>
           </Button>
         </div>
       </div>
