@@ -2,6 +2,8 @@ import { Metadata } from 'next'
 import { getActiveProvinces } from '@/lib/database'
 import ProvincesPageClient from './ProvincesPageClient'
 
+// Force new deploy
+
 export const metadata: Metadata = {
   title: 'Todas las Provincias - Autoescuelas.ar',
   description: 'Encuentra autoescuelas en todas las provincias de Argentina. Navega por provincia para encontrar la escuela de manejo más cercana a ti.',
