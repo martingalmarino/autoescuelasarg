@@ -34,11 +34,16 @@ async function main() {
     ]
 
   for (const province of provinces) {
-    await prisma.province.upsert({
-      where: { slug: province.slug },
-      update: province,
-      create: province
+    // Solo crear si no existe, no actualizar
+    const existingProvince = await prisma.province.findUnique({
+      where: { slug: province.slug }
     })
+    
+    if (!existingProvince) {
+      await prisma.province.create({
+        data: province
+      })
+    }
   }
 
   console.log('✅ Provinces created')
@@ -58,16 +63,19 @@ async function main() {
     ]
 
     for (const city of cities) {
-      await prisma.city.upsert({
+      // Solo crear si no existe, no actualizar
+      const existingCity = await prisma.city.findFirst({
         where: { 
-          name_provinceId: {
-            name: city.name,
-            provinceId: city.provinceId
-          }
-        },
-        update: city,
-        create: city
+          name: city.name,
+          provinceId: city.provinceId
+        }
       })
+      
+      if (!existingCity) {
+        await prisma.city.create({
+          data: city
+        })
+      }
     }
 
     console.log('✅ Cities created')
@@ -140,11 +148,16 @@ async function main() {
       ]
 
       for (const school of schools) {
-        await prisma.drivingSchool.upsert({
-          where: { slug: school.slug },
-          update: school,
-          create: school
+        // Solo crear si no existe, no actualizar
+        const existingSchool = await prisma.drivingSchool.findUnique({
+          where: { slug: school.slug }
         })
+        
+        if (!existingSchool) {
+          await prisma.drivingSchool.create({
+            data: school
+          })
+        }
       }
 
       console.log('✅ Driving schools created')
