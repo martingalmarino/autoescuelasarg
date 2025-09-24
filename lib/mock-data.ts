@@ -36,15 +36,7 @@ export const cordobaSchools: DrivingSchool[] = [
     phone: '+54 351 234-5678',
     email: 'info@autoescuelapremium.com',
     website: 'https://autoescuelapremium.com',
-    hours: {
-      monday: '08:00 - 18:00',
-      tuesday: '08:00 - 18:00',
-      wednesday: '08:00 - 18:00',
-      thursday: '08:00 - 18:00',
-      friday: '08:00 - 18:00',
-      saturday: '08:00 - 14:00',
-      sunday: 'Cerrado'
-    },
+    hours: 'Lunes a Viernes: 08:00 - 18:00, Sábados: 08:00 - 14:00, Domingos: Cerrado',
     services: [
       'Clases teóricas y prácticas',
       'Preparación para examen teórico',
@@ -115,15 +107,7 @@ export const cordobaSchools: DrivingSchool[] = [
     phone: '+54 351 123-4567',
     email: 'info@escuelacentro.com',
     website: 'https://escuelacentro.com',
-    hours: {
-      monday: '07:30 - 19:00',
-      tuesday: '07:30 - 19:00',
-      wednesday: '07:30 - 19:00',
-      thursday: '07:30 - 19:00',
-      friday: '07:30 - 19:00',
-      saturday: '08:00 - 16:00',
-      sunday: 'Cerrado'
-    },
+    hours: 'Lunes a Viernes: 07:30 - 19:00, Sábados: 08:00 - 16:00, Domingos: Cerrado',
     services: [
       'Clases teóricas y prácticas',
       'Preparación para exámenes',
@@ -178,15 +162,7 @@ export const cordobaSchools: DrivingSchool[] = [
     phone: '+54 353 456-7890',
     email: 'info@autoescuelavm.com',
     website: 'https://autoescuelavm.com',
-    hours: {
-      monday: '08:00 - 17:00',
-      tuesday: '08:00 - 17:00',
-      wednesday: '08:00 - 17:00',
-      thursday: '08:00 - 17:00',
-      friday: '08:00 - 17:00',
-      saturday: '08:00 - 12:00',
-      sunday: 'Cerrado'
-    },
+    hours: 'Lunes a Viernes: 08:00 - 17:00, Sábados: 08:00 - 12:00, Domingos: Cerrado',
     services: [
       'Clases teóricas y prácticas',
       'Ambiente familiar',
