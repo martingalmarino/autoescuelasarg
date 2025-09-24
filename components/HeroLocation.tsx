@@ -157,7 +157,7 @@ export default function HeroLocation() {
 
               {/* Dropdown Menu */}
               {isDropdownOpen && (
-                <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 bg-white rounded-lg shadow-xl border border-gray-200 w-[320px] sm:w-[400px] md:w-[500px] max-w-[90vw] max-h-[400px] overflow-hidden z-50">
+                <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 bg-white rounded-lg shadow-xl border border-gray-200 w-[320px] sm:w-[400px] md:w-[500px] max-w-[90vw] max-h-[500px] z-50">
                   {/* Search Header */}
                   <div className="p-3 border-b border-gray-100">
                     <div className="relative">
@@ -183,7 +183,7 @@ export default function HeroLocation() {
                   </div>
 
                   {/* Provinces List */}
-                  <div className="max-h-[300px] overflow-y-auto">
+                  <div className="max-h-[350px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 relative">
                     {filteredProvinces.length > 0 ? (
                       <div className="p-3">
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-1 sm:gap-2">
@@ -201,6 +201,16 @@ export default function HeroLocation() {
                             </button>
                           ))}
                         </div>
+                        
+                        {/* Scroll indicator */}
+                        {filteredProvinces.length > 12 && (
+                          <div className="mt-2 text-center">
+                            <div className="inline-flex items-center text-xs text-gray-400">
+                              <div className="animate-bounce mr-1">↓</div>
+                              Desplázate para ver más provincias
+                            </div>
+                          </div>
+                        )}
                       </div>
                     ) : (
                       <div className="p-6 text-center text-gray-500">
@@ -212,9 +222,12 @@ export default function HeroLocation() {
 
                   {/* Footer */}
                   <div className="p-3 border-t border-gray-100 bg-gray-50">
-                    <p className="text-xs text-gray-500 text-center">
-                      {filteredProvinces.length} de {PROVINCES.length} provincias
-                    </p>
+                    <div className="flex items-center justify-between text-xs text-gray-500">
+                      <span>{filteredProvinces.length} de {PROVINCES.length} provincias</span>
+                      {filteredProvinces.length > 12 && (
+                        <span className="text-blue-500">↑↓ Desplázate</span>
+                      )}
+                    </div>
                   </div>
                 </div>
               )}
