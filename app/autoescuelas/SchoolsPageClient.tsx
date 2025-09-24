@@ -25,6 +25,7 @@ import { Badge } from '@/components/ui/badge'
 import { DrivingSchool, Province } from '@/lib/types'
 import { formatPrice, formatRating, formatReviews } from '@/lib/utils'
 import { analyticsEvents } from '@/lib/analytics'
+import SafeHTML from '@/components/SafeHTML'
 
 interface SchoolsPageClientProps {
   schools: DrivingSchool[]
@@ -456,9 +457,9 @@ export default function SchoolsPageClient({ schools, provinces, searchParams }: 
 
                           {/* Description */}
                           {school.description && (
-                            <p className="mb-2 sm:mb-3 text-xs sm:text-sm text-muted-foreground line-clamp-2">
-                              {school.description}
-                            </p>
+                            <div className="mb-2 sm:mb-3 text-xs sm:text-sm text-muted-foreground line-clamp-2">
+                              <SafeHTML content={school.description} />
+                            </div>
                           )}
 
                           {/* Price Range */}

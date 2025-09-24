@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { formatPrice, formatRating, formatReviews } from '@/lib/utils'
 import { analyticsEvents } from '@/lib/analytics'
+import SafeHTML from '@/components/SafeHTML'
 
 interface City {
   id: string
@@ -181,9 +182,9 @@ export default function CityPageClient({ params, city, schools }: CityPageClient
                       </div>
                       
                       {school.description && (
-                        <p className="text-sm text-gray-600 mb-3 line-clamp-2">
-                          {school.description}
-                        </p>
+                        <div className="text-sm text-gray-600 mb-3 line-clamp-2">
+                          <SafeHTML content={school.description} />
+                        </div>
                       )}
                       
                       {school.priceMin && school.priceMax && (

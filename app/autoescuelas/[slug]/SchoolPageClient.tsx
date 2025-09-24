@@ -22,6 +22,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import ContactForm from '@/components/ContactForm'
+import SafeHTML from '@/components/SafeHTML'
 import { getSchoolBySlug } from '@/lib/mock-data'
 import { formatPrice, formatRating, formatReviews } from '@/lib/utils'
 import { analyticsEvents } from '@/lib/analytics'
@@ -208,9 +209,10 @@ export default function SchoolPageClient({ params }: SchoolPageClientProps) {
                   <CardTitle>Descripción</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground leading-relaxed">
-                    {school.description}
-                  </p>
+                  <SafeHTML 
+                    content={school.description} 
+                    className="text-muted-foreground leading-relaxed"
+                  />
                 </CardContent>
               </Card>
             )}
