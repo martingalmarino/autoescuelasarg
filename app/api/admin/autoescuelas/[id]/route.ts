@@ -47,6 +47,8 @@ export async function GET(
       ...school,
       city: school.city.name,
       province: school.city.province.name,
+      cityId: school.city.id,
+      provinceId: school.city.province.id,
     }
 
     return NextResponse.json({ 

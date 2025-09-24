@@ -27,6 +27,8 @@ interface DrivingSchool {
   reviewsCount: number
   city: string
   province: string
+  cityId: string
+  provinceId: string
   imageUrl?: string | null
   priceMin?: number | null
   priceMax?: number | null
