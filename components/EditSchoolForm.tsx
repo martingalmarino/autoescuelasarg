@@ -68,7 +68,10 @@ export default function EditSchoolForm({ school, onClose, onSuccess }: EditSchoo
     hours: school.hours || '',
     priceMin: school.priceMin?.toString() || '',
     priceMax: school.priceMax?.toString() || '',
-    cityId: '',
+    rating: school.rating?.toString() || '0',
+    reviewsCount: school.reviewsCount?.toString() || '0',
+    cityId: school.cityId || '',
+    provinceId: school.provinceId || '',
     isActive: school.isActive || true,
     isVerified: school.isVerified || false,
     isFeatured: school.isFeatured || false,
@@ -394,6 +397,44 @@ export default function EditSchoolForm({ school, onClose, onSuccess }: EditSchoo
                       value={formData.priceMax}
                       onChange={(e) => handleInputChange('priceMax', e.target.value)}
                       placeholder="Ej: 35000"
+                    />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Rating y Reseñas */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Calificación y Reseñas</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium mb-1">
+                      Rating (0-5)
+                    </label>
+                    <Input
+                      type="number"
+                      min="0"
+                      max="5"
+                      step="0.1"
+                      value={formData.rating}
+                      onChange={(e) => handleInputChange('rating', e.target.value)}
+                      placeholder="Ej: 4.5"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-1">
+                      Cantidad de Reseñas
+                    </label>
+                    <Input
+                      type="number"
+                      min="0"
+                      value={formData.reviewsCount}
+                      onChange={(e) => handleInputChange('reviewsCount', e.target.value)}
+                      placeholder="Ej: 150"
                     />
                   </div>
                 </div>

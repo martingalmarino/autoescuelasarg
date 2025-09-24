@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import { getActiveProvinces } from '@/lib/database'
 import ProvincesPageClient from './ProvincesPageClient'
 
 export const metadata: Metadata = {
@@ -11,7 +12,7 @@ export const metadata: Metadata = {
   },
 }
 
-export default function ProvincesPage() {
-  const provinces = getAllProvinces()
+export default async function ProvincesPage() {
+  const provinces = await getActiveProvinces()
   return <ProvincesPageClient provinces={provinces} />
 }

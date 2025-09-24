@@ -95,6 +95,8 @@ export async function PATCH(
     if (body.services !== undefined) updateData.services = body.services
     if (body.priceMin !== undefined) updateData.priceMin = body.priceMin ? parseInt(body.priceMin) : null
     if (body.priceMax !== undefined) updateData.priceMax = body.priceMax ? parseInt(body.priceMax) : null
+    if (body.rating !== undefined) updateData.rating = body.rating ? parseFloat(body.rating) : 0
+    if (body.reviewsCount !== undefined) updateData.reviewsCount = body.reviewsCount ? parseInt(body.reviewsCount) : 0
     if (body.isActive !== undefined) updateData.isActive = body.isActive
     if (body.isVerified !== undefined) updateData.isVerified = body.isVerified
     if (body.isFeatured !== undefined) updateData.isFeatured = body.isFeatured
