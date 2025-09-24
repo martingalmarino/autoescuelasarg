@@ -10,18 +10,7 @@ export default function AdminPage() {
   useEffect(() => {
     // Verificar variables de entorno (solo las públicas)
     const checkEnv = () => {
-      const requiredVars = [
-        'NEXT_PUBLIC_SUPABASE_URL',
-        'NEXT_PUBLIC_SUPABASE_ANON_KEY'
-      ]
-      
-      const missing = requiredVars.filter(varName => !process.env[varName])
-      
-      if (missing.length > 0) {
-        setError(`Variables de entorno faltantes: ${missing.join(', ')}`)
-        return false
-      }
-      
+      // Como estamos usando Neon, no necesitamos las variables de Supabase
       return true
     }
 
