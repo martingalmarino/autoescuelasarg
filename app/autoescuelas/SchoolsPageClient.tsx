@@ -213,10 +213,10 @@ export default function SchoolsPageClient({ schools, provinces, searchParams }: 
       <section className="py-6 sm:py-8 bg-muted/30">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="bg-white rounded-lg shadow-sm border p-4 sm:p-6">
-            {/* Mobile: Stack vertically, Desktop: Grid */}
-            <div className="flex flex-col space-y-4 md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-4 md:space-y-0">
-              {/* Search - Full width on all devices */}
-              <div className="w-full md:col-span-2 lg:col-span-1">
+            {/* Mobile: Simple search + one filter, Desktop: Full filters */}
+            <div className="space-y-4">
+              {/* Search - Always visible */}
+              <div className="w-full">
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                   <Input
@@ -228,13 +228,13 @@ export default function SchoolsPageClient({ schools, provinces, searchParams }: 
                 </div>
               </div>
 
-              {/* Province Filter */}
-              <div className="w-full">
+              {/* Mobile: Simple province filter only */}
+              <div className="block md:hidden">
                 <Select value={selectedProvince} onValueChange={handleProvinceChange}>
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Todas las provincias" />
                   </SelectTrigger>
-                  <SelectContent className="max-h-[200px] overflow-y-auto">
+                  <SelectContent className="max-h-[300px] overflow-y-auto">
                     <SelectItem value="all">Todas las provincias</SelectItem>
                     {provinces.map((province) => (
                       <SelectItem key={province.id} value={province.name}>
@@ -245,86 +245,121 @@ export default function SchoolsPageClient({ schools, provinces, searchParams }: 
                 </Select>
               </div>
 
-              {/* City Filter */}
-              <div className="w-full">
-                <Select 
-                  value={selectedCity} 
-                  onValueChange={handleCityChange}
-                  disabled={!selectedProvince || selectedProvince === 'all'}
-                >
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Todas las ciudades" />
-                  </SelectTrigger>
-                  <SelectContent className="max-h-[200px] overflow-y-auto">
-                    <SelectItem value="all">Todas las ciudades</SelectItem>
-                    {availableCities.map((city) => (
-                      <SelectItem key={city} value={city}>
-                        {city}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+              {/* Desktop: Full filters grid */}
+              <div className="hidden md:grid md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {/* Province Filter */}
+                <div className="w-full">
+                  <Select value={selectedProvince} onValueChange={handleProvinceChange}>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Todas las provincias" />
+                    </SelectTrigger>
+                    <SelectContent className="max-h-[200px] overflow-y-auto">
+                      <SelectItem value="all">Todas las provincias</SelectItem>
+                      {provinces.map((province) => (
+                        <SelectItem key={province.id} value={province.name}>
+                          {province.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
 
-              {/* Sort */}
-              <div className="w-full">
-                <Select value={sortBy} onValueChange={handleSortChange}>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Ordenar por" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="rating_desc">Mejor calificadas</SelectItem>
-                    <SelectItem value="rating_asc">Menor calificación</SelectItem>
-                    <SelectItem value="name_asc">Nombre A-Z</SelectItem>
-                    <SelectItem value="name_desc">Nombre Z-A</SelectItem>
-                    <SelectItem value="price_asc">Precio menor</SelectItem>
-                    <SelectItem value="price_desc">Precio mayor</SelectItem>
-                  </SelectContent>
-                </Select>
+                {/* City Filter */}
+                <div className="w-full">
+                  <Select 
+                    value={selectedCity} 
+                    onValueChange={handleCityChange}
+                    disabled={!selectedProvince || selectedProvince === 'all'}
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Todas las ciudades" />
+                    </SelectTrigger>
+                    <SelectContent className="max-h-[200px] overflow-y-auto">
+                      <SelectItem value="all">Todas las ciudades</SelectItem>
+                      {availableCities.map((city) => (
+                        <SelectItem key={city} value={city}>
+                          {city}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Sort */}
+                <div className="w-full">
+                  <Select value={sortBy} onValueChange={handleSortChange}>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Ordenar por" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="rating_desc">Mejor calificadas</SelectItem>
+                      <SelectItem value="rating_asc">Menor calificación</SelectItem>
+                      <SelectItem value="name_asc">Nombre A-Z</SelectItem>
+                      <SelectItem value="name_desc">Nombre Z-A</SelectItem>
+                      <SelectItem value="price_asc">Precio menor</SelectItem>
+                      <SelectItem value="price_desc">Precio mayor</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
             </div>
 
-            {/* Active Filters */}
+            {/* Active Filters - Simplified for mobile */}
             {(searchTerm || (selectedProvince && selectedProvince !== 'all') || (selectedCity && selectedCity !== 'all')) && (
               <div className="mt-4 pt-4 border-t border-gray-100">
-                <div className="flex flex-col space-y-3">
-                  <div className="flex flex-wrap gap-2">
-                    {searchTerm && (
-                      <Badge variant="secondary" className="flex items-center gap-1 text-xs px-2 py-1">
-                        <span className="truncate max-w-[100px] sm:max-w-[150px]">Búsqueda: {searchTerm}</span>
-                        <X 
-                          className="h-3 w-3 cursor-pointer flex-shrink-0 hover:text-red-500" 
-                          onClick={() => handleSearch('')}
-                        />
-                      </Badge>
-                    )}
-                    {selectedProvince && selectedProvince !== 'all' && (
-                      <Badge variant="secondary" className="flex items-center gap-1 text-xs px-2 py-1">
-                        <span className="truncate max-w-[80px] sm:max-w-[120px]">Provincia: {selectedProvince}</span>
-                        <X 
-                          className="h-3 w-3 cursor-pointer flex-shrink-0 hover:text-red-500" 
-                          onClick={() => handleProvinceChange('all')}
-                        />
-                      </Badge>
-                    )}
-                    {selectedCity && selectedCity !== 'all' && (
-                      <Badge variant="secondary" className="flex items-center gap-1 text-xs px-2 py-1">
-                        <span className="truncate max-w-[80px] sm:max-w-[120px]">Ciudad: {selectedCity}</span>
-                        <X 
-                          className="h-3 w-3 cursor-pointer flex-shrink-0 hover:text-red-500" 
-                          onClick={() => handleCityChange('all')}
-                        />
-                      </Badge>
-                    )}
-                  </div>
+                {/* Mobile: Simple clear button */}
+                <div className="block md:hidden">
                   <Button 
                     variant="outline" 
                     size="sm" 
                     onClick={clearFilters}
-                    className="text-xs w-full sm:w-auto self-start"
+                    className="text-xs w-full"
                   >
-                    Limpiar todos los filtros
+                    Limpiar filtros
                   </Button>
+                </div>
+                
+                {/* Desktop: Full filter badges */}
+                <div className="hidden md:block">
+                  <div className="flex flex-col space-y-3">
+                    <div className="flex flex-wrap gap-2">
+                      {searchTerm && (
+                        <Badge variant="secondary" className="flex items-center gap-1 text-xs px-2 py-1">
+                          <span className="truncate max-w-[150px]">Búsqueda: {searchTerm}</span>
+                          <X 
+                            className="h-3 w-3 cursor-pointer flex-shrink-0 hover:text-red-500" 
+                            onClick={() => handleSearch('')}
+                          />
+                        </Badge>
+                      )}
+                      {selectedProvince && selectedProvince !== 'all' && (
+                        <Badge variant="secondary" className="flex items-center gap-1 text-xs px-2 py-1">
+                          <span className="truncate max-w-[120px]">Provincia: {selectedProvince}</span>
+                          <X 
+                            className="h-3 w-3 cursor-pointer flex-shrink-0 hover:text-red-500" 
+                            onClick={() => handleProvinceChange('all')}
+                          />
+                        </Badge>
+                      )}
+                      {selectedCity && selectedCity !== 'all' && (
+                        <Badge variant="secondary" className="flex items-center gap-1 text-xs px-2 py-1">
+                          <span className="truncate max-w-[120px]">Ciudad: {selectedCity}</span>
+                          <X 
+                            className="h-3 w-3 cursor-pointer flex-shrink-0 hover:text-red-500" 
+                            onClick={() => handleCityChange('all')}
+                          />
+                        </Badge>
+                      )}
+                    </div>
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      onClick={clearFilters}
+                      className="text-xs w-auto self-start"
+                    >
+                      Limpiar todos los filtros
+                    </Button>
+                  </div>
                 </div>
               </div>
             )}
