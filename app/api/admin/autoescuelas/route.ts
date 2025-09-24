@@ -13,9 +13,11 @@ export async function GET() {
       include: {
         city: {
           select: {
+            id: true,
             name: true,
             province: {
               select: {
+                id: true,
                 name: true,
               },
             },
@@ -34,6 +36,8 @@ export async function GET() {
       ...school,
       city: school.city.name,
       province: school.city.province.name,
+      cityId: school.city.id,
+      provinceId: school.city.province.id,
     }))
 
     return NextResponse.json({ 
