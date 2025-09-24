@@ -117,7 +117,7 @@ export default function HeroLocation() {
         <div className="max-w-4xl mx-auto">
           {/* Main Heading */}
           <h1 className="mb-4 sm:mb-6 md:mb-8 text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tight text-white leading-tight">
-            Encuentra tu autoescuela{' '}
+            Encontrá tu autoescuela{' '}
             <span className="text-yellow-400">estés donde estés</span>
             <span className="text-white/80">…</span>
           </h1>

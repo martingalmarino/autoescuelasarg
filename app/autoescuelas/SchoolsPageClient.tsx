@@ -193,7 +193,7 @@ export default function SchoolsPageClient({ schools, provinces, searchParams }: 
               Todas las Autoescuelas
             </h1>
             <p className="text-lg sm:text-xl text-white/90 max-w-3xl mx-auto mb-8">
-              Encuentra la autoescuela perfecta para obtener tu licencia de conducir. 
+              Encontrá la autoescuela perfecta para obtener tu licencia de conducir. 
               Filtra por ubicación, calificación y precio.
             </p>
             <div className="flex items-center justify-center space-x-6 text-white/80">

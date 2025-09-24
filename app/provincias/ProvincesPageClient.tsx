@@ -25,7 +25,7 @@ export default function ProvincesPageClient({ provinces }: ProvincesPageClientPr
               Todas las Provincias
             </h1>
             <p className="text-lg sm:text-xl text-white/90 max-w-3xl mx-auto mb-8">
-              Encuentra autoescuelas en todas las provincias de Argentina. 
+              Encontrá autoescuelas en todas las provincias de Argentina. 
               Navega por provincia para encontrar la escuela de manejo más cercana a ti.
             </p>
             <div className="flex items-center justify-center space-x-6 text-white/80">

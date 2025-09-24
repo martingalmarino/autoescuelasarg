@@ -7,8 +7,8 @@ import Footer from '@/components/Footer'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Autoescuelas.ar - Encuentra tu escuela de manejo en Argentina',
-  description: 'El directorio más completo de escuelas de manejo en Argentina. Encuentra la autoescuela perfecta para obtener tu licencia de conducir. Busca por provincia, ciudad y calificaciones.',
+  title: 'Autoescuelas.ar - Encontrá tu escuela de manejo en Argentina',
+  description: 'El directorio más completo de escuelas de manejo en Argentina. Encontrá la autoescuela perfecta para obtener tu licencia de conducir. Buscá por provincia, ciudad y calificaciones.',
   keywords: 'autoescuelas, escuela de manejo, licencia de conducir, Argentina, aprender a manejar, clases de manejo',
   authors: [{ name: 'Autoescuelas.ar' }],
   creator: 'Autoescuelas.ar',
@@ -33,8 +33,8 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: 'Autoescuelas.ar - Encuentra tu escuela de manejo en Argentina',
-    description: 'El directorio más completo de escuelas de manejo en Argentina. Encuentra la autoescuela perfecta para obtener tu licencia de conducir.',
+    title: 'Autoescuelas.ar - Encontrá tu escuela de manejo en Argentina',
+    description: 'El directorio más completo de escuelas de manejo en Argentina. Encontrá la autoescuela perfecta para obtener tu licencia de conducir.',
     url: 'https://www.autoescuelas.ar',
     siteName: 'Autoescuelas.ar',
     locale: 'es_AR',
@@ -50,8 +50,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Autoescuelas.ar - Encuentra tu escuela de manejo en Argentina',
-    description: 'El directorio más completo de escuelas de manejo en Argentina. Encuentra la autoescuela perfecta para obtener tu licencia de conducir.',
+    title: 'Autoescuelas.ar - Encontrá tu escuela de manejo en Argentina',
+    description: 'El directorio más completo de escuelas de manejo en Argentina. Encontrá la autoescuela perfecta para obtener tu licencia de conducir.',
     images: ['/og-image.jpg'],
   },
   robots: {
