@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
 import { getSchoolBySlug } from '@/lib/mock-data'
+import { getSchoolBySlugFromDB } from '@/lib/database'
 import { formatPrice, formatRating, formatReviews } from '@/lib/utils'
 import SchoolPageClient from './SchoolPageClient'
 
@@ -10,7 +11,7 @@ interface SchoolPageProps {
 }
 
 export async function generateMetadata({ params }: SchoolPageProps): Promise<Metadata> {
-  const school = getSchoolBySlug(params.slug)
+  const school = await getSchoolBySlugFromDB(params.slug)
   
   if (!school) {
     return {

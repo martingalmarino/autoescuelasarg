@@ -1,5 +1,6 @@
 "use client"
 
+import { useState, useEffect } from 'react'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -30,10 +31,77 @@ interface SchoolPageClientProps {
   }
 }
 
-export default function SchoolPageClient({ params }: SchoolPageClientProps) {
-  const school = getSchoolBySlug(params.slug)
+interface DrivingSchool {
+  id: string
+  name: string
+  slug: string
+  rating: number
+  reviewsCount: number
+  city: string
+  province: string
+  imageUrl?: string | null
+  priceMin?: number | null
+  priceMax?: number | null
+  description?: string | null
+  address?: string | null
+  phone?: string | null
+  email?: string | null
+  website?: string | null
+  hours?: string | null
+  services?: string[]
+  isActive?: boolean
+  isVerified?: boolean
+  isFeatured?: boolean
+  createdAt: Date
+  updatedAt: Date
+}
 
-  if (!school) {
+export default function SchoolPageClient({ params }: SchoolPageClientProps) {
+  const [school, setSchool] = useState<DrivingSchool | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    const fetchSchool = async () => {
+      try {
+        setLoading(true)
+        const response = await fetch(`/api/autoescuelas/${params.slug}`)
+        if (response.ok) {
+          const data = await response.json()
+          if (data.success && data.school) {
+            setSchool(data.school)
+          } else {
+            setError('Autoescuela no encontrada')
+          }
+        } else if (response.status === 404) {
+          setError('Autoescuela no encontrada')
+        } else {
+          setError('Error al cargar la autoescuela')
+        }
+      } catch (err) {
+        setError('Error de conexión')
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchSchool()
+  }, [params.slug])
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 py-8">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="text-center p-8">
+            <div className="animate-spin inline-block w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full mb-4"></div>
+            <div className="text-blue-600">Cargando autoescuela...</div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  if (error || !school) {
     notFound()
   }
 
