@@ -1,10 +1,12 @@
 import { MeiliSearch } from 'meilisearch'
 
 // Configuración del cliente de Meilisearch
-const client = new MeiliSearch({
-  host: process.env.MEILISEARCH_HOST || 'http://localhost:7700',
-  apiKey: process.env.MEILISEARCH_API_KEY || 'masterKey',
-})
+const client = process.env.MEILISEARCH_HOST && process.env.MEILISEARCH_API_KEY 
+  ? new MeiliSearch({
+      host: process.env.MEILISEARCH_HOST,
+      apiKey: process.env.MEILISEARCH_API_KEY,
+    })
+  : null
 
 // Índices
 export const searchIndexes = {
@@ -62,6 +64,10 @@ export async function searchSchools(query: string, filters?: {
   maxPrice?: number
   minPrice?: number
 }) {
+  if (!searchClient) {
+    return { hits: [], totalHits: 0, processingTimeMs: 0 }
+  }
+  
   try {
     const index = searchClient.index(searchIndexes.schools)
     
@@ -112,6 +118,10 @@ export async function searchSchools(query: string, filters?: {
 }
 
 export async function searchProvinces(query: string) {
+  if (!searchClient) {
+    return { hits: [], totalHits: 0, processingTimeMs: 0 }
+  }
+  
   try {
     const index = searchClient.index(searchIndexes.provinces)
     
@@ -131,6 +141,10 @@ export async function searchProvinces(query: string) {
 }
 
 export async function searchCities(query: string, province?: string) {
+  if (!searchClient) {
+    return { hits: [], totalHits: 0, processingTimeMs: 0 }
+  }
+  
   try {
     const index = searchClient.index(searchIndexes.cities)
     
@@ -157,6 +171,11 @@ export async function searchCities(query: string, province?: string) {
 
 // Función para indexar datos
 export async function indexSchools(schools: SearchSchool[]) {
+  if (!searchClient) {
+    console.log('⚠️ Meilisearch not configured, skipping indexing')
+    return
+  }
+  
   try {
     const index = searchClient.index(searchIndexes.schools)
     
@@ -178,6 +197,11 @@ export async function indexSchools(schools: SearchSchool[]) {
 }
 
 export async function indexProvinces(provinces: SearchProvince[]) {
+  if (!searchClient) {
+    console.log('⚠️ Meilisearch not configured, skipping indexing')
+    return
+  }
+  
   try {
     const index = searchClient.index(searchIndexes.provinces)
     
@@ -197,6 +221,11 @@ export async function indexProvinces(provinces: SearchProvince[]) {
 }
 
 export async function indexCities(cities: SearchCity[]) {
+  if (!searchClient) {
+    console.log('⚠️ Meilisearch not configured, skipping indexing')
+    return
+  }
+  
   try {
     const index = searchClient.index(searchIndexes.cities)
     
