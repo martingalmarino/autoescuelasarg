@@ -12,11 +12,17 @@ export default async function AdminPage() {
   // Test de conexión (solo en desarrollo)
   let connectionTest = null
   if (process.env.NODE_ENV === 'development') {
-    connectionTest = await testSupabaseConnection()
+    try {
+      connectionTest = await testSupabaseConnection()
+    } catch (error) {
+      console.error('Connection test failed:', error)
+      connectionTest = false
+    }
   }
 
   // Obtener estadísticas básicas
   let stats = null
+  let dbError = null
   try {
     const [provincesCount, schoolsCount, citiesCount] = await Promise.all([
       prisma.province.count(),
@@ -31,6 +37,7 @@ export default async function AdminPage() {
     }
   } catch (error) {
     console.error('Error fetching stats:', error)
+    dbError = error instanceof Error ? error.message : 'Unknown database error'
   }
 
   return (
@@ -72,10 +79,10 @@ export default async function AdminPage() {
         </div>
 
         {/* Estadísticas */}
-        {stats && (
-          <div className="bg-white rounded-lg shadow p-6 mb-6">
-            <h2 className="text-xl font-semibold mb-4">Estadísticas</h2>
-            
+        <div className="bg-white rounded-lg shadow p-6 mb-6">
+          <h2 className="text-xl font-semibold mb-4">Estadísticas</h2>
+          
+          {stats ? (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="text-center p-4 bg-blue-50 rounded-lg">
                 <div className="text-2xl font-bold text-blue-600">{stats.provinces}</div>
@@ -92,8 +99,18 @@ export default async function AdminPage() {
                 <div className="text-sm text-gray-600">Autoescuelas</div>
               </div>
             </div>
-          </div>
-        )}
+          ) : (
+            <div className="text-center p-8">
+              <div className="text-red-600 mb-2">❌ Error de conexión a la base de datos</div>
+              <div className="text-sm text-gray-600 mb-4">
+                {dbError || 'No se pudo conectar a la base de datos'}
+              </div>
+              <div className="text-xs text-gray-500">
+                Verifica que la DATABASE_URL esté configurada correctamente en Vercel
+              </div>
+            </div>
+          )}
+        </div>
 
         {/* Acciones de administración */}
         <div className="bg-white rounded-lg shadow p-6">
@@ -125,9 +142,14 @@ export default async function AdminPage() {
                     alert('❌ Error al indexar datos')
                   }
                 }}
-                className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors"
+                disabled={!stats}
+                className={`px-4 py-2 rounded transition-colors ${
+                  stats 
+                    ? 'bg-blue-600 text-white hover:bg-blue-700' 
+                    : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                }`}
               >
-                Indexar Datos
+                {stats ? 'Indexar Datos' : 'Base de datos no disponible'}
               </button>
             </div>
           </div>
