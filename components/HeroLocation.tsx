@@ -103,7 +103,7 @@ export default function HeroLocation() {
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: "url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1920&h=1080&fit=crop&crop=center')"
+          backgroundImage: "url('/images/hero-image.jpg')"
         }}
       />
       
