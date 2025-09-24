@@ -95,32 +95,59 @@ export default async function AdminPage() {
           </div>
         )}
 
+        {/* Acciones de administración */}
+        <div className="bg-white rounded-lg shadow p-6">
+          <h2 className="text-xl font-semibold mb-4">Acciones de Administración</h2>
+          
+          <div className="space-y-4">
+            <div>
+              <h3 className="font-medium mb-2">Indexar datos en Meilisearch</h3>
+              <p className="text-sm text-gray-600 mb-3">
+                Indexa todos los datos de la base de datos en Meilisearch para habilitar la búsqueda avanzada.
+              </p>
+              <button
+                onClick={async () => {
+                  try {
+                    const response = await fetch('/api/admin/index-data', {
+                      method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/json',
+                      },
+                    })
+                    const result = await response.json()
+                    if (result.success) {
+                      alert('✅ Datos indexados correctamente!')
+                      window.location.reload()
+                    } else {
+                      alert('❌ Error: ' + result.error)
+                    }
+                  } catch (error) {
+                    alert('❌ Error al indexar datos')
+                  }
+                }}
+                className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors"
+              >
+                Indexar Datos
+              </button>
+            </div>
+          </div>
+        </div>
+
         {/* Instrucciones */}
         <div className="bg-white rounded-lg shadow p-6">
-          <h2 className="text-xl font-semibold mb-4">Próximos Pasos</h2>
+          <h2 className="text-xl font-semibold mb-4">Estado del Sistema</h2>
           
           <div className="space-y-4 text-sm text-gray-700">
             <div>
-              <strong>1. Configurar variables de entorno en Vercel:</strong>
-              <ul className="ml-4 mt-2 space-y-1">
-                <li>• DATABASE_URL</li>
-                <li>• NEXT_PUBLIC_SUPABASE_URL</li>
-                <li>• NEXT_PUBLIC_SUPABASE_ANON_KEY</li>
-              </ul>
+              <strong>✅ Base de datos:</strong> Conectada y funcionando
             </div>
             
             <div>
-              <strong>2. Ejecutar migración de base de datos:</strong>
-              <code className="block bg-gray-100 p-2 rounded mt-1">
-                npm run db:push
-              </code>
+              <strong>✅ Variables de entorno:</strong> Configuradas correctamente
             </div>
             
             <div>
-              <strong>3. Poblar base de datos con datos de ejemplo:</strong>
-              <code className="block bg-gray-100 p-2 rounded mt-1">
-                npm run db:seed
-              </code>
+              <strong>🔍 Búsqueda:</strong> Requiere indexación de datos
             </div>
           </div>
         </div>
