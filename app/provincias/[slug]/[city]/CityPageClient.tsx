@@ -142,6 +142,20 @@ export default function CityPageClient({ params, city, schools }: CityPageClient
                           </div>
                         </div>
                       )}
+                      
+                      {/* Logo overlay */}
+                      {school.logoUrl && (
+                        <div className="absolute top-2 left-2 w-12 h-12 rounded-lg overflow-hidden bg-white shadow-md border-2 border-white">
+                          <Image
+                            src={school.logoUrl}
+                            alt={`Logo de ${school.name}`}
+                            fill
+                            className="object-contain p-1"
+                            sizes="48px"
+                          />
+                        </div>
+                      )}
+                      
                       {school.isFeatured && (
                         <div className="absolute top-2 right-2 bg-yellow-500 text-white px-2 py-1 rounded-full text-xs font-medium">
                           Destacada

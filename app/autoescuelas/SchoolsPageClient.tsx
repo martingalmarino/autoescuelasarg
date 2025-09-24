@@ -370,6 +370,19 @@ export default function SchoolsPageClient({ schools, provinces, searchParams }: 
                               <div className="text-4xl text-muted-foreground">🚗</div>
                             </div>
                           )}
+                          
+                          {/* Logo overlay */}
+                          {school.logoUrl && (
+                            <div className="absolute top-3 right-3 w-14 h-14 rounded-lg overflow-hidden bg-white shadow-lg border-2 border-white">
+                              <Image
+                                src={school.logoUrl}
+                                alt={`Logo de ${school.name}`}
+                                fill
+                                className="object-contain p-1"
+                                sizes="56px"
+                              />
+                            </div>
+                          )}
                         </div>
 
                         {/* Content */}

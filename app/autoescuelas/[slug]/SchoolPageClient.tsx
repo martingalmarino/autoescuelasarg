@@ -159,9 +159,22 @@ export default function SchoolPageClient({ params }: SchoolPageClientProps) {
               <ArrowLeft className="h-4 w-4 mr-2" />
               Volver a {school.province}
             </Link>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
-              {school.name}
-            </h1>
+            <div className="flex items-center gap-4 mb-4">
+              {school.logoUrl && (
+                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg overflow-hidden bg-white shadow-lg border-2 border-white flex-shrink-0">
+                  <Image
+                    src={school.logoUrl}
+                    alt={`Logo de ${school.name}`}
+                    width={80}
+                    height={80}
+                    className="object-contain p-2"
+                  />
+                </div>
+              )}
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold">
+                {school.name}
+              </h1>
+            </div>
             <div className="flex flex-wrap items-center gap-4 text-white/90">
               <div className="flex items-center space-x-2">
                 <MapPin className="h-5 w-5" />

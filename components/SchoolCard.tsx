@@ -36,6 +36,19 @@ export default function SchoolCard({ school }: SchoolCardProps) {
                 <div className="text-3xl sm:text-4xl text-muted-foreground">🚗</div>
               </div>
             )}
+            
+            {/* Logo overlay */}
+            {school.logoUrl && (
+              <div className="absolute top-2 right-2 w-12 h-12 sm:w-14 sm:h-14 rounded-lg overflow-hidden bg-white shadow-md border-2 border-white">
+                <Image
+                  src={school.logoUrl}
+                  alt={`Logo de ${school.name}`}
+                  fill
+                  className="object-contain p-1"
+                  sizes="56px"
+                />
+              </div>
+            )}
           </div>
 
           {/* Content */}
