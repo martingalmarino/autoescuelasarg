@@ -236,6 +236,37 @@ export async function searchSchools(query: string, filters?: {
   }))
 }
 
+export async function getAllSchoolsFromDB() {
+  const schools = await prisma.drivingSchool.findMany({
+    where: { isActive: true },
+    include: {
+      city: {
+        select: {
+          name: true,
+          province: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      },
+    },
+    orderBy: [
+      { isFeatured: 'desc' },
+      { sortOrder: 'asc' },
+      { rating: 'desc' },
+    ],
+  })
+
+  // Transform to match DrivingSchool interface
+  return schools.map(school => ({
+    ...school,
+    city: school.city.name,
+    province: school.city.province.name,
+    hours: school.hours || undefined,
+  }))
+}
+
 export async function getDatabaseStats() {
   const [provinces, cities, schools] = await Promise.all([
     prisma.province.count({ where: { isActive: true } }),

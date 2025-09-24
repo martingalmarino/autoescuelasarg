@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
 import { getAllSchools, getAllProvinces } from '@/lib/mock-data'
+import { getActiveProvinces, getAllSchoolsFromDB } from '@/lib/database'
 import SchoolsPageClient from './SchoolsPageClient'
 
 export const metadata: Metadata = {
@@ -22,9 +23,12 @@ interface SchoolsPageProps {
   }
 }
 
-export default function SchoolsPage({ searchParams }: SchoolsPageProps) {
-  const schools = getAllSchools()
-  const provinces = getAllProvinces()
+export default async function SchoolsPage({ searchParams }: SchoolsPageProps) {
+  // Usar datos de la base de datos
+  const [provinces, schools] = await Promise.all([
+    getActiveProvinces(),
+    getAllSchoolsFromDB()
+  ])
   
   return <SchoolsPageClient 
     schools={schools} 
