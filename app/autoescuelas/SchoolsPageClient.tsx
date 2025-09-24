@@ -210,27 +210,28 @@ export default function SchoolsPageClient({ schools, provinces, searchParams }: 
       </section>
 
       {/* Filters Section */}
-      <section className="py-8 bg-muted/30">
+      <section className="py-6 sm:py-8 bg-muted/30">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="bg-white rounded-lg shadow-sm border p-4 sm:p-6">
-            <div className="flex flex-col lg:flex-row gap-4">
-              {/* Search */}
-              <div className="flex-1">
+            {/* Mobile: Stack vertically, Desktop: Horizontal */}
+            <div className="space-y-4 sm:space-y-0 sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:gap-4">
+              {/* Search - Full width on mobile, spans 2 columns on desktop */}
+              <div className="sm:col-span-2 lg:col-span-1">
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                   <Input
                     placeholder="Buscar autoescuelas..."
                     value={searchTerm}
                     onChange={(e) => handleSearch(e.target.value)}
-                    className="pl-10"
+                    className="pl-10 w-full"
                   />
                 </div>
               </div>
 
               {/* Province Filter */}
-              <div className="w-full lg:w-48">
+              <div className="w-full">
                 <Select value={selectedProvince} onValueChange={handleProvinceChange}>
-                  <SelectTrigger>
+                  <SelectTrigger className="w-full">
                     <SelectValue placeholder="Todas las provincias" />
                   </SelectTrigger>
                   <SelectContent>
@@ -245,13 +246,13 @@ export default function SchoolsPageClient({ schools, provinces, searchParams }: 
               </div>
 
               {/* City Filter */}
-              <div className="w-full lg:w-48">
+              <div className="w-full">
                 <Select 
                   value={selectedCity} 
                   onValueChange={handleCityChange}
-                  disabled={!selectedProvince}
+                  disabled={!selectedProvince || selectedProvince === 'all'}
                 >
-                  <SelectTrigger>
+                  <SelectTrigger className="w-full">
                     <SelectValue placeholder="Todas las ciudades" />
                   </SelectTrigger>
                   <SelectContent>
@@ -266,9 +267,9 @@ export default function SchoolsPageClient({ schools, provinces, searchParams }: 
               </div>
 
               {/* Sort */}
-              <div className="w-full lg:w-48">
+              <div className="w-full">
                 <Select value={sortBy} onValueChange={handleSortChange}>
-                  <SelectTrigger>
+                  <SelectTrigger className="w-full">
                     <SelectValue placeholder="Ordenar por" />
                   </SelectTrigger>
                   <SelectContent>
@@ -285,41 +286,43 @@ export default function SchoolsPageClient({ schools, provinces, searchParams }: 
 
             {/* Active Filters */}
             {(searchTerm || (selectedProvince && selectedProvince !== 'all') || (selectedCity && selectedCity !== 'all')) && (
-              <div className="mt-4 flex flex-wrap gap-2">
-                {searchTerm && (
-                  <Badge variant="secondary" className="flex items-center gap-1">
-                    Búsqueda: {searchTerm}
-                    <X 
-                      className="h-3 w-3 cursor-pointer" 
-                      onClick={() => handleSearch('')}
-                    />
-                  </Badge>
-                )}
-                {selectedProvince && selectedProvince !== 'all' && (
-                  <Badge variant="secondary" className="flex items-center gap-1">
-                    Provincia: {selectedProvince}
-                    <X 
-                      className="h-3 w-3 cursor-pointer" 
-                      onClick={() => handleProvinceChange('all')}
-                    />
-                  </Badge>
-                )}
-                {selectedCity && selectedCity !== 'all' && (
-                  <Badge variant="secondary" className="flex items-center gap-1">
-                    Ciudad: {selectedCity}
-                    <X 
-                      className="h-3 w-3 cursor-pointer" 
-                      onClick={() => handleCityChange('all')}
-                    />
-                  </Badge>
-                )}
+              <div className="mt-4 space-y-2">
+                <div className="flex flex-wrap gap-2">
+                  {searchTerm && (
+                    <Badge variant="secondary" className="flex items-center gap-1 text-xs">
+                      <span className="truncate max-w-[120px] sm:max-w-none">Búsqueda: {searchTerm}</span>
+                      <X 
+                        className="h-3 w-3 cursor-pointer flex-shrink-0" 
+                        onClick={() => handleSearch('')}
+                      />
+                    </Badge>
+                  )}
+                  {selectedProvince && selectedProvince !== 'all' && (
+                    <Badge variant="secondary" className="flex items-center gap-1 text-xs">
+                      <span className="truncate max-w-[100px] sm:max-w-none">Provincia: {selectedProvince}</span>
+                      <X 
+                        className="h-3 w-3 cursor-pointer flex-shrink-0" 
+                        onClick={() => handleProvinceChange('all')}
+                      />
+                    </Badge>
+                  )}
+                  {selectedCity && selectedCity !== 'all' && (
+                    <Badge variant="secondary" className="flex items-center gap-1 text-xs">
+                      <span className="truncate max-w-[100px] sm:max-w-none">Ciudad: {selectedCity}</span>
+                      <X 
+                        className="h-3 w-3 cursor-pointer flex-shrink-0" 
+                        onClick={() => handleCityChange('all')}
+                      />
+                    </Badge>
+                  )}
+                </div>
                 <Button 
                   variant="ghost" 
                   size="sm" 
                   onClick={clearFilters}
-                  className="text-xs"
+                  className="text-xs w-full sm:w-auto"
                 >
-                  Limpiar filtros
+                  Limpiar todos los filtros
                 </Button>
               </div>
             )}
@@ -345,7 +348,7 @@ export default function SchoolsPageClient({ schools, provinces, searchParams }: 
           {/* Schools Grid */}
           {paginatedSchools.length > 0 ? (
             <>
-              <div className="grid gap-6 sm:gap-8 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
+              <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {paginatedSchools.map((school) => (
                   <Link
                     key={school.id}
@@ -386,17 +389,17 @@ export default function SchoolsPageClient({ schools, provinces, searchParams }: 
                         </div>
 
                         {/* Content */}
-                        <div className="p-4 sm:p-6">
+                        <div className="p-3 sm:p-4 lg:p-6">
                           {/* Name */}
-                          <h3 className="mb-2 text-lg sm:text-xl font-semibold text-foreground group-hover:text-primary transition-colors">
+                          <h3 className="mb-2 text-base sm:text-lg lg:text-xl font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-2">
                             {school.name}
                           </h3>
 
                           {/* Rating */}
-                          <div className="mb-3 flex items-center space-x-2">
+                          <div className="mb-2 sm:mb-3 flex flex-col sm:flex-row sm:items-center space-y-1 sm:space-y-0 sm:space-x-2">
                             <div className="flex items-center space-x-1">
-                              <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                              <span className="text-sm font-medium text-foreground">
+                              <Star className="h-3 w-3 sm:h-4 sm:w-4 fill-yellow-400 text-yellow-400" />
+                              <span className="text-xs sm:text-sm font-medium text-foreground">
                                 {formatRating(school.rating)}
                               </span>
                             </div>
@@ -409,44 +412,44 @@ export default function SchoolsPageClient({ schools, provinces, searchParams }: 
                           </div>
 
                           {/* Location */}
-                          <div className="mb-3 flex items-center space-x-1 text-muted-foreground">
-                            <MapPin className="h-3 w-3" />
-                            <span className="text-sm">
+                          <div className="mb-2 sm:mb-3 flex items-center space-x-1 text-muted-foreground">
+                            <MapPin className="h-3 w-3 flex-shrink-0" />
+                            <span className="text-xs sm:text-sm truncate">
                               {school.city}, {school.province}
                             </span>
                           </div>
 
                           {/* Description */}
                           {school.description && (
-                            <p className="mb-3 text-sm text-muted-foreground line-clamp-2">
+                            <p className="mb-2 sm:mb-3 text-xs sm:text-sm text-muted-foreground line-clamp-2">
                               {school.description}
                             </p>
                           )}
 
                           {/* Price Range */}
                           {school.priceMin && school.priceMax && (
-                            <div className="text-sm font-medium text-primary mb-3">
+                            <div className="text-xs sm:text-sm font-medium text-primary mb-2 sm:mb-3">
                               {formatPrice(school.priceMin)} - {formatPrice(school.priceMax)}
                             </div>
                           )}
 
                           {/* Contact Info */}
-                          <div className="pt-3 border-t flex items-center justify-between">
-                            <div className="flex items-center space-x-3 text-xs text-muted-foreground">
+                          <div className="pt-2 sm:pt-3 border-t flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-2 sm:space-y-0">
+                            <div className="flex items-center space-x-2 sm:space-x-3 text-xs text-muted-foreground">
                               {school.phone && (
                                 <div className="flex items-center space-x-1">
                                   <Phone className="h-3 w-3" />
-                                  <span>Llamar</span>
+                                  <span className="hidden sm:inline">Llamar</span>
                                 </div>
                               )}
                               {school.email && (
                                 <div className="flex items-center space-x-1">
                                   <Mail className="h-3 w-3" />
-                                  <span>Email</span>
+                                  <span className="hidden sm:inline">Email</span>
                                 </div>
                               )}
                             </div>
-                            <div className="text-primary text-sm font-medium">
+                            <div className="text-primary text-xs sm:text-sm font-medium">
                               Ver detalles →
                             </div>
                           </div>
@@ -459,48 +462,78 @@ export default function SchoolsPageClient({ schools, provinces, searchParams }: 
 
               {/* Pagination */}
               {totalPages > 1 && (
-                <div className="mt-8 flex items-center justify-center space-x-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => handlePageChange(currentPage - 1)}
-                    disabled={currentPage === 1}
-                  >
-                    <ArrowLeft className="h-4 w-4" />
-                    Anterior
-                  </Button>
+                <div className="mt-6 sm:mt-8">
+                  {/* Mobile: Simple pagination */}
+                  <div className="flex items-center justify-between sm:hidden">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handlePageChange(currentPage - 1)}
+                      disabled={currentPage === 1}
+                      className="flex-1 mr-2"
+                    >
+                      <ArrowLeft className="h-4 w-4 mr-1" />
+                      Anterior
+                    </Button>
+                    <span className="text-sm text-muted-foreground px-4">
+                      {currentPage} de {totalPages}
+                    </span>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handlePageChange(currentPage + 1)}
+                      disabled={currentPage === totalPages}
+                      className="flex-1 ml-2"
+                    >
+                      Siguiente
+                      <ArrowRight className="h-4 w-4 ml-1" />
+                    </Button>
+                  </div>
                   
-                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
-                    if (
-                      page === 1 ||
-                      page === totalPages ||
-                      (page >= currentPage - 1 && page <= currentPage + 1)
-                    ) {
-                      return (
-                        <Button
-                          key={page}
-                          variant={page === currentPage ? "default" : "outline"}
-                          size="sm"
-                          onClick={() => handlePageChange(page)}
-                        >
-                          {page}
-                        </Button>
-                      )
-                    } else if (page === currentPage - 2 || page === currentPage + 2) {
-                      return <span key={page} className="text-muted-foreground">...</span>
-                    }
-                    return null
-                  })}
-                  
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => handlePageChange(currentPage + 1)}
-                    disabled={currentPage === totalPages}
-                  >
-                    Siguiente
-                    <ArrowRight className="h-4 w-4" />
-                  </Button>
+                  {/* Desktop: Full pagination */}
+                  <div className="hidden sm:flex items-center justify-center space-x-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handlePageChange(currentPage - 1)}
+                      disabled={currentPage === 1}
+                    >
+                      <ArrowLeft className="h-4 w-4" />
+                      Anterior
+                    </Button>
+                    
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
+                      if (
+                        page === 1 ||
+                        page === totalPages ||
+                        (page >= currentPage - 1 && page <= currentPage + 1)
+                      ) {
+                        return (
+                          <Button
+                            key={page}
+                            variant={page === currentPage ? "default" : "outline"}
+                            size="sm"
+                            onClick={() => handlePageChange(page)}
+                          >
+                            {page}
+                          </Button>
+                        )
+                      } else if (page === currentPage - 2 || page === currentPage + 2) {
+                        return <span key={page} className="text-muted-foreground">...</span>
+                      }
+                      return null
+                    })}
+                    
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handlePageChange(currentPage + 1)}
+                      disabled={currentPage === totalPages}
+                    >
+                      Siguiente
+                      <ArrowRight className="h-4 w-4" />
+                    </Button>
+                  </div>
                 </div>
               )}
             </>
