@@ -302,18 +302,11 @@ export default function SchoolPageClient({ params }: SchoolPageClientProps) {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-2 text-sm">
-                    <div className="flex justify-between">
-                      <span>Lunes - Viernes</span>
-                      <span className="text-muted-foreground">{school.hours.monday}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Sábado</span>
-                      <span className="text-muted-foreground">{school.hours.saturday}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Domingo</span>
-                      <span className="text-muted-foreground">{school.hours.sunday}</span>
-                    </div>
+                    {school.hours && (
+                      <div className="text-muted-foreground">
+                        {school.hours}
+                      </div>
+                    )}
                   </div>
                 </CardContent>
               </Card>
