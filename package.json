@@ -26,6 +26,7 @@
     "@radix-ui/react-slot": "^1.2.3",
     "@supabase/supabase-js": "^2.57.4",
     "class-variance-authority": "^0.7.0",
+    "cloudinary": "^2.7.0",
     "clsx": "^2.0.0",
     "lucide-react": "^0.303.0",
     "meilisearch": "^0.53.0",
