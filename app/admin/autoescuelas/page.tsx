@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/badge'
 import { Plus, Edit, Trash2, Eye, Search } from 'lucide-react'
 import Link from 'next/link'
 import AddSchoolForm from '@/components/AddSchoolForm'
+import EditSchoolForm from '@/components/EditSchoolForm'
 
 interface DrivingSchool {
   id: string
@@ -40,6 +41,7 @@ export default function AutoescuelasAdminPage() {
   const [error, setError] = useState<string | null>(null)
   const [searchTerm, setSearchTerm] = useState('')
   const [showAddForm, setShowAddForm] = useState(false)
+  const [editingSchool, setEditingSchool] = useState<DrivingSchool | null>(null)
 
   useEffect(() => {
     fetchSchools()
@@ -255,7 +257,11 @@ export default function AutoescuelasAdminPage() {
                             <Eye className="h-4 w-4" />
                           </Link>
                         </Button>
-                        <Button variant="outline" size="sm">
+                        <Button 
+                          variant="outline" 
+                          size="sm"
+                          onClick={() => setEditingSchool(school)}
+                        >
                           <Edit className="h-4 w-4" />
                         </Button>
                         <Button
@@ -288,6 +294,18 @@ export default function AutoescuelasAdminPage() {
             onSuccess={() => {
               fetchSchools()
               setShowAddForm(false)
+            }}
+          />
+        )}
+
+        {/* Edit Form Modal */}
+        {editingSchool && (
+          <EditSchoolForm
+            school={editingSchool}
+            onClose={() => setEditingSchool(null)}
+            onSuccess={() => {
+              fetchSchools()
+              setEditingSchool(null)
             }}
           />
         )}
