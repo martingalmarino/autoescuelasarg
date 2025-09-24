@@ -1,7 +1,9 @@
 import { Metadata } from 'next'
-import { getProvinceBySlug } from '@/lib/mock-data'
 import { getProvinceBySlugFromDB, getSchoolsByProvinceSlug } from '@/lib/database'
 import ProvincePageClient from './ProvincePageClient'
+
+// Forzar revalidación dinámica
+export const dynamic = 'force-dynamic'
 
 interface ProvincePageProps {
   params: {

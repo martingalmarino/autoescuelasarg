@@ -6,6 +6,9 @@ import JsonLd from '@/components/SEO/JsonLd'
 import { FAQ } from '@/lib/types'
 import { getActiveProvinces, getFeaturedSchools } from '@/lib/database'
 
+// Forzar revalidación dinámica
+export const dynamic = 'force-dynamic'
+
 // FAQ data - contenido estático que puede quedarse hardcodeado
 const faqData: FAQ[] = [
   {

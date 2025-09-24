@@ -2,6 +2,9 @@ import { Metadata } from 'next'
 import { getActiveProvinces, getAllSchoolsFromDB } from '@/lib/database'
 import SchoolsPageClient from './SchoolsPageClient'
 
+// Forzar revalidación dinámica
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: 'Todas las Autoescuelas - Autoescuelas.ar',
   description: 'Encuentra todas las autoescuelas de Argentina. Filtra por provincia, ciudad y calificación. Compara precios y lee reseñas de estudiantes.',
