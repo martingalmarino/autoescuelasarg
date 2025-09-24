@@ -116,7 +116,7 @@ export default function HeroLocation() {
       <div className="relative z-10 container mx-auto px-4 text-center py-6 sm:py-8 md:py-0">
         <div className="max-w-4xl mx-auto">
           {/* Main Heading */}
-          <h1 className="mb-3 sm:mb-4 md:mb-6 lg:mb-8 text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-bold tracking-tight text-white leading-tight">
+          <h1 className="mb-3 sm:mb-4 md:mb-6 lg:mb-8 text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tight text-white leading-tight">
             Encontrá tu autoescuela{' '}
             <span className="text-yellow-400">estés donde estés</span>
             <span className="text-white/80">…</span>
@@ -182,9 +182,9 @@ export default function HeroLocation() {
             <Button
               size="lg"
               onClick={handleViewAll}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-6 sm:px-8 md:px-10 py-2.5 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg font-semibold rounded-lg shadow-lg transition-all duration-200 hover:shadow-xl w-auto mx-auto block sm:inline-block"
+              className="bg-blue-600 hover:bg-blue-700 text-white px-8 sm:px-10 md:px-12 py-3 sm:py-4 md:py-5 text-base sm:text-lg md:text-xl font-semibold rounded-lg shadow-lg transition-all duration-200 hover:shadow-xl w-auto mx-auto block sm:inline-block"
             >
-              <MapPin className="mr-1 sm:mr-2 h-3 w-3 sm:h-4 sm:w-4 md:h-5 md:w-5" />
+              <MapPin className="mr-2 sm:mr-3 h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6" />
               VER TODAS
             </Button>
             <p className="text-white/90 text-xs sm:text-sm">
