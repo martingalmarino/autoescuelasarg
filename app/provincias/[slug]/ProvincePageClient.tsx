@@ -75,7 +75,7 @@ export default function ProvincePageClient({ params, province, schools, cities }
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative h-64 sm:h-80 bg-gradient-to-r from-blue-600 to-blue-800">
+      <section className="relative min-h-[400px] sm:min-h-[500px] bg-gradient-to-r from-blue-600 to-blue-800">
         {province.imageUrl && (
           <div className="absolute inset-0">
             <Image
@@ -87,29 +87,29 @@ export default function ProvincePageClient({ params, province, schools, cities }
             />
           </div>
         )}
-        <div className="relative z-10 container mx-auto px-4 sm:px-6 h-full flex items-center">
-          <div className="text-white">
+        <div className="relative z-10 container mx-auto px-4 sm:px-6 py-8 sm:py-12 h-full flex items-center">
+          <div className="text-white w-full">
             <Link 
               href="/provincias" 
-              className="inline-flex items-center text-white/80 hover:text-white mb-4 transition-colors"
+              className="inline-flex items-center text-white/80 hover:text-white mb-3 sm:mb-4 transition-colors text-sm sm:text-base"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
               Volver a provincias
             </Link>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 leading-tight">
               Autoescuelas en {province.name}
             </h1>
-            <p className="text-lg sm:text-xl text-white/90 max-w-2xl">
+            <p className="text-sm sm:text-base md:text-lg lg:text-xl text-white/90 max-w-2xl leading-relaxed mb-4 sm:mb-6">
               Encontrá las mejores autoescuelas en {province.name} con instructores profesionales, autos doble comando y clases prácticas en ciudad y ruta.
             </p>
-            <div className="mt-6 flex items-center space-x-6 text-white/80">
-              <div className="flex items-center space-x-2">
-                <MapPin className="h-5 w-5" />
+            <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-6 space-y-2 sm:space-y-0 text-white/80">
+              <div className="flex items-center space-x-2 text-sm sm:text-base">
+                <MapPin className="h-4 w-4 sm:h-5 sm:w-5" />
                 <span>{province.schoolsCount} autoescuelas</span>
               </div>
               {cities && cities.length > 0 && (
-                <div className="flex items-center space-x-2">
-                  <Users className="h-5 w-5" />
+                <div className="flex items-center space-x-2 text-sm sm:text-base">
+                  <Users className="h-4 w-4 sm:h-5 sm:w-5" />
                   <span>{cities.length} ciudades</span>
                 </div>
               )}

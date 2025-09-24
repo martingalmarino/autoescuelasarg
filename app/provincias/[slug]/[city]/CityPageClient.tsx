@@ -70,30 +70,30 @@ export default function CityPageClient({ params, city, schools }: CityPageClient
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-blue-600 to-blue-800 text-white py-12 sm:py-16">
+      <section className="relative bg-gradient-to-r from-blue-600 to-blue-800 text-white py-8 sm:py-12 md:py-16">
         <div className="container mx-auto px-4 sm:px-6">
-          <div className="max-w-4xl">
+          <div className="max-w-4xl w-full">
             <Link 
               href={`/provincias/${city.province.slug}`}
-              className="inline-flex items-center text-white/80 hover:text-white mb-4 transition-colors"
+              className="inline-flex items-center text-white/80 hover:text-white mb-3 sm:mb-4 transition-colors text-sm sm:text-base"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
               Volver a {city.province.name}
             </Link>
             
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 leading-tight">
               Autoescuelas en {city.name}
             </h1>
-            <p className="text-lg sm:text-xl text-white/90 mb-6">
+            <p className="text-sm sm:text-base md:text-lg lg:text-xl text-white/90 mb-4 sm:mb-6 leading-relaxed">
               Aprendé a manejar en {city.name} con autoescuelas que ofrecen instructores capacitados, autos doble comando y clases prácticas adaptadas a tu ritmo.
             </p>
-            <div className="mt-6 flex items-center space-x-6 text-white/80">
-              <div className="flex items-center space-x-2">
-                <MapPin className="h-5 w-5" />
+            <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-6 space-y-2 sm:space-y-0 text-white/80">
+              <div className="flex items-center space-x-2 text-sm sm:text-base">
+                <MapPin className="h-4 w-4 sm:h-5 sm:w-5" />
                 <span>{city.schoolsCount} autoescuelas</span>
               </div>
-              <div className="flex items-center space-x-2">
-                <Users className="h-5 w-5" />
+              <div className="flex items-center space-x-2 text-sm sm:text-base">
+                <Users className="h-4 w-4 sm:h-5 sm:w-5" />
                 <span>{city.province.name}</span>
               </div>
             </div>
