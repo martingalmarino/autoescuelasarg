@@ -182,10 +182,10 @@ export default function HeroLocation() {
             <Button
               size="lg"
               onClick={handleViewAll}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-6 sm:px-8 md:px-10 py-4 sm:py-5 md:py-6 text-sm sm:text-base md:text-lg font-semibold rounded-lg shadow-lg transition-all duration-200 hover:shadow-xl w-auto mx-auto block sm:inline-block min-w-[140px] sm:min-w-[160px] h-auto min-h-[48px] sm:min-h-[52px] md:min-h-[56px]"
+              className="bg-blue-600 hover:bg-blue-700 text-white px-6 sm:px-8 md:px-10 py-4 sm:py-5 md:py-6 text-sm sm:text-base md:text-lg font-semibold rounded-lg shadow-lg transition-all duration-200 hover:shadow-xl w-auto mx-auto block sm:inline-block min-w-[140px] sm:min-w-[160px] h-auto min-h-[48px] sm:min-h-[52px] md:min-h-[56px] flex items-center justify-center"
             >
-              <MapPin className="mr-1.5 sm:mr-2 h-3.5 w-3.5 sm:h-4 sm:w-4 md:h-5 md:w-5" />
-              VER TODAS
+              <MapPin className="mr-2 sm:mr-3 h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 flex-shrink-0" />
+              <span>VER TODAS</span>
             </Button>
             <p className="text-white/90 text-xs sm:text-sm">
               ¡Sí, es 100% gratis!
