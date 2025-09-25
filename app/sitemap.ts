@@ -57,25 +57,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           select: { slug: true }
         }
       },
-      select: {
-        slug: true,
-        updatedAt: true,
-        province: {
-          select: { slug: true }
-        }
-      },
       orderBy: { sortOrder: 'asc' }
     })
 
     // Obtener todas las autoescuelas activas
     const schools = await prisma.drivingSchool.findMany({
       where: { isActive: true },
-      select: {
-        slug: true,
-        updatedAt: true,
+      include: {
         city: {
-          select: {
-            slug: true,
+          include: {
             province: {
               select: { slug: true }
             }
