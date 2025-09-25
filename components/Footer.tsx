@@ -5,7 +5,7 @@ export default function Footer() {
   return (
     <footer className="bg-muted/50 border-t" role="contentinfo">
       <div className="container py-8 sm:py-12 px-4 sm:px-6">
-        <div className="grid gap-6 sm:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-6 sm:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5">
           {/* Brand */}
           <div className="space-y-3 sm:space-y-4">
             <Link href="/" className="flex items-center space-x-2">
@@ -64,6 +64,33 @@ export default function Footer() {
               <li className="flex items-center space-x-2 text-muted-foreground">
                 <Phone className="h-3 w-3 sm:h-4 sm:w-4" />
                 <span>+54 11 1234-5678</span>
+              </li>
+            </ul>
+          </div>
+
+          {/* Useful Links */}
+          <div className="space-y-3 sm:space-y-4">
+            <h3 className="font-semibold text-sm sm:text-base text-foreground">Enlaces útiles</h3>
+            <ul className="space-y-2 text-xs sm:text-sm">
+              <li>
+                <a 
+                  href="https://www.guiadelconductor.ar/" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Test de conducir Córdoba
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="https://calculadorapatentes.ar/" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Calculadora de Patentes
+                </a>
               </li>
             </ul>
           </div>
