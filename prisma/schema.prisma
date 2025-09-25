@@ -150,7 +150,7 @@ model Contact {
   email       String?  // Optional email for general contacts
   phone       String
   message     String
-  schoolId    String
+  schoolId    String?  // Optional for general contacts
   schoolName  String
   status      String   @default("new") // new, contacted, closed
   source      String   @default("website") // website, phone, etc.
@@ -159,7 +159,7 @@ model Contact {
   updatedAt   DateTime @updatedAt
 
   // Relations
-  school      DrivingSchool @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  school      DrivingSchool? @relation(fields: [schoolId], references: [id], onDelete: Cascade)
 
   @@index([schoolId])
   @@index([status])

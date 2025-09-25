@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
         phone: phone?.trim() || '',
         message: `[${subject.toUpperCase()}] ${message.trim()}`,
         email: email.trim(),
-        schoolId: 'general-contact', // ID especial para contactos generales
+        schoolId: null, // No hay autoescuela específica para contactos generales
         schoolName: 'Contacto General',
         status: 'new',
         source: 'website-contact'

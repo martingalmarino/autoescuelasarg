@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
       ? {} 
       : { status }
 
-    // Obtener contactos con información de la autoescuela
+    // Obtener contactos con información de la autoescuela (si existe)
     const contacts = await prisma.contact.findMany({
       where: whereClause,
       include: {

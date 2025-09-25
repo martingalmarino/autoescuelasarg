@@ -26,7 +26,7 @@ interface Contact {
   email?: string | null
   phone: string
   message: string
-  schoolId: string
+  schoolId?: string | null
   schoolName: string
   status: 'new' | 'contacted' | 'closed'
   source: string
