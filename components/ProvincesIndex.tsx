@@ -54,30 +54,38 @@ export default function ProvincesIndex({
   };
 
   return (
-    <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+    <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       {provinces.map((province) => (
         <Link
           key={province.id}
           href={`/provincias/${province.slug}`}
           onClick={() => handleProvinceClick(province)}
-          className="group flex items-center justify-between rounded-lg border bg-card p-3 sm:p-4 transition-all duration-200 hover:shadow-md hover:border-primary/50"
+          className="group relative flex items-center justify-between rounded-xl border border-gray-200 bg-white p-4 sm:p-5 transition-all duration-300 hover:shadow-lg hover:shadow-primary/10 hover:border-primary/30 hover:-translate-y-1 hover:bg-gradient-to-br hover:from-white hover:to-blue-50/30"
         >
-          <div className="flex items-center space-x-2 sm:space-x-3">
-            <div className="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
-              <MapPin className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
+          {/* Subtle background gradient on hover */}
+          <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-primary/5 to-blue-100/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          
+          <div className="relative flex items-center space-x-3 sm:space-x-4">
+            <div className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-xl bg-gradient-to-br from-primary/15 to-primary/25 group-hover:from-primary/25 group-hover:to-primary/35 transition-all duration-300 shadow-sm">
+              <MapPin className="h-5 w-5 sm:h-6 sm:w-6 text-primary group-hover:scale-110 transition-transform duration-300" />
             </div>
-            <div>
-              <h3 className="font-medium text-sm sm:text-base text-foreground group-hover:text-primary transition-colors">
+            <div className="flex-1">
+              <h3 className="font-semibold text-sm sm:text-base text-gray-900 group-hover:text-primary transition-colors duration-300">
                 {province.name}
               </h3>
-              <p className="text-xs sm:text-sm text-muted-foreground">
+              <p className="text-xs sm:text-sm text-gray-600 group-hover:text-primary/80 transition-colors duration-300">
                 {province.schoolsCount} autoescuelas
               </p>
             </div>
           </div>
-          <div className="text-muted-foreground group-hover:text-primary transition-colors text-sm sm:text-base">
+          
+          {/* Enhanced arrow with animation */}
+          <div className="relative text-gray-400 group-hover:text-primary transition-all duration-300 text-lg sm:text-xl group-hover:translate-x-1">
             →
           </div>
+          
+          {/* Subtle border accent */}
+          <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary/20 rounded-l-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         </Link>
       ))}
     </div>
