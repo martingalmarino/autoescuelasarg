@@ -142,7 +142,7 @@ export default function SchoolPageClient({ params }: SchoolPageClientProps) {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative h-64 sm:h-80 bg-gradient-to-r from-blue-600 to-blue-800">
+      <section className="relative min-h-[280px] sm:min-h-[320px] bg-gradient-to-r from-blue-600 to-blue-800">
         {school.imageUrl && (
           <div className="absolute inset-0">
             <Image
@@ -154,44 +154,55 @@ export default function SchoolPageClient({ params }: SchoolPageClientProps) {
             />
           </div>
         )}
-        <div className="relative z-10 container mx-auto px-4 sm:px-6 h-full flex items-center">
-          <div className="text-white">
+        <div className="relative z-10 container mx-auto px-4 sm:px-6 py-6 sm:py-8 h-full flex items-center">
+          <div className="text-white w-full">
             <Link 
               href={`/provincias/${school.province.toLowerCase().replace(/\s+/g, '-')}`}
-              className="inline-flex items-center text-white/80 hover:text-white mb-4 transition-colors"
+              className="inline-flex items-center text-white/80 hover:text-white mb-3 sm:mb-4 transition-colors text-sm sm:text-base"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
               Volver a {school.province}
             </Link>
-            <div className="flex items-center gap-4 mb-4">
-              {school.logoUrl && (
-                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg overflow-hidden bg-white shadow-lg border-2 border-white flex-shrink-0">
-                  <Image
-                    src={school.logoUrl}
-                    alt={`Logo de ${school.name}`}
-                    width={80}
-                    height={80}
-                    className="object-contain p-2"
-                  />
+            
+            {/* Logo and title section - responsive layout */}
+            <div className="mb-4 sm:mb-6">
+              <div className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4">
+                {/* Logo */}
+                {school.logoUrl && (
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg overflow-hidden bg-white shadow-lg border-2 border-white flex-shrink-0 self-start">
+                    <Image
+                      src={school.logoUrl}
+                      alt={`Logo de ${school.name}`}
+                      width={80}
+                      height={80}
+                      className="object-contain p-2"
+                    />
+                  </div>
+                )}
+                
+                {/* Title - full width on mobile */}
+                <div className="flex-1 min-w-0">
+                  <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight break-words">
+                    {school.name}
+                  </h1>
                 </div>
-              )}
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold">
-                {school.name}
-              </h1>
+              </div>
             </div>
-            <div className="flex flex-wrap items-center gap-4 text-white/90">
+
+            {/* Info section - responsive grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 text-white/90">
               <div className="flex items-center space-x-2">
-                <MapPin className="h-5 w-5" />
-                <span>{school.city}, {school.province}</span>
+                <MapPin className="h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0" />
+                <span className="text-sm sm:text-base truncate">{school.city}, {school.province}</span>
               </div>
               <div className="flex items-center space-x-2">
-                <Star className="h-5 w-5 fill-yellow-400 text-yellow-400" />
-                <span>{formatRating(school.rating)} ({formatReviews(school.reviewsCount)} reseñas)</span>
+                <Star className="h-4 w-4 sm:h-5 sm:w-5 fill-yellow-400 text-yellow-400 flex-shrink-0" />
+                <span className="text-sm sm:text-base">{formatRating(school.rating)} ({formatReviews(school.reviewsCount)} reseñas)</span>
               </div>
               {school.priceMin && school.priceMax && (
-                <div className="flex items-center space-x-2">
-                  <DollarSign className="h-5 w-5" />
-                  <span>{formatPrice(school.priceMin)} - {formatPrice(school.priceMax)}</span>
+                <div className="flex items-center space-x-2 sm:col-span-2 lg:col-span-1">
+                  <DollarSign className="h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0" />
+                  <span className="text-sm sm:text-base">{formatPrice(school.priceMin)} - {formatPrice(school.priceMax)}</span>
                 </div>
               )}
             </div>
