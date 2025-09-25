@@ -38,4 +38,9 @@ export const analyticsEvents = {
     event: 'province_link_click',
     properties: { province }
   }),
+  
+  schoolLinkClick: (schoolName: string, source: string) => trackEvent({
+    event: 'school_link_click',
+    properties: { school_name: schoolName, source }
+  }),
 }

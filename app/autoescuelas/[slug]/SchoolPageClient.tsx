@@ -23,6 +23,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import ContactForm from '@/components/ContactForm'
 import SafeHTML from '@/components/SafeHTML'
+import RelatedSchools from '@/components/RelatedSchools'
 import { getSchoolBySlug } from '@/lib/mock-data'
 import { formatPrice, formatRating, formatReviews } from '@/lib/utils'
 import { analyticsEvents } from '@/lib/analytics'
@@ -461,6 +462,9 @@ export default function SchoolPageClient({ params }: SchoolPageClientProps) {
           </div>
         </div>
       </div>
+
+      {/* Related Schools Section */}
+      <RelatedSchools currentSchoolSlug={params.slug} />
     </div>
   )
 }
