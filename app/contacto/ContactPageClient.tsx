@@ -299,7 +299,7 @@ export default function ContactPageClient() {
                 <CardContent>
                   <p className="text-sm text-muted-foreground mb-4">
                     Si tenés una autoescuela y querés aparecer en nuestro directorio, 
-                    seleccioná "Agregar mi autoescuela" en el formulario de contacto.
+                    seleccioná &quot;Agregar mi autoescuela&quot; en el formulario de contacto.
                   </p>
                   <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                     <h4 className="font-medium text-blue-900 mb-2">¿Por qué aparecer en Autoescuelas.ar?</h4>

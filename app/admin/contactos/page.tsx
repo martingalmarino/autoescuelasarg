@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -44,9 +44,9 @@ export default function ContactosAdminPage() {
 
   useEffect(() => {
     fetchContacts()
-  }, [statusFilter])
+  }, [statusFilter, fetchContacts])
 
-  const fetchContacts = async () => {
+  const fetchContacts = useCallback(async () => {
     try {
       const response = await fetch(`/api/admin/contactos?status=${statusFilter}`)
       const data = await response.json()
@@ -58,7 +58,7 @@ export default function ContactosAdminPage() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [statusFilter])
 
   const updateContactStatus = async (contactId: string, newStatus: string) => {
     try {
