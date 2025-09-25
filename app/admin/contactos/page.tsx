@@ -42,10 +42,6 @@ export default function ContactosAdminPage() {
   const [statusFilter, setStatusFilter] = useState<string>('all')
   const [notes, setNotes] = useState('')
 
-  useEffect(() => {
-    fetchContacts()
-  }, [statusFilter, fetchContacts])
-
   const fetchContacts = useCallback(async () => {
     try {
       const response = await fetch(`/api/admin/contactos?status=${statusFilter}`)
@@ -59,6 +55,10 @@ export default function ContactosAdminPage() {
       setLoading(false)
     }
   }, [statusFilter])
+
+  useEffect(() => {
+    fetchContacts()
+  }, [fetchContacts])
 
   const updateContactStatus = async (contactId: string, newStatus: string) => {
     try {
