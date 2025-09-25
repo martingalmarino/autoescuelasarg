@@ -1,81 +1,94 @@
-"use client"
+"use client";
 
-import { notFound } from 'next/navigation'
-import Image from 'next/image'
-import Link from 'next/link'
-import { MapPin, Star, Users, Clock, Phone, Mail, Globe, ArrowLeft } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
-import { formatPrice, formatRating, formatReviews } from '@/lib/utils'
-import { analyticsEvents } from '@/lib/analytics'
-import SafeHTML from '@/components/SafeHTML'
+import { notFound } from "next/navigation";
+import Image from "next/image";
+import Link from "next/link";
+import {
+  MapPin,
+  Star,
+  Users,
+  Clock,
+  Phone,
+  Mail,
+  Globe,
+  ArrowLeft,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { formatPrice, formatRating, formatReviews } from "@/lib/utils";
+import { analyticsEvents } from "@/lib/analytics";
+import SafeHTML from "@/components/SafeHTML";
 
 interface City {
-  id: string
-  name: string
-  slug: string
-  schoolsCount: number
+  id: string;
+  name: string;
+  slug: string;
+  schoolsCount: number;
 }
 
 interface Province {
-  id: string
-  name: string
-  slug: string
-  description?: string
-  imageUrl?: string
-  schoolsCount: number
-  cities?: City[]
+  id: string;
+  name: string;
+  slug: string;
+  description?: string;
+  imageUrl?: string;
+  schoolsCount: number;
+  cities?: City[];
 }
 
 interface DrivingSchool {
-  id: string
-  name: string
-  slug: string
-  rating: number
-  reviewsCount: number
-  city: string
-  province: string
-  imageUrl?: string | null
-  logoUrl?: string | null
-  priceMin?: number | null
-  priceMax?: number | null
-  description?: string | null
-  address?: string | null
-  phone?: string | null
-  email?: string | null
-  website?: string | null
-  hours?: string | null
-  services?: string[]
-  isActive?: boolean
-  isVerified?: boolean
-  isFeatured?: boolean
-  createdAt: Date
-  updatedAt: Date
+  id: string;
+  name: string;
+  slug: string;
+  rating: number;
+  reviewsCount: number;
+  city: string;
+  province: string;
+  imageUrl?: string | null;
+  logoUrl?: string | null;
+  priceMin?: number | null;
+  priceMax?: number | null;
+  description?: string | null;
+  address?: string | null;
+  phone?: string | null;
+  email?: string | null;
+  website?: string | null;
+  hours?: string | null;
+  services?: string[];
+  isActive?: boolean;
+  isVerified?: boolean;
+  isFeatured?: boolean;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 interface ProvincePageClientProps {
   params: {
-    slug: string
-  }
-  province?: Province | null
-  schools?: DrivingSchool[]
-  cities?: City[]
+    slug: string;
+  };
+  province?: Province | null;
+  schools?: DrivingSchool[];
+  cities?: City[];
 }
 
-export default function ProvincePageClient({ params, province, schools, cities }: ProvincePageClientProps) {
-
+export default function ProvincePageClient({
+  params,
+  province,
+  schools,
+  cities,
+}: ProvincePageClientProps) {
   if (!province) {
-    notFound()
+    notFound();
   }
 
   const handleSchoolClick = (schoolId: string, schoolName: string) => {
-    analyticsEvents.clickSchoolCard(schoolId, schoolName)
-  }
+    analyticsEvents.clickSchoolCard(schoolId, schoolName);
+  };
 
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative min-h-[400px] sm:min-h-[500px] bg-gradient-to-r from-blue-600 to-blue-800">
+      <section className="relative min-h-[280px] sm:min-h-[320px] bg-gradient-to-r from-blue-600 to-blue-800">
         {province.imageUrl && (
           <div className="absolute inset-0">
             <Image
@@ -87,20 +100,22 @@ export default function ProvincePageClient({ params, province, schools, cities }
             />
           </div>
         )}
-        <div className="relative z-10 container mx-auto px-4 sm:px-6 py-8 sm:py-12 h-full flex items-center">
+        <div className="relative z-10 container mx-auto px-4 sm:px-6 py-6 sm:py-8 h-full flex items-center">
           <div className="text-white w-full">
-            <Link 
-              href="/provincias" 
-              className="inline-flex items-center text-white/80 hover:text-white mb-3 sm:mb-4 transition-colors text-sm sm:text-base"
+            <Link
+              href="/provincias"
+              className="inline-flex items-center text-white/80 hover:text-white mb-2 sm:mb-3 transition-colors text-sm sm:text-base"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
               Volver a provincias
             </Link>
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 leading-tight">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2 sm:mb-3 leading-tight">
               Autoescuelas en {province.name}
             </h1>
-            <p className="text-sm sm:text-base md:text-lg lg:text-xl text-white/90 max-w-2xl leading-relaxed mb-4 sm:mb-6">
-              Encontrá las mejores autoescuelas en {province.name} con instructores profesionales, autos doble comando y clases prácticas en ciudad y ruta.
+            <p className="text-sm sm:text-base md:text-lg lg:text-xl text-white/90 max-w-2xl leading-relaxed mb-3 sm:mb-4">
+              Encontrá las mejores autoescuelas en {province.name} con
+              instructores profesionales, autos doble comando y clases prácticas
+              en ciudad y ruta.
             </p>
             <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-6 space-y-2 sm:space-y-0 text-white/80">
               <div className="flex items-center space-x-2 text-sm sm:text-base">
@@ -168,9 +183,7 @@ export default function ProvincePageClient({ params, province, schools, cities }
             </div>
             <div className="mt-4 sm:mt-0">
               <Button variant="outline" asChild>
-                <Link href="/autoescuelas">
-                  Ver todas las autoescuelas
-                </Link>
+                <Link href="/autoescuelas">Ver todas las autoescuelas</Link>
               </Button>
             </div>
           </div>
@@ -198,10 +211,12 @@ export default function ProvincePageClient({ params, province, schools, cities }
                           />
                         ) : (
                           <div className="flex h-full items-center justify-center bg-muted">
-                            <div className="text-4xl text-muted-foreground">🚗</div>
+                            <div className="text-4xl text-muted-foreground">
+                              🚗
+                            </div>
                           </div>
                         )}
-                        
+
                         {/* Logo overlay */}
                         {school.logoUrl && (
                           <div className="absolute top-2 right-2 w-12 h-12 rounded-lg overflow-hidden bg-white shadow-md border-2 border-white">
@@ -257,7 +272,8 @@ export default function ProvincePageClient({ params, province, schools, cities }
                         {/* Price Range */}
                         {school.priceMin && school.priceMax && (
                           <div className="text-sm font-medium text-primary">
-                            {formatPrice(school.priceMin)} - {formatPrice(school.priceMax)}
+                            {formatPrice(school.priceMin)} -{" "}
+                            {formatPrice(school.priceMax)}
                           </div>
                         )}
 
@@ -297,14 +313,12 @@ export default function ProvincePageClient({ params, province, schools, cities }
                 Pronto agregaremos más autoescuelas en {province.name}
               </p>
               <Button asChild>
-                <Link href="/provincias">
-                  Ver otras provincias
-                </Link>
+                <Link href="/provincias">Ver otras provincias</Link>
               </Button>
             </div>
           )}
         </div>
       </section>
     </div>
-  )
+  );
 }

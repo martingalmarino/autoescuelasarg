@@ -1,32 +1,35 @@
-"use client"
+"use client";
 
-import Link from 'next/link'
-import { MapPin, Users, ArrowRight } from 'lucide-react'
-import { Card, CardContent } from '@/components/ui/card'
-import { Province } from '@/lib/types'
-import { analyticsEvents } from '@/lib/analytics'
+import Link from "next/link";
+import { MapPin, Users, ArrowRight } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Province } from "@/lib/types";
+import { analyticsEvents } from "@/lib/analytics";
 
 interface ProvincesPageClientProps {
-  provinces: Province[]
+  provinces: Province[];
 }
 
-export default function ProvincesPageClient({ provinces }: ProvincesPageClientProps) {
+export default function ProvincesPageClient({
+  provinces,
+}: ProvincesPageClientProps) {
   const handleProvinceClick = (province: Province) => {
-    analyticsEvents.provinceLinkClick(province.name)
-  }
+    analyticsEvents.provinceLinkClick(province.name);
+  };
 
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-blue-600 to-blue-800 py-16 sm:py-20">
+      <section className="bg-gradient-to-r from-blue-600 to-blue-800 py-8 sm:py-12">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="text-center text-white">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3">
               Todas las Provincias
             </h1>
-            <p className="text-lg sm:text-xl text-white/90 max-w-3xl mx-auto mb-8">
-              Encontrá autoescuelas en todas las provincias de Argentina. 
-              Navega por provincia para encontrar la escuela de manejo más cercana a ti.
+            <p className="text-lg sm:text-xl text-white/90 max-w-3xl mx-auto mb-6">
+              Encontrá autoescuelas en todas las provincias de Argentina. Navega
+              por provincia para encontrar la escuela de manejo más cercana a
+              ti.
             </p>
             <div className="flex items-center justify-center space-x-6 text-white/80">
               <div className="flex items-center space-x-2">
@@ -35,7 +38,10 @@ export default function ProvincesPageClient({ provinces }: ProvincesPageClientPr
               </div>
               <div className="flex items-center space-x-2">
                 <Users className="h-5 w-5" />
-                <span>{provinces.reduce((total, p) => total + p.schoolsCount, 0)} autoescuelas</span>
+                <span>
+                  {provinces.reduce((total, p) => total + p.schoolsCount, 0)}{" "}
+                  autoescuelas
+                </span>
               </div>
             </div>
           </div>
@@ -61,15 +67,15 @@ export default function ProvincesPageClient({ provinces }: ProvincesPageClientPr
                       </div>
                       <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
                     </div>
-                    
+
                     <h3 className="font-semibold text-lg sm:text-xl text-foreground group-hover:text-primary transition-colors mb-2">
                       {province.name}
                     </h3>
-                    
+
                     <p className="text-sm text-muted-foreground mb-3">
                       {province.schoolsCount} autoescuelas
                     </p>
-                    
+
                     {province.description && (
                       <p className="text-xs text-muted-foreground line-clamp-2">
                         {province.description}
@@ -90,8 +96,9 @@ export default function ProvincesPageClient({ provinces }: ProvincesPageClientPr
             ¿No encuentras tu provincia?
           </h2>
           <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-            Estamos constantemente agregando nuevas autoescuelas y provincias. 
-            Si no ves tu provincia, contáctanos y te ayudaremos a encontrar la mejor opción.
+            Estamos constantemente agregando nuevas autoescuelas y provincias.
+            Si no ves tu provincia, contáctanos y te ayudaremos a encontrar la
+            mejor opción.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
@@ -110,5 +117,5 @@ export default function ProvincesPageClient({ provinces }: ProvincesPageClientPr
         </div>
       </section>
     </div>
-  )
+  );
 }

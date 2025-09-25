@@ -1,200 +1,228 @@
-"use client"
+"use client";
 
-import { useState, useMemo } from 'react'
-import Link from 'next/link'
-import Image from 'next/image'
-import { useRouter, useSearchParams } from 'next/navigation'
-import { 
-  Search, 
-  Filter, 
-  MapPin, 
-  Star, 
-  Users, 
-  Phone, 
+import { useState, useMemo } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { useRouter, useSearchParams } from "next/navigation";
+import {
+  Search,
+  Filter,
+  MapPin,
+  Star,
+  Users,
+  Phone,
   Mail,
   ChevronDown,
   X,
   ArrowLeft,
-  ArrowRight
-} from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Badge } from '@/components/ui/badge'
-import { DrivingSchool, Province } from '@/lib/types'
-import { formatPrice, formatRating, formatReviews } from '@/lib/utils'
-import { analyticsEvents } from '@/lib/analytics'
-import SafeHTML from '@/components/SafeHTML'
+  ArrowRight,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Badge } from "@/components/ui/badge";
+import { DrivingSchool, Province } from "@/lib/types";
+import { formatPrice, formatRating, formatReviews } from "@/lib/utils";
+import { analyticsEvents } from "@/lib/analytics";
+import SafeHTML from "@/components/SafeHTML";
 
 interface SchoolsPageClientProps {
-  schools: DrivingSchool[]
-  provinces: Province[]
+  schools: DrivingSchool[];
+  provinces: Province[];
   searchParams: {
-    page?: string
-    province?: string
-    city?: string
-    sort?: string
-    search?: string
-  }
+    page?: string;
+    province?: string;
+    city?: string;
+    sort?: string;
+    search?: string;
+  };
 }
 
-const ITEMS_PER_PAGE = 12
+const ITEMS_PER_PAGE = 12;
 
-export default function SchoolsPageClient({ schools, provinces, searchParams }: SchoolsPageClientProps) {
+export default function SchoolsPageClient({
+  schools,
+  provinces,
+  searchParams,
+}: SchoolsPageClientProps) {
   // Updated to use priceMin/priceMax instead of priceRange
-  const router = useRouter()
-  const urlSearchParams = useSearchParams()
-  
-  const [searchTerm, setSearchTerm] = useState(searchParams.search || '')
-  const [selectedProvince, setSelectedProvince] = useState(searchParams.province || 'all')
-  const [selectedCity, setSelectedCity] = useState(searchParams.city || 'all')
-  const [sortBy, setSortBy] = useState(searchParams.sort || 'rating_desc')
-  const [currentPage, setCurrentPage] = useState(parseInt(searchParams.page || '1'))
+  const router = useRouter();
+  const urlSearchParams = useSearchParams();
+
+  const [searchTerm, setSearchTerm] = useState(searchParams.search || "");
+  const [selectedProvince, setSelectedProvince] = useState(
+    searchParams.province || "all"
+  );
+  const [selectedCity, setSelectedCity] = useState(searchParams.city || "all");
+  const [sortBy, setSortBy] = useState(searchParams.sort || "rating_desc");
+  const [currentPage, setCurrentPage] = useState(
+    parseInt(searchParams.page || "1")
+  );
 
   // Filtrar y ordenar autoescuelas
   const filteredAndSortedSchools = useMemo(() => {
-    let filtered = schools
+    let filtered = schools;
 
     // Filtro por búsqueda
     if (searchTerm) {
-      filtered = filtered.filter(school =>
-        school.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        school.city.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        school.province.toLowerCase().includes(searchTerm.toLowerCase())
-      )
+      filtered = filtered.filter(
+        (school) =>
+          school.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          school.city.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          school.province.toLowerCase().includes(searchTerm.toLowerCase())
+      );
     }
 
     // Filtro por provincia
-    if (selectedProvince && selectedProvince !== 'all') {
-      filtered = filtered.filter(school => school.province.toLowerCase() === selectedProvince.toLowerCase())
+    if (selectedProvince && selectedProvince !== "all") {
+      filtered = filtered.filter(
+        (school) =>
+          school.province.toLowerCase() === selectedProvince.toLowerCase()
+      );
     }
 
     // Filtro por ciudad
-    if (selectedCity && selectedCity !== 'all') {
-      filtered = filtered.filter(school => school.city.toLowerCase() === selectedCity.toLowerCase())
+    if (selectedCity && selectedCity !== "all") {
+      filtered = filtered.filter(
+        (school) => school.city.toLowerCase() === selectedCity.toLowerCase()
+      );
     }
 
     // Ordenamiento
     switch (sortBy) {
-      case 'rating_desc':
-        filtered.sort((a, b) => b.rating - a.rating)
-        break
-      case 'rating_asc':
-        filtered.sort((a, b) => a.rating - b.rating)
-        break
-      case 'name_asc':
-        filtered.sort((a, b) => a.name.localeCompare(b.name))
-        break
-      case 'name_desc':
-        filtered.sort((a, b) => b.name.localeCompare(a.name))
-        break
-      case 'price_asc':
+      case "rating_desc":
+        filtered.sort((a, b) => b.rating - a.rating);
+        break;
+      case "rating_asc":
+        filtered.sort((a, b) => a.rating - b.rating);
+        break;
+      case "name_asc":
+        filtered.sort((a, b) => a.name.localeCompare(b.name));
+        break;
+      case "name_desc":
+        filtered.sort((a, b) => b.name.localeCompare(a.name));
+        break;
+      case "price_asc":
         filtered.sort((a, b) => {
-          const aPrice = a.priceMin || 0
-          const bPrice = b.priceMin || 0
-          return aPrice - bPrice
-        })
-        break
-      case 'price_desc':
+          const aPrice = a.priceMin || 0;
+          const bPrice = b.priceMin || 0;
+          return aPrice - bPrice;
+        });
+        break;
+      case "price_desc":
         filtered.sort((a, b) => {
-          const aPrice = a.priceMin || 0
-          const bPrice = b.priceMin || 0
-          return bPrice - aPrice
-        })
-        break
+          const aPrice = a.priceMin || 0;
+          const bPrice = b.priceMin || 0;
+          return bPrice - aPrice;
+        });
+        break;
     }
 
-    return filtered
-  }, [schools, searchTerm, selectedProvince, selectedCity, sortBy])
+    return filtered;
+  }, [schools, searchTerm, selectedProvince, selectedCity, sortBy]);
 
   // Paginación
-  const totalPages = Math.ceil(filteredAndSortedSchools.length / ITEMS_PER_PAGE)
-  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE
-  const paginatedSchools = filteredAndSortedSchools.slice(startIndex, startIndex + ITEMS_PER_PAGE)
+  const totalPages = Math.ceil(
+    filteredAndSortedSchools.length / ITEMS_PER_PAGE
+  );
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const paginatedSchools = filteredAndSortedSchools.slice(
+    startIndex,
+    startIndex + ITEMS_PER_PAGE
+  );
 
   // Obtener ciudades únicas de la provincia seleccionada
   const availableCities = useMemo(() => {
-    if (!selectedProvince || selectedProvince === 'all') return []
-    const provinceSchools = schools.filter(school => 
-      school.province.toLowerCase() === selectedProvince.toLowerCase()
-    )
-    return Array.from(new Set(provinceSchools.map(school => school.city))).sort()
-  }, [selectedProvince, schools])
+    if (!selectedProvince || selectedProvince === "all") return [];
+    const provinceSchools = schools.filter(
+      (school) =>
+        school.province.toLowerCase() === selectedProvince.toLowerCase()
+    );
+    return Array.from(
+      new Set(provinceSchools.map((school) => school.city))
+    ).sort();
+  }, [selectedProvince, schools]);
 
   const updateURL = (params: Record<string, string>) => {
-    const newSearchParams = new URLSearchParams(urlSearchParams.toString())
-    
-    Object.entries(params).forEach(([key, value]) => {
-      if (value && value !== 'all') {
-        newSearchParams.set(key, value)
-      } else {
-        newSearchParams.delete(key)
-      }
-    })
+    const newSearchParams = new URLSearchParams(urlSearchParams.toString());
 
-    router.push(`/autoescuelas?${newSearchParams.toString()}`)
-  }
+    Object.entries(params).forEach(([key, value]) => {
+      if (value && value !== "all") {
+        newSearchParams.set(key, value);
+      } else {
+        newSearchParams.delete(key);
+      }
+    });
+
+    router.push(`/autoescuelas?${newSearchParams.toString()}`);
+  };
 
   const handleSearch = (value: string) => {
-    setSearchTerm(value)
-    setCurrentPage(1)
-    updateURL({ search: value, page: '1' })
-  }
+    setSearchTerm(value);
+    setCurrentPage(1);
+    updateURL({ search: value, page: "1" });
+  };
 
   const handleProvinceChange = (value: string) => {
-    setSelectedProvince(value)
-    setSelectedCity('all')
-    setCurrentPage(1)
-    updateURL({ 
-      province: value, 
-      city: 'all', 
-      page: '1' 
-    })
-  }
+    setSelectedProvince(value);
+    setSelectedCity("all");
+    setCurrentPage(1);
+    updateURL({
+      province: value,
+      city: "all",
+      page: "1",
+    });
+  };
 
   const handleCityChange = (value: string) => {
-    setSelectedCity(value)
-    setCurrentPage(1)
-    updateURL({ city: value, page: '1' })
-  }
+    setSelectedCity(value);
+    setCurrentPage(1);
+    updateURL({ city: value, page: "1" });
+  };
 
   const handleSortChange = (value: string) => {
-    setSortBy(value)
-    setCurrentPage(1)
-    updateURL({ sort: value, page: '1' })
-  }
+    setSortBy(value);
+    setCurrentPage(1);
+    updateURL({ sort: value, page: "1" });
+  };
 
   const handlePageChange = (page: number) => {
-    setCurrentPage(page)
-    updateURL({ page: page.toString() })
-  }
+    setCurrentPage(page);
+    updateURL({ page: page.toString() });
+  };
 
   const clearFilters = () => {
-    setSearchTerm('')
-    setSelectedProvince('all')
-    setSelectedCity('all')
-    setSortBy('rating_desc')
-    setCurrentPage(1)
-    router.push('/autoescuelas')
-  }
+    setSearchTerm("");
+    setSelectedProvince("all");
+    setSelectedCity("all");
+    setSortBy("rating_desc");
+    setCurrentPage(1);
+    router.push("/autoescuelas");
+  };
 
   const handleSchoolClick = (schoolId: string, schoolName: string) => {
-    analyticsEvents.clickSchoolCard(schoolId, schoolName)
-  }
+    analyticsEvents.clickSchoolCard(schoolId, schoolName);
+  };
 
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-blue-600 to-blue-800 py-16 sm:py-20">
+      <section className="bg-gradient-to-r from-blue-600 to-blue-800 py-8 sm:py-12">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="text-center text-white">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3">
               Todas las Autoescuelas
             </h1>
-            <p className="text-lg sm:text-xl text-white/90 max-w-3xl mx-auto mb-8">
-              Encontrá la autoescuela perfecta para obtener tu licencia de conducir. 
-              Filtra por ubicación, calificación y precio.
+            <p className="text-lg sm:text-xl text-white/90 max-w-3xl mx-auto mb-6">
+              Encontrá la autoescuela perfecta para obtener tu licencia de
+              conducir. Filtra por ubicación, calificación y precio.
             </p>
             <div className="flex items-center justify-center space-x-6 text-white/80">
               <div className="flex items-center space-x-2">
@@ -231,7 +259,10 @@ export default function SchoolsPageClient({ schools, provinces, searchParams }: 
 
               {/* Mobile: Simple province filter only */}
               <div className="block md:hidden">
-                <Select value={selectedProvince} onValueChange={handleProvinceChange}>
+                <Select
+                  value={selectedProvince}
+                  onValueChange={handleProvinceChange}
+                >
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Todas las provincias" />
                   </SelectTrigger>
@@ -250,7 +281,10 @@ export default function SchoolsPageClient({ schools, provinces, searchParams }: 
               <div className="hidden md:grid md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {/* Province Filter */}
                 <div className="w-full">
-                  <Select value={selectedProvince} onValueChange={handleProvinceChange}>
+                  <Select
+                    value={selectedProvince}
+                    onValueChange={handleProvinceChange}
+                  >
                     <SelectTrigger className="w-full">
                       <SelectValue placeholder="Todas las provincias" />
                     </SelectTrigger>
@@ -267,10 +301,10 @@ export default function SchoolsPageClient({ schools, provinces, searchParams }: 
 
                 {/* City Filter */}
                 <div className="w-full">
-                  <Select 
-                    value={selectedCity} 
+                  <Select
+                    value={selectedCity}
                     onValueChange={handleCityChange}
-                    disabled={!selectedProvince || selectedProvince === 'all'}
+                    disabled={!selectedProvince || selectedProvince === "all"}
                   >
                     <SelectTrigger className="w-full">
                       <SelectValue placeholder="Todas las ciudades" />
@@ -293,8 +327,12 @@ export default function SchoolsPageClient({ schools, provinces, searchParams }: 
                       <SelectValue placeholder="Ordenar por" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="rating_desc">Mejor calificadas</SelectItem>
-                      <SelectItem value="rating_asc">Menor calificación</SelectItem>
+                      <SelectItem value="rating_desc">
+                        Mejor calificadas
+                      </SelectItem>
+                      <SelectItem value="rating_asc">
+                        Menor calificación
+                      </SelectItem>
                       <SelectItem value="name_asc">Nombre A-Z</SelectItem>
                       <SelectItem value="name_desc">Nombre Z-A</SelectItem>
                       <SelectItem value="price_asc">Precio menor</SelectItem>
@@ -306,55 +344,72 @@ export default function SchoolsPageClient({ schools, provinces, searchParams }: 
             </div>
 
             {/* Active Filters - Simplified for mobile */}
-            {(searchTerm || (selectedProvince && selectedProvince !== 'all') || (selectedCity && selectedCity !== 'all')) && (
+            {(searchTerm ||
+              (selectedProvince && selectedProvince !== "all") ||
+              (selectedCity && selectedCity !== "all")) && (
               <div className="mt-4 pt-4 border-t border-gray-100">
                 {/* Mobile: Simple clear button */}
                 <div className="block md:hidden">
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
+                  <Button
+                    variant="outline"
+                    size="sm"
                     onClick={clearFilters}
                     className="text-xs w-full"
                   >
                     Limpiar filtros
                   </Button>
                 </div>
-                
+
                 {/* Desktop: Full filter badges */}
                 <div className="hidden md:block">
                   <div className="flex flex-col space-y-3">
                     <div className="flex flex-wrap gap-2">
                       {searchTerm && (
-                        <Badge variant="secondary" className="flex items-center gap-1 text-xs px-2 py-1">
-                          <span className="truncate max-w-[150px]">Búsqueda: {searchTerm}</span>
-                          <X 
-                            className="h-3 w-3 cursor-pointer flex-shrink-0 hover:text-red-500" 
-                            onClick={() => handleSearch('')}
+                        <Badge
+                          variant="secondary"
+                          className="flex items-center gap-1 text-xs px-2 py-1"
+                        >
+                          <span className="truncate max-w-[150px]">
+                            Búsqueda: {searchTerm}
+                          </span>
+                          <X
+                            className="h-3 w-3 cursor-pointer flex-shrink-0 hover:text-red-500"
+                            onClick={() => handleSearch("")}
                           />
                         </Badge>
                       )}
-                      {selectedProvince && selectedProvince !== 'all' && (
-                        <Badge variant="secondary" className="flex items-center gap-1 text-xs px-2 py-1">
-                          <span className="truncate max-w-[120px]">Provincia: {selectedProvince}</span>
-                          <X 
-                            className="h-3 w-3 cursor-pointer flex-shrink-0 hover:text-red-500" 
-                            onClick={() => handleProvinceChange('all')}
+                      {selectedProvince && selectedProvince !== "all" && (
+                        <Badge
+                          variant="secondary"
+                          className="flex items-center gap-1 text-xs px-2 py-1"
+                        >
+                          <span className="truncate max-w-[120px]">
+                            Provincia: {selectedProvince}
+                          </span>
+                          <X
+                            className="h-3 w-3 cursor-pointer flex-shrink-0 hover:text-red-500"
+                            onClick={() => handleProvinceChange("all")}
                           />
                         </Badge>
                       )}
-                      {selectedCity && selectedCity !== 'all' && (
-                        <Badge variant="secondary" className="flex items-center gap-1 text-xs px-2 py-1">
-                          <span className="truncate max-w-[120px]">Ciudad: {selectedCity}</span>
-                          <X 
-                            className="h-3 w-3 cursor-pointer flex-shrink-0 hover:text-red-500" 
-                            onClick={() => handleCityChange('all')}
+                      {selectedCity && selectedCity !== "all" && (
+                        <Badge
+                          variant="secondary"
+                          className="flex items-center gap-1 text-xs px-2 py-1"
+                        >
+                          <span className="truncate max-w-[120px]">
+                            Ciudad: {selectedCity}
+                          </span>
+                          <X
+                            className="h-3 w-3 cursor-pointer flex-shrink-0 hover:text-red-500"
+                            onClick={() => handleCityChange("all")}
                           />
                         </Badge>
                       )}
                     </div>
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
+                    <Button
+                      variant="outline"
+                      size="sm"
                       onClick={clearFilters}
                       className="text-xs w-auto self-start"
                     >
@@ -406,10 +461,12 @@ export default function SchoolsPageClient({ schools, provinces, searchParams }: 
                             />
                           ) : (
                             <div className="flex h-full items-center justify-center bg-muted">
-                              <div className="text-4xl text-muted-foreground">🚗</div>
+                              <div className="text-4xl text-muted-foreground">
+                                🚗
+                              </div>
                             </div>
                           )}
-                          
+
                           {/* Logo overlay */}
                           {school.logoUrl && (
                             <div className="absolute top-3 right-3 w-14 h-14 rounded-lg overflow-hidden bg-white shadow-lg border-2 border-white">
@@ -465,7 +522,8 @@ export default function SchoolsPageClient({ schools, provinces, searchParams }: 
                           {/* Price Range */}
                           {school.priceMin && school.priceMax && (
                             <div className="text-xs sm:text-sm font-medium text-primary mb-2 sm:mb-3">
-                              {formatPrice(school.priceMin)} - {formatPrice(school.priceMax)}
+                              {formatPrice(school.priceMin)} -{" "}
+                              {formatPrice(school.priceMax)}
                             </div>
                           )}
 
@@ -475,13 +533,17 @@ export default function SchoolsPageClient({ schools, provinces, searchParams }: 
                               {school.phone && (
                                 <div className="flex items-center space-x-1">
                                   <Phone className="h-3 w-3" />
-                                  <span className="hidden sm:inline">Llamar</span>
+                                  <span className="hidden sm:inline">
+                                    Llamar
+                                  </span>
                                 </div>
                               )}
                               {school.email && (
                                 <div className="flex items-center space-x-1">
                                   <Mail className="h-3 w-3" />
-                                  <span className="hidden sm:inline">Email</span>
+                                  <span className="hidden sm:inline">
+                                    Email
+                                  </span>
                                 </div>
                               )}
                             </div>
@@ -525,7 +587,7 @@ export default function SchoolsPageClient({ schools, provinces, searchParams }: 
                       <ArrowRight className="h-4 w-4 ml-1" />
                     </Button>
                   </div>
-                  
+
                   {/* Desktop: Full pagination */}
                   <div className="hidden sm:flex items-center justify-center space-x-2">
                     <Button
@@ -537,29 +599,40 @@ export default function SchoolsPageClient({ schools, provinces, searchParams }: 
                       <ArrowLeft className="h-4 w-4" />
                       Anterior
                     </Button>
-                    
-                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
-                      if (
-                        page === 1 ||
-                        page === totalPages ||
-                        (page >= currentPage - 1 && page <= currentPage + 1)
-                      ) {
-                        return (
-                          <Button
-                            key={page}
-                            variant={page === currentPage ? "default" : "outline"}
-                            size="sm"
-                            onClick={() => handlePageChange(page)}
-                          >
-                            {page}
-                          </Button>
-                        )
-                      } else if (page === currentPage - 2 || page === currentPage + 2) {
-                        return <span key={page} className="text-muted-foreground">...</span>
+
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                      (page) => {
+                        if (
+                          page === 1 ||
+                          page === totalPages ||
+                          (page >= currentPage - 1 && page <= currentPage + 1)
+                        ) {
+                          return (
+                            <Button
+                              key={page}
+                              variant={
+                                page === currentPage ? "default" : "outline"
+                              }
+                              size="sm"
+                              onClick={() => handlePageChange(page)}
+                            >
+                              {page}
+                            </Button>
+                          );
+                        } else if (
+                          page === currentPage - 2 ||
+                          page === currentPage + 2
+                        ) {
+                          return (
+                            <span key={page} className="text-muted-foreground">
+                              ...
+                            </span>
+                          );
+                        }
+                        return null;
                       }
-                      return null
-                    })}
-                    
+                    )}
+
                     <Button
                       variant="outline"
                       size="sm"
@@ -582,13 +655,11 @@ export default function SchoolsPageClient({ schools, provinces, searchParams }: 
               <p className="text-muted-foreground mb-6">
                 Intenta ajustar tus filtros de búsqueda
               </p>
-              <Button onClick={clearFilters}>
-                Limpiar filtros
-              </Button>
+              <Button onClick={clearFilters}>Limpiar filtros</Button>
             </div>
           )}
         </div>
       </section>
     </div>
-  )
+  );
 }
