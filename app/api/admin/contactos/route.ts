@@ -34,6 +34,7 @@ export async function GET(request: NextRequest) {
     const transformedContacts = contacts.map(contact => ({
       id: contact.id,
       name: contact.name,
+      email: contact.email,
       phone: contact.phone,
       message: contact.message,
       schoolId: contact.schoolId,

@@ -147,6 +147,7 @@ model Course {
 model Contact {
   id          String   @id @default(cuid())
   name        String
+  email       String?  // Optional email for general contacts
   phone       String
   message     String
   schoolId    String

@@ -23,6 +23,7 @@ import {
 interface Contact {
   id: string
   name: string
+  email?: string | null
   phone: string
   message: string
   schoolId: string
@@ -223,6 +224,12 @@ export default function ContactosAdminPage() {
                               <Phone className="h-3 w-3 inline mr-1" />
                               {contact.phone}
                             </p>
+                            {contact.email && (
+                              <p className="text-sm text-gray-600 mb-1">
+                                <Mail className="h-3 w-3 inline mr-1" />
+                                {contact.email}
+                              </p>
+                            )}
                             <p className="text-sm text-gray-600 mb-2">
                               <MessageSquare className="h-3 w-3 inline mr-1" />
                               {contact.schoolName}
@@ -271,6 +278,13 @@ export default function ContactosAdminPage() {
                     <label className="text-sm font-medium text-gray-700">Teléfono</label>
                     <p className="text-sm text-gray-900">{selectedContact.phone}</p>
                   </div>
+
+                  {selectedContact.email && (
+                    <div>
+                      <label className="text-sm font-medium text-gray-700">Email</label>
+                      <p className="text-sm text-gray-900">{selectedContact.email}</p>
+                    </div>
+                  )}
 
                   <div>
                     <label className="text-sm font-medium text-gray-700">Autoescuela</label>

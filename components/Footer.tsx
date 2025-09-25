@@ -50,6 +50,14 @@ export default function Footer() {
                   Mejor calificadas
                 </Link>
               </li>
+              <li>
+                <Link 
+                  href="/contacto" 
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Contacto
+                </Link>
+              </li>
             </ul>
           </div>
 
