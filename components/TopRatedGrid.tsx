@@ -56,12 +56,12 @@ export default function TopRatedGrid({ schools }: TopRatedGridProps) {
         {/* Schools Grid */}
         <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {schools.length > 0 ? (
-            schools.slice(0, 8).map((school) => (
+            schools.map((school) => (
               <SchoolCard key={school.id} school={school} />
             ))
           ) : (
             // Loading skeletons
-            Array.from({ length: 8 }).map((_, index) => (
+            Array.from({ length: 12 }).map((_, index) => (
               <SchoolCardSkeleton key={index} />
             ))
           )}

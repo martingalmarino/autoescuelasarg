@@ -47,7 +47,7 @@ export default async function HomePage() {
   // Obtener datos reales de la base de datos
   const [provinces, featuredSchools] = await Promise.all([
     getActiveProvinces(),
-    getFeaturedSchools(8), // Obtener 8 autoescuelas destacadas
+    getFeaturedSchools(12), // Obtener 12 autoescuelas destacadas
   ]);
 
   return (
