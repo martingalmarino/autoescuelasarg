@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Plus, Database, Search, Upload, Edit, Trash2 } from 'lucide-react'
+import { Plus, Database, Search, Upload, Edit, Trash2, FileText, BookOpen } from 'lucide-react'
 
 export default function AdminPage() {
   const [stats, setStats] = useState<{provinces: number, schools: number, cities: number} | null>(null)
@@ -148,7 +148,7 @@ export default function AdminPage() {
         </Card>
 
         {/* Acciones de administración */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center">
@@ -170,32 +170,66 @@ export default function AdminPage() {
             </CardContent>
           </Card>
 
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <Plus className="h-5 w-5 mr-2" />
-                  Gestión de Datos
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  <Button asChild variant="outline" className="w-full justify-start">
-                    <Link href="/admin/autoescuelas">
-                      <Edit className="h-4 w-4 mr-2" />
-                      Gestionar Autoescuelas
-                    </Link>
-                  </Button>
-                  <Button variant="outline" className="w-full justify-start">
-                    <Upload className="h-4 w-4 mr-2" />
-                    Importar desde Excel/CSV
-                  </Button>
-                  <Button variant="outline" className="w-full justify-start">
-                    <Trash2 className="h-4 w-4 mr-2" />
-                    Limpiar Datos
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center">
+                <Plus className="h-5 w-5 mr-2" />
+                Gestión de Datos
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-3">
+                <Button asChild variant="outline" className="w-full justify-start">
+                  <Link href="/admin/autoescuelas">
+                    <Edit className="h-4 w-4 mr-2" />
+                    Gestionar Autoescuelas
+                  </Link>
+                </Button>
+                <Button variant="outline" className="w-full justify-start">
+                  <Upload className="h-4 w-4 mr-2" />
+                  Importar desde Excel/CSV
+                </Button>
+                <Button variant="outline" className="w-full justify-start">
+                  <Trash2 className="h-4 w-4 mr-2" />
+                  Limpiar Datos
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center">
+                <BookOpen className="h-5 w-5 mr-2" />
+                Blog
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-gray-600 mb-4">
+                Gestiona los artículos del blog: crear, editar y publicar contenido.
+              </p>
+              <div className="space-y-3">
+                <Button asChild className="w-full">
+                  <Link href="/admin/blog/nuevo">
+                    <Plus className="h-4 w-4 mr-2" />
+                    Nuevo Artículo
+                  </Link>
+                </Button>
+                <Button asChild variant="outline" className="w-full">
+                  <Link href="/admin/blog">
+                    <FileText className="h-4 w-4 mr-2" />
+                    Gestionar Artículos
+                  </Link>
+                </Button>
+                <Button asChild variant="outline" className="w-full">
+                  <Link href="/blog">
+                    <BookOpen className="h-4 w-4 mr-2" />
+                    Ver Blog Público
+                  </Link>
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </div>
