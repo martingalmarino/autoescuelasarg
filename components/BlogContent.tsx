@@ -57,32 +57,34 @@ export default function BlogContent({
   }
 
   return (
-    <article className={`max-w-4xl mx-auto ${className}`}>
+    <article className={`max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 ${className}`}>
       {/* Header del artículo */}
-      <header className="mb-8">
-        <div className="flex items-center space-x-2 mb-4">
+      <header className="mb-6 sm:mb-8">
+        <div className="flex flex-wrap items-center gap-2 mb-4">
           {article.category && (
-            <Badge variant="secondary">{article.category}</Badge>
+            <Badge variant="secondary" className="text-xs sm:text-sm">
+              {article.category}
+            </Badge>
           )}
           {article.isFeatured && (
-            <Badge className="bg-yellow-500 hover:bg-yellow-600">
+            <Badge className="bg-yellow-500 hover:bg-yellow-600 text-xs sm:text-sm">
               Destacado
             </Badge>
           )}
         </div>
 
-        <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 leading-tight">
           {article.title}
         </h1>
 
         {article.excerpt && (
-          <p className="text-xl text-gray-600 mb-6 leading-relaxed">
+          <p className="text-lg sm:text-xl text-gray-600 mb-6 leading-relaxed">
             {article.excerpt}
           </p>
         )}
 
-        <div className="flex items-center justify-between flex-wrap gap-4">
-          <div className="flex items-center space-x-6 text-sm text-gray-500">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-sm text-gray-500">
             <span className="flex items-center">
               <User className="w-4 h-4 mr-2" />
               {article.author}
@@ -103,7 +105,7 @@ export default function BlogContent({
             variant="outline"
             size="sm"
             onClick={handleShare}
-            className="flex items-center"
+            className="flex items-center self-start sm:self-auto"
           >
             <Share2 className="w-4 h-4 mr-2" />
             Compartir
@@ -113,25 +115,26 @@ export default function BlogContent({
 
       {/* Imagen destacada */}
       {article.featuredImage && (
-        <div className="relative h-64 md:h-96 w-full mb-8 rounded-lg overflow-hidden">
+        <div className="relative h-48 sm:h-64 md:h-80 lg:h-96 w-full mb-6 sm:mb-8 rounded-lg overflow-hidden">
           <Image
             src={article.featuredImage}
             alt={article.title}
             fill
             className="object-cover"
             priority
+            sizes="(max-width: 640px) 100vw, (max-width: 768px) 100vw, (max-width: 1024px) 100vw, 896px"
           />
         </div>
       )}
 
       {/* Contenido del artículo */}
-      <div className="prose prose-lg max-w-none mb-8">
+      <div className="prose prose-sm sm:prose-base lg:prose-lg max-w-none mb-6 sm:mb-8">
         <SafeHTML content={article.content} />
       </div>
 
       {/* Tags */}
       {article.tags && article.tags.length > 0 && (
-        <div className="mb-8">
+        <div className="mb-6 sm:mb-8">
           <div className="flex items-center mb-3">
             <Tag className="w-4 h-4 mr-2 text-gray-500" />
             <span className="text-sm font-medium text-gray-700">
@@ -159,20 +162,21 @@ export default function BlogContent({
 
       {/* Artículos relacionados */}
       {relatedArticles.length > 0 && (
-        <section className="mt-12 pt-8 border-t border-gray-200">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">
+        <section className="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-gray-200">
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">
             Artículos relacionados
           </h2>
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {relatedArticles.map((relatedArticle) => (
               <div key={relatedArticle.id} className="space-y-3">
                 {relatedArticle.featuredImage && (
-                  <div className="relative h-32 w-full rounded-lg overflow-hidden">
+                  <div className="relative h-32 sm:h-40 w-full rounded-lg overflow-hidden">
                     <Image
                       src={relatedArticle.featuredImage}
                       alt={relatedArticle.title}
                       fill
                       className="object-cover"
+                      sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 300px"
                     />
                   </div>
                 )}
@@ -182,7 +186,7 @@ export default function BlogContent({
                       {relatedArticle.category}
                     </Badge>
                   )}
-                  <h3 className="font-semibold text-gray-900 line-clamp-2 mb-1">
+                  <h3 className="font-semibold text-gray-900 line-clamp-2 mb-1 text-sm sm:text-base">
                     <a
                       href={`/blog/${relatedArticle.slug}`}
                       className="hover:text-primary transition-colors"
@@ -190,10 +194,10 @@ export default function BlogContent({
                       {relatedArticle.title}
                     </a>
                   </h3>
-                  <p className="text-sm text-gray-600 line-clamp-2 mb-2">
+                  <p className="text-xs sm:text-sm text-gray-600 line-clamp-2 mb-2">
                     {relatedArticle.excerpt}
                   </p>
-                  <div className="flex items-center text-xs text-gray-500 space-x-3">
+                  <div className="flex flex-wrap items-center text-xs text-gray-500 gap-2 sm:gap-3">
                     <span>
                       {formatDate(
                         relatedArticle.publishedAt || relatedArticle.createdAt
