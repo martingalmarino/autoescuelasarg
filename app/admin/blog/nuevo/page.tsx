@@ -15,7 +15,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Card } from "@/components/ui/card";
-import RichTextEditor from "@/components/RichTextEditor";
+import BlogEditor from "@/components/BlogEditor";
 import ImageUpload from "@/components/ImageUpload";
 
 export default function NewBlogArticlePage() {
@@ -166,7 +166,7 @@ export default function NewBlogArticlePage() {
 
                 <div>
                   <Label htmlFor="content">Contenido *</Label>
-                  <RichTextEditor
+                  <BlogEditor
                     content={formData.content}
                     onChange={(content) =>
                       setFormData((prev) => ({ ...prev, content }))
