@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { Suspense } from "react";
-import BlogPageClient from "./BlogPageClient";
+import BlogPageClientSimple from "./BlogPageClientSimple";
 
 export const metadata: Metadata = {
   title: "Blog - Autoescuelas.ar | Consejos y guías para obtener tu licencia",
@@ -62,7 +62,7 @@ export default function BlogPage() {
       <section className="py-12">
         <div className="container mx-auto px-4">
           <Suspense fallback={<BlogLoadingSkeleton />}>
-            <BlogPageClient />
+            <BlogPageClientSimple />
           </Suspense>
         </div>
       </section>
