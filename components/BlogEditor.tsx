@@ -9,26 +9,13 @@ import TextAlign from '@tiptap/extension-text-align';
 import Underline from '@tiptap/extension-underline';
 import Strike from '@tiptap/extension-strike';
 import Code from '@tiptap/extension-code';
-import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
 import Highlight from '@tiptap/extension-highlight';
-import Color from '@tiptap/extension-color';
-import TextStyle from '@tiptap/extension-text-style';
-import Subscript from '@tiptap/extension-subscript';
-import Superscript from '@tiptap/extension-superscript';
-import Table from '@tiptap/extension-table';
-import TableRow from '@tiptap/extension-table-row';
-import TableCell from '@tiptap/extension-table-cell';
-import TableHeader from '@tiptap/extension-table-header';
 import HorizontalRule from '@tiptap/extension-horizontal-rule';
 import TaskList from '@tiptap/extension-task-list';
 import TaskItem from '@tiptap/extension-task-item';
 import Placeholder from '@tiptap/extension-placeholder';
-import Focus from '@tiptap/extension-focus';
-import Gapcursor from '@tiptap/extension-gapcursor';
-import History from '@tiptap/extension-history';
 import CharacterCount from '@tiptap/extension-character-count';
 import Typography from '@tiptap/extension-typography';
-import { lowlight } from 'lowlight';
 import { Button } from '@/components/ui/button';
 import { 
   Bold, 
@@ -54,15 +41,10 @@ import {
   Heading6,
   Link as LinkIcon,
   Image as ImageIcon,
-  Table as TableIcon,
   Minus,
   CheckSquare,
   Square,
-  Palette,
   Highlighter,
-  Subscript as SubscriptIcon,
-  Superscript as SuperscriptIcon,
-  MoreHorizontal,
   Eye,
   EyeOff
 } from 'lucide-react';
@@ -122,36 +104,9 @@ export default function BlogEditor({
           class: 'bg-gray-100 px-1 py-0.5 rounded text-sm font-mono',
         },
       }),
-      CodeBlockLowlight.configure({
-        lowlight,
-        HTMLAttributes: {
-          class: 'bg-gray-900 text-gray-100 p-4 rounded-lg font-mono text-sm',
-        },
-      }),
       Highlight.configure({
         HTMLAttributes: {
           class: 'bg-yellow-200 px-1 rounded',
-        },
-      }),
-      Color,
-      TextStyle,
-      Subscript,
-      Superscript,
-      Table.configure({
-        resizable: true,
-        HTMLAttributes: {
-          class: 'border-collapse border border-gray-300',
-        },
-      }),
-      TableRow,
-      TableHeader.configure({
-        HTMLAttributes: {
-          class: 'bg-gray-50 font-semibold',
-        },
-      }),
-      TableCell.configure({
-        HTMLAttributes: {
-          class: 'border border-gray-300 p-2',
         },
       }),
       HorizontalRule.configure({
@@ -173,11 +128,6 @@ export default function BlogEditor({
       Placeholder.configure({
         placeholder,
       }),
-      Focus.configure({
-        className: 'focus:outline-none',
-      }),
-      Gapcursor,
-      History,
       CharacterCount,
       Typography,
     ],
@@ -270,9 +220,6 @@ export default function BlogEditor({
     editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run();
   };
 
-  const addTable = () => {
-    editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run();
-  };
 
   const addHorizontalRule = () => {
     editor.chain().focus().setHorizontalRule().run();
@@ -496,12 +443,6 @@ export default function BlogEditor({
               <ImageIcon className="h-4 w-4" />
             </ToolbarButton>
 
-            <ToolbarButton
-              onClick={addTable}
-              title="Insertar tabla"
-            >
-              <TableIcon className="h-4 w-4" />
-            </ToolbarButton>
 
             <ToolbarButton
               onClick={addHorizontalRule}
@@ -523,13 +464,6 @@ export default function BlogEditor({
               <Quote className="h-4 w-4" />
             </ToolbarButton>
 
-            <ToolbarButton
-              onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-              isActive={editor.isActive('codeBlock')}
-              title="Bloque de código"
-            >
-              <CodeIcon className="h-4 w-4" />
-            </ToolbarButton>
           </ToolbarGroup>
 
           <ToolbarSeparator />
