@@ -30,6 +30,7 @@ export default function BlogPageClient() {
     null
   );
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -78,20 +79,32 @@ export default function BlogPageClient() {
 
   useEffect(() => {
     const loadData = async () => {
-      setLoading(true);
+      try {
+        setLoading(true);
 
-      // Cargar artículo destacado
-      const featuredData = await fetchArticles(1, "", true);
-      if (featuredData.articles.length > 0) {
-        setFeaturedArticle(featuredData.articles[0]);
+        // Cargar artículos regulares (incluyendo destacados)
+        const regularData = await fetchArticles(currentPage, selectedCategory);
+        setArticles(regularData.articles);
+        setPagination(regularData.pagination);
+
+        // Si hay artículos destacados, tomar el primero
+        const featured = regularData.articles.find(article => article.isFeatured);
+        if (featured) {
+          setFeaturedArticle(featured);
+        } else if (regularData.articles.length > 0) {
+          // Si no hay destacados, tomar el primero
+          setFeaturedArticle(regularData.articles[0]);
+        }
+
+      } catch (error) {
+        console.error('Error loading blog data:', error);
+        setError('Error al cargar los artículos del blog');
+        setArticles([]);
+        setPagination({ page: 1, limit: 10, total: 0, pages: 0 });
+        setFeaturedArticle(null);
+      } finally {
+        setLoading(false);
       }
-
-      // Cargar artículos regulares
-      const regularData = await fetchArticles(currentPage, selectedCategory);
-      setArticles(regularData.articles);
-      setPagination(regularData.pagination);
-
-      setLoading(false);
     };
 
     loadData();
@@ -106,10 +119,12 @@ export default function BlogPageClient() {
   const handleCategoryChange = (category: string) => {
     setSelectedCategory(category);
     setCurrentPage(1);
+    setError(null);
   };
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
+    setError(null);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -119,6 +134,28 @@ export default function BlogPageClient() {
         <div className="text-center py-12">
           <div className="animate-spin inline-block w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full mb-4"></div>
           <p className="text-gray-600">Cargando artículos...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center py-12">
+          <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg className="w-8 h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+            </svg>
+          </div>
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">Error al cargar el blog</h3>
+          <p className="text-gray-500 mb-4">{error}</p>
+          <button 
+            onClick={() => window.location.reload()} 
+            className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            Intentar nuevamente
+          </button>
         </div>
       </div>
     );
