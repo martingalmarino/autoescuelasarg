@@ -11,10 +11,11 @@ export default function SafeHTML({ content, className = "" }: SafeHTMLProps) {
   const sanitizedHTML = useMemo(() => {
     if (!content) return ''
     
-    // Lista de tags permitidos
+    // Lista de tags permitidos (incluyendo los del editor de blog)
     const allowedTags = [
-      'p', 'br', 'strong', 'b', 'em', 'i', 'u', 'ul', 'ol', 'li', 
-      'blockquote', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'
+      'p', 'br', 'strong', 'b', 'em', 'i', 'u', 's', 'strike', 'ul', 'ol', 'li', 
+      'blockquote', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'a', 'img', 'mark', 
+      'code', 'pre', 'hr', 'div', 'span'
     ]
     
     // Crear un parser simple para limpiar el HTML
@@ -35,7 +36,7 @@ export default function SafeHTML({ content, className = "" }: SafeHTMLProps) {
 
   return (
     <div 
-      className={`prose prose-sm max-w-none ${className}`}
+      className={`prose prose-lg max-w-none ${className}`}
       dangerouslySetInnerHTML={{ __html: sanitizedHTML }}
     />
   )
