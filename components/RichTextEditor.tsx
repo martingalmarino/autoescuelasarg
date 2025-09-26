@@ -144,3 +144,6 @@ export default function RichTextEditor({ content, onChange, placeholder = "Escri
   )
 }
 
+
+
+

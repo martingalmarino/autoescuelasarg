@@ -1,23 +1,25 @@
-"use client"
+"use client";
 
-import { useState } from 'react'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
-import { Car, Search } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
+import { useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { Car, Search } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 export default function Header() {
-  const [searchQuery, setSearchQuery] = useState('')
-  const router = useRouter()
+  const [searchQuery, setSearchQuery] = useState("");
+  const router = useRouter();
 
   const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     if (searchQuery.trim()) {
-      router.push(`/autoescuelas?search=${encodeURIComponent(searchQuery.trim())}`)
-      setSearchQuery('')
+      router.push(
+        `/autoescuelas?search=${encodeURIComponent(searchQuery.trim())}`
+      );
+      setSearchQuery("");
     }
-  }
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur-md supports-[backdrop-filter]:bg-white/80 shadow-sm">
@@ -34,17 +36,23 @@ export default function Header() {
 
         {/* Navigation */}
         <nav className="hidden md:flex items-center space-x-4 lg:space-x-6">
-          <Link 
-            href="/autoescuelas" 
+          <Link
+            href="/autoescuelas"
             className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
           >
             Todas las autoescuelas
           </Link>
-          <Link 
-            href="/provincias" 
+          <Link
+            href="/provincias"
             className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
           >
             Por provincia
+          </Link>
+          <Link
+            href="/blog"
+            className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Blog
           </Link>
         </nav>
 
@@ -52,7 +60,10 @@ export default function Header() {
         <div className="flex items-center">
           {/* Mobile: Icon only, Desktop: Full search */}
           <div className="hidden sm:block">
-            <form onSubmit={handleSearch} className="flex items-center space-x-2">
+            <form
+              onSubmit={handleSearch}
+              className="flex items-center space-x-2"
+            >
               <Input
                 type="text"
                 placeholder="Buscar autoescuelas..."
@@ -65,14 +76,14 @@ export default function Header() {
               </Button>
             </form>
           </div>
-          
+
           {/* Mobile: Search icon only */}
           <div className="block sm:hidden">
-            <Button 
-              variant="ghost" 
-              size="sm" 
+            <Button
+              variant="ghost"
+              size="sm"
               className="h-9 w-9 p-0"
-              onClick={() => router.push('/autoescuelas')}
+              onClick={() => router.push("/autoescuelas")}
             >
               <Search className="h-4 w-4" />
             </Button>
@@ -80,5 +91,5 @@ export default function Header() {
         </div>
       </div>
     </header>
-  )
+  );
 }
