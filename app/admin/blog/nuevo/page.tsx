@@ -329,9 +329,12 @@ export default function NewBlogArticlePage() {
             <Card className="p-6">
               <h2 className="text-xl font-semibold mb-4">Imagen destacada</h2>
               <ImageUpload
-                value={formData.featuredImage}
-                onChange={(url) =>
+                currentImage={formData.featuredImage}
+                onUpload={(url) =>
                   setFormData((prev) => ({ ...prev, featuredImage: url }))
+                }
+                onRemove={() =>
+                  setFormData((prev) => ({ ...prev, featuredImage: "" }))
                 }
                 folder="blog"
               />
