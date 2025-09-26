@@ -167,7 +167,7 @@ export default function NewBlogArticlePage() {
                 <div>
                   <Label htmlFor="content">Contenido *</Label>
                   <RichTextEditor
-                    value={formData.content}
+                    content={formData.content}
                     onChange={(content) =>
                       setFormData((prev) => ({ ...prev, content }))
                     }
