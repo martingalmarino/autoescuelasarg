@@ -283,17 +283,26 @@ export const getProvinceBySlugFromDB = cache(async (slug: string) => {
             name: true,
             slug: true,
             schoolsCount: true,
+            _count: { select: { schools: { where: { isActive: true } } } },
           },
         },
+        _count: { select: { schools: { where: { isActive: true } } } },
       },
     })
 
     if (!province) return null
 
+    const { _count, cities, ...rest } = province
+
     return {
-      ...province,
+      ...rest,
       description: province.description || undefined,
       imageUrl: province.imageUrl || undefined,
+      activeSchoolsCount: _count.schools,
+      cities: cities.map(({ _count: cityCount, ...city }) => ({
+        ...city,
+        activeSchoolsCount: cityCount.schools,
+      })),
     }
   } catch (error) {
     console.error(`Error fetching province ${slug}:`, error)

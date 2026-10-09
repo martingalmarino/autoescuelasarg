@@ -175,7 +175,7 @@ export default function SchoolsPageClient({
         <div className="container mx-auto px-4 sm:px-6">
           <div className="text-center text-white">
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3">
-              Todas las Autoescuelas
+              Todas las autoescuelas de Argentina
             </h1>
             <p className="text-lg sm:text-xl text-white/90 max-w-3xl mx-auto mb-6">
               Encontrá la autoescuela perfecta para obtener tu licencia de

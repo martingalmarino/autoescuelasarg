@@ -5,9 +5,17 @@ import ProvincesIndex from "@/components/ProvincesIndex";
 import JsonLd from "@/components/SEO/JsonLd";
 import { FAQ } from "@/lib/types";
 import { getActiveProvinces, getFeaturedSchools } from "@/lib/database";
+import { buildMetadata } from "@/lib/seo";
 
 // ISR: 24 h. El admin invalida la caché al editar datos.
 export const revalidate = 86400;
+
+export const metadata = buildMetadata({
+  titleVariants: ["Autoescuelas en Argentina: escuelas de manejo cerca tuyo"],
+  description:
+    "Compará autoescuelas y escuelas de manejo de todo el país: precios, reseñas y clases para sacar tu registro de conducir. Buscá por provincia o ciudad.",
+  path: "/",
+});
 
 // FAQ data - contenido estático que puede quedarse hardcodeado
 const faqData: FAQ[] = [

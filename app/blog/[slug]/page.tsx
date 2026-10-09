@@ -5,6 +5,7 @@ import { prisma } from "@/lib/database";
 import BlogContent from "@/components/BlogContent";
 import JsonLd from "@/components/SEO/JsonLd";
 import { BlogArticle } from "@/lib/types";
+import { buildMetadata, notFoundMetadata } from "@/lib/seo";
 
 // ISR: 24 h. Los artículos se generan en la primera visita; el admin invalida la caché al editar.
 export const revalidate = 86400;
@@ -75,51 +76,39 @@ export async function generateMetadata({
   const data = await getArticle(params.slug);
 
   if (!data) {
-    return {
-      title: "Artículo no encontrado",
-    };
+    return notFoundMetadata;
   }
 
   const { article } = data;
-  const title = article.metaTitle || article.title;
-  const description =
-    article.metaDescription ||
-    article.excerpt ||
-    `Lee sobre ${article.title} en Autoescuelas.ar`;
+  const summary = (article.metaDescription || article.excerpt || "").trim();
+  const withStop = (text: string) => (/[.?!]$/.test(text) ? text : `${text}.`);
+  const fullTitle = (article.metaTitle || article.title).trim();
+  const titleSegments = fullTitle
+    .split(/(?<=[?:])\s+/)
+    .map((segment) => segment.replace(/:$/, "").trim())
+    .filter((segment) => segment.length >= 25)
+    .sort((a, b) => b.length - a.length);
+  const base = buildMetadata({
+    titleVariants: [fullTitle, ...titleSegments],
+    description:
+      summary.length >= 110
+        ? summary
+        : `${withStop(summary || article.title.trim())} Guía del blog de Autoescuelas.ar para aprender a manejar y sacar tu registro de conducir.`,
+    path: `/blog/${article.slug}`,
+    images: article.featuredImage ? [article.featuredImage] : undefined,
+    type: "article",
+  });
 
   return {
-    title: `${title} - Blog Autoescuelas.ar`,
-    description,
-    keywords: article.tags.join(", "),
+    ...base,
     authors: [{ name: article.author }],
     openGraph: {
-      title: `${title} - Blog Autoescuelas.ar`,
-      description,
-      url: `https://www.autoescuelas.ar/blog/${article.slug}`,
+      ...base.openGraph,
       type: "article",
       publishedTime: article.publishedAt?.toISOString(),
       modifiedTime: article.updatedAt.toISOString(),
       authors: [article.author],
       tags: article.tags,
-      images: article.featuredImage
-        ? [
-            {
-              url: article.featuredImage,
-              width: 1200,
-              height: 630,
-              alt: article.title,
-            },
-          ]
-        : [],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: `${title} - Blog Autoescuelas.ar`,
-      description,
-      images: article.featuredImage ? [article.featuredImage] : [],
-    },
-    alternates: {
-      canonical: `/blog/${article.slug}`,
     },
   };
 }

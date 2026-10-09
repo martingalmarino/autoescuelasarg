@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getActiveProvinces, getProvinceBySlugFromDB, getSchoolsByProvinceSlug, getActiveCitiesByProvince } from '@/lib/database'
+import { buildMetadata, notFoundMetadata, seoPlaceName } from '@/lib/seo'
 import ProvincePageClient from './ProvincePageClient'
 
 // ISR: 24 h. El admin invalida la caché al editar datos.
@@ -26,25 +27,40 @@ export async function generateMetadata({ params }: ProvincePageProps): Promise<M
   const province = await getProvinceBySlugFromDB(params.slug)
   
   if (!province) {
-    return {
-      title: 'Provincia no encontrada',
-    }
+    return notFoundMetadata
   }
 
-  return {
-    title: `Autoescuelas y Cursos de Manejo en ${province.name}`,
-    description: `Encontrá las mejores autoescuelas en ${province.name} con instructores profesionales, autos doble comando y clases prácticas en ciudad y ruta. ${province.schoolsCount} escuelas de manejo disponibles.`,
-    keywords: `autoescuelas, ${province.name}, escuela de manejo, licencia de conducir, clases de manejo, instructores profesionales, autos doble comando`,
-    alternates: {
-      canonical: `/provincias/${province.slug}`,
-    },
-    openGraph: {
-      title: `Autoescuelas y Cursos de Manejo en ${province.name}`,
-      description: `Encontrá las mejores autoescuelas en ${province.name} con instructores profesionales, autos doble comando y clases prácticas en ciudad y ruta.`,
-      url: `https://www.autoescuelas.ar/provincias/${province.slug}`,
-      images: province.imageUrl ? [province.imageUrl] : [],
-    },
-  }
+  const name = seoPlaceName(province.name, province.slug)
+  const count = province.activeSchoolsCount
+  const topCities = province.cities
+    .filter((city) => city.activeSchoolsCount > 0)
+    .sort((a, b) => b.activeSchoolsCount - a.activeSchoolsCount)
+    .slice(0, 2)
+    .map((city) => seoPlaceName(city.name, city.slug))
+
+  const countText = count === 1 ? '1 autoescuela' : `${count} autoescuelas`
+  const description =
+    count === 0
+      ? [`Autoescuelas y escuelas de manejo en ${name}: muy pronto vas a poder comparar precios, opiniones y clases para sacar tu registro de conducir.`]
+      : [
+          topCities.length > 1 &&
+            `${countText} en ${name} con precios, opiniones y contacto. Compará escuelas de manejo en ${topCities.join(', ')} y más, y sacá tu registro.`,
+          topCities.length > 0 &&
+            `${countText} en ${name} con precios, opiniones y contacto. Compará escuelas de manejo en ${topCities[0]} y más, y sacá tu registro.`,
+          `${countText} en ${name} con precios, opiniones y contacto. Compará escuelas de manejo y clases para sacar tu registro de conducir.`,
+        ].filter((variant): variant is string => Boolean(variant))
+
+  return buildMetadata({
+    titleVariants: [
+      `Autoescuelas en ${name}: escuelas de manejo y clases`,
+      `Autoescuelas en ${name}: escuelas de manejo`,
+      `Autoescuelas en ${name}`,
+    ],
+    description,
+    path: `/provincias/${province.slug}`,
+    images: province.imageUrl ? [province.imageUrl] : undefined,
+    noindex: count === 0,
+  })
 }
 
 export default async function ProvincePage({ params }: ProvincePageProps) {

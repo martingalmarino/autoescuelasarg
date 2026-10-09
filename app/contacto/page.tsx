@@ -1,17 +1,12 @@
 import ContactPageClient from './ContactPageClient'
-import { Metadata } from 'next'
+import { buildMetadata } from '@/lib/seo'
 
-export const metadata: Metadata = {
-  title: 'Contacto - Autoescuelas.ar',
-  description: 'Contacta con nosotros para consultas, sugerencias o para agregar tu autoescuela al directorio más completo de Argentina.',
-  keywords: 'contacto, autoescuelas, consultas, soporte, Argentina',
-  openGraph: {
-    title: 'Contacto - Autoescuelas.ar',
-    description: 'Contacta con nosotros para consultas, sugerencias o para agregar tu autoescuela al directorio más completo de Argentina.',
-    type: 'website',
-    url: 'https://autoescuelas.ar/contacto',
-  },
-}
+export const metadata = buildMetadata({
+  titleVariants: ['Contacto: sumá tu autoescuela al directorio'],
+  description:
+    'Escribinos para sumar tu autoescuela o escuela de manejo al directorio más completo de Argentina, actualizar sus datos o hacernos consultas y sugerencias.',
+  path: '/contacto',
+})
 
 export default function ContactPage() {
   return <ContactPageClient />
