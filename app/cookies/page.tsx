@@ -65,7 +65,7 @@ const sections = [
         <div className="mb-4 overflow-x-auto">
           <table className="w-full min-w-[560px] border-collapse text-sm">
             <thead>
-              <tr className="bg-gray-100 text-left text-gray-900">
+              <tr className="bg-muted text-left text-foreground">
                 <th className="border p-3">Tipo</th>
                 <th className="border p-3">Proveedor</th>
                 <th className="border p-3">Finalidad</th>
@@ -75,7 +75,7 @@ const sections = [
             <tbody>
               {cookieTypes.map((cookie) => (
                 <tr key={cookie.type} className="align-top">
-                  <td className="border p-3 font-medium text-gray-900">{cookie.type}</td>
+                  <td className="border p-3 font-medium text-foreground">{cookie.type}</td>
                   <td className="border p-3">{cookie.provider}</td>
                   <td className="border p-3">{cookie.purpose}</td>
                   <td className="border p-3">{cookie.duration}</td>

@@ -14,8 +14,8 @@ interface TopRatedGridProps {
 // Skeleton component for loading state
 function SchoolCardSkeleton() {
   return (
-    <div className="h-80 animate-pulse rounded-lg border bg-card">
-      <div className="h-48 bg-muted rounded-t-lg" />
+    <div className="h-80 animate-pulse surface-card">
+      <div className="h-48 bg-muted rounded-t-xl" />
       <div className="p-4 space-y-3">
         <div className="h-5 bg-muted rounded w-3/4" />
         <div className="h-4 bg-muted rounded w-1/2" />
@@ -37,16 +37,16 @@ export default function TopRatedGrid({ schools }: TopRatedGridProps) {
         {/* Section Header */}
         <div className="mb-8 sm:mb-12 flex flex-col items-center justify-between gap-4 sm:flex-row">
           <div className="text-center sm:text-left">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-foreground">
+            <h2 className="section-title inline-block text-2xl sm:text-3xl lg:text-4xl">
               Escuelas de manejo más valoradas
             </h2>
-            <p className="mt-2 text-base sm:text-lg text-muted-foreground">
+            <p className="mt-3 text-base sm:text-lg text-muted-foreground">
               Las autoescuelas mejor calificadas por nuestros usuarios
             </p>
           </div>
           
-          <Link href="/autoescuelas?sort=rating_desc" onClick={handleViewAllClick}>
-            <Button variant="outline" className="hidden sm:flex items-center space-x-2">
+          <Link href="/autoescuelas?sort=rating_desc" onClick={handleViewAllClick} className="hidden sm:block">
+            <Button variant="outline" className="flex items-center space-x-2">
               <span>VER TODAS</span>
               <ArrowRight className="h-4 w-4" />
             </Button>

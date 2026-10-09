@@ -29,7 +29,7 @@ export default function BlogCard({
   if (variant === "compact") {
     return (
       <Link href={`/blog/${article.slug}`} className={`block ${className}`}>
-        <Card className="p-4 hover:shadow-md transition-shadow">
+        <Card className="surface-card-hover p-4">
           <div className="flex space-x-3">
             {article.featuredImage && (
               <div className="flex-shrink-0 w-20 h-20 relative rounded-lg overflow-hidden">
@@ -42,13 +42,13 @@ export default function BlogCard({
               </div>
             )}
             <div className="flex-1 min-w-0">
-              <h3 className="font-semibold text-gray-900 line-clamp-2 mb-1">
+              <h3 className="font-bold text-foreground line-clamp-2 mb-1">
                 {article.title}
               </h3>
-              <p className="text-sm text-gray-600 line-clamp-2 mb-2">
+              <p className="text-sm text-muted-foreground line-clamp-2 mb-2">
                 {article.excerpt}
               </p>
-              <div className="flex items-center text-xs text-gray-500 space-x-3">
+              <div className="flex items-center text-xs text-muted-foreground space-x-3">
                 <span className="flex items-center">
                   <Calendar className="w-3 h-3 mr-1" />
                   {formatDate(article.publishedAt || article.createdAt)}
@@ -70,7 +70,7 @@ export default function BlogCard({
   if (variant === "featured") {
     return (
       <Link href={`/blog/${article.slug}`} className={`block ${className}`}>
-        <Card className="overflow-hidden hover:shadow-lg transition-shadow">
+        <Card className="surface-card-hover overflow-hidden">
           {article.featuredImage && (
             <div className="relative h-64 w-full">
               <Image
@@ -80,7 +80,7 @@ export default function BlogCard({
                 className="object-cover"
               />
               {article.isFeatured && (
-                <Badge className="absolute top-4 left-4 bg-yellow-500 hover:bg-yellow-600">
+                <Badge variant="signal" className="absolute top-4 left-4">
                   Destacado
                 </Badge>
               )}
@@ -92,16 +92,16 @@ export default function BlogCard({
                 <Badge variant="secondary">{article.category}</Badge>
               )}
               {article.isFeatured && !article.featuredImage && (
-                <Badge className="bg-yellow-500 hover:bg-yellow-600">
+                <Badge variant="signal">
                   Destacado
                 </Badge>
               )}
             </div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-3 line-clamp-2">
+            <h2 className="text-2xl font-bold text-foreground mb-3 line-clamp-2">
               {article.title}
             </h2>
-            <p className="text-gray-600 mb-4 line-clamp-3">{article.excerpt}</p>
-            <div className="flex items-center justify-between text-sm text-gray-500">
+            <p className="text-muted-foreground mb-4 line-clamp-3">{article.excerpt}</p>
+            <div className="flex items-center justify-between text-sm text-muted-foreground">
               <div className="flex items-center space-x-4">
                 <span className="flex items-center">
                   <User className="w-4 h-4 mr-1" />
@@ -128,7 +128,7 @@ export default function BlogCard({
   // Default variant
   return (
     <Link href={`/blog/${article.slug}`} className={`block ${className}`}>
-      <Card className="overflow-hidden hover:shadow-md transition-shadow">
+      <Card className="surface-card-hover overflow-hidden">
         {article.featuredImage && (
           <div className="relative h-48 w-full">
             <Image
@@ -145,16 +145,16 @@ export default function BlogCard({
               <Badge variant="secondary">{article.category}</Badge>
             )}
             {article.isFeatured && (
-              <Badge className="bg-yellow-500 hover:bg-yellow-600">
+              <Badge variant="signal">
                 Destacado
               </Badge>
             )}
           </div>
-          <h3 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-2">
+          <h3 className="text-lg font-bold leading-snug text-foreground mb-2 line-clamp-2">
             {article.title}
           </h3>
-          <p className="text-gray-600 mb-4 line-clamp-3">{article.excerpt}</p>
-          <div className="flex items-center justify-between text-sm text-gray-500">
+          <p className="text-muted-foreground mb-4 line-clamp-3">{article.excerpt}</p>
+          <div className="flex items-center justify-between text-sm text-muted-foreground">
             <div className="flex items-center space-x-3">
               <span className="flex items-center">
                 <Calendar className="w-4 h-4 mr-1" />

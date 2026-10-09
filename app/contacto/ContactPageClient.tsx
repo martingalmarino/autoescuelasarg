@@ -84,12 +84,12 @@ export default function ContactPageClient() {
   ]
 
   return (
-    <main className="min-h-screen bg-gray-50">
+    <main className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-blue-600 to-blue-800 py-8 sm:py-12">
+      <section className="page-hero py-10 sm:py-14">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="text-center text-white">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold mb-3">
               Contactanos
             </h1>
             <p className="text-lg sm:text-xl text-white/90 max-w-3xl mx-auto mb-6">
@@ -104,10 +104,10 @@ export default function ContactPageClient() {
         <div className="grid gap-8 lg:grid-cols-3">
           {/* Contact Form */}
           <div className="lg:col-span-2">
-            <Card className="border-2 border-primary/20">
+            <Card className="overflow-hidden border-t-4 border-t-signal">
               <CardHeader>
-                <CardTitle className="text-2xl font-bold text-primary flex items-center gap-2">
-                  <MessageSquare className="h-6 w-6" />
+                <CardTitle className="text-2xl flex items-center gap-2">
+                  <MessageSquare className="h-6 w-6 text-primary" />
                   Envíanos tu mensaje
                 </CardTitle>
                 <p className="text-muted-foreground">
@@ -221,12 +221,14 @@ export default function ContactPageClient() {
 
                   <Button 
                     type="submit" 
-                    className="w-full bg-primary hover:bg-primary/90 text-white font-medium py-3" 
+                    variant="signal"
+                    size="lg"
+                    className="w-full font-bold" 
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? (
                       <>
-                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-current mr-2"></div>
                         Enviando mensaje...
                       </>
                     ) : (
@@ -246,8 +248,8 @@ export default function ContactPageClient() {
             <div className="space-y-6">
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-xl font-semibold flex items-center gap-2">
-                    <Users className="h-5 w-5" />
+                  <CardTitle className="text-xl flex items-center gap-2">
+                    <Users className="h-5 w-5 text-primary" />
                     Información de contacto
                   </CardTitle>
                 </CardHeader>
@@ -291,8 +293,8 @@ export default function ContactPageClient() {
 
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-xl font-semibold flex items-center gap-2">
-                    <Car className="h-5 w-5" />
+                  <CardTitle className="text-xl flex items-center gap-2">
+                    <Car className="h-5 w-5 text-primary" />
                     ¿Tenés una autoescuela?
                   </CardTitle>
                 </CardHeader>
@@ -301,9 +303,9 @@ export default function ContactPageClient() {
                     Si tenés una autoescuela y querés aparecer en nuestro directorio, 
                     seleccioná &quot;Agregar mi autoescuela&quot; en el formulario de contacto.
                   </p>
-                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                    <h4 className="font-medium text-blue-900 mb-2">¿Por qué aparecer en Autoescuelas.ar?</h4>
-                    <ul className="text-sm text-blue-800 space-y-1">
+                  <div className="bg-navy text-navy-foreground rounded-lg p-4 border-l-4 border-signal">
+                    <h4 className="font-display font-bold text-white mb-2">¿Por qué aparecer en Autoescuelas.ar?</h4>
+                    <ul className="text-sm text-navy-foreground/85 space-y-1">
                       <li>• Mayor visibilidad online</li>
                       <li>• Más alumnos potenciales</li>
                       <li>• Perfil completo y profesional</li>

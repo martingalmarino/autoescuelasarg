@@ -40,13 +40,13 @@ export default function RelatedSchools({ schools, city, citySlug, provinceSlug }
   }
 
   return (
-    <section className="py-8 sm:py-12 bg-gray-50/50">
+    <section className="py-10 sm:py-14 bg-muted/50">
       <div className="container mx-auto px-4 sm:px-6">
         <div className="text-center mb-8">
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3">
+          <h2 className="section-title inline-block text-2xl sm:text-3xl mb-3">
             Otras Autoescuelas en {city}
           </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
+          <p className="text-muted-foreground max-w-2xl mx-auto">
             Explora otras opciones de escuelas de manejo en tu zona. 
             Compará precios, calificaciones y servicios para encontrar la mejor opción.
           </p>
@@ -58,12 +58,12 @@ export default function RelatedSchools({ schools, city, citySlug, provinceSlug }
               key={school.id}
               href={`/autoescuelas/${school.slug}`}
               onClick={() => handleSchoolClick(school)}
-              className="group relative bg-white rounded-xl border border-gray-200 p-5 transition-all duration-300 hover:shadow-lg hover:shadow-primary/10 hover:border-primary/30 hover:-translate-y-1"
+              className="surface-card surface-card-hover group relative p-5"
             >
               {/* Featured badge */}
               {school.isFeatured && (
                 <div className="absolute -top-2 -right-2 z-10">
-                  <div className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-xs font-semibold px-2 py-1 rounded-full shadow-md">
+                  <div className="bg-signal text-signal-foreground text-xs font-bold px-2 py-1 rounded-full shadow-md">
                     <Award className="h-3 w-3 inline mr-1" />
                     Destacada
                   </div>
@@ -73,10 +73,10 @@ export default function RelatedSchools({ schools, city, citySlug, provinceSlug }
               <div className="space-y-4">
                 {/* School name and location */}
                 <div>
-                  <h3 className="font-semibold text-lg text-gray-900 group-hover:text-primary transition-colors duration-300 mb-2">
+                  <h3 className="font-display font-bold text-lg text-foreground group-hover:text-primary transition-colors duration-200 mb-2">
                     {school.name}
                   </h3>
-                  <div className="flex items-center text-sm text-gray-600">
+                  <div className="flex items-center text-sm text-muted-foreground">
                     <MapPin className="h-4 w-4 mr-1 text-primary" />
                     <span>{school.city}, {school.province}</span>
                   </div>
@@ -86,12 +86,12 @@ export default function RelatedSchools({ schools, city, citySlug, provinceSlug }
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-2">
                     <div className="flex items-center">
-                      <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                      <span className="ml-1 font-semibold text-gray-900">
+                      <Star className="h-4 w-4 fill-signal text-signal" />
+                      <span className="ml-1 font-bold text-foreground">
                         {formatRating(school.rating)}
                       </span>
                     </div>
-                    <span className="text-sm text-gray-500">
+                    <span className="text-sm text-muted-foreground">
                       ({formatReviews(school.reviewsCount)})
                     </span>
                   </div>
@@ -106,21 +106,21 @@ export default function RelatedSchools({ schools, city, citySlug, provinceSlug }
 
                 {/* Price range */}
                 {formatPrice(school.priceMin, school.priceMax) && (
-                  <div className="text-sm font-medium text-gray-700">
+                  <div className="inline-flex rounded-md bg-accent px-2 py-0.5 text-sm font-semibold text-primary">
                     {formatPrice(school.priceMin, school.priceMax)}
                   </div>
                 )}
 
                 {/* Arrow indicator */}
                 <div className="flex items-center justify-end">
-                  <div className="text-gray-400 group-hover:text-primary transition-colors duration-300 group-hover:translate-x-1">
+                  <div className="text-muted-foreground group-hover:text-primary transition-all duration-200 group-hover:translate-x-1">
                     <ChevronRight className="h-5 w-5" />
                   </div>
                 </div>
               </div>
 
               {/* Subtle border accent */}
-              <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary/20 rounded-l-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="absolute left-0 top-0 bottom-0 w-1 bg-signal rounded-l-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
             </Link>
           ))}
         </div>

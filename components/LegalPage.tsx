@@ -23,10 +23,10 @@ const legalLinks = [
 
 export default function LegalPage({ title, intro, sections }: LegalPageProps) {
   return (
-    <div className="bg-gray-50">
-      <section className="bg-gradient-to-r from-blue-600 to-blue-800 py-8 sm:py-12">
+    <div className="bg-background">
+      <section className="page-hero py-10 sm:py-14">
         <div className="container mx-auto px-4 sm:px-6 text-center text-white">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3">{title}</h1>
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold mb-3">{title}</h1>
           <p className="text-sm sm:text-base text-white/80">Última actualización: {LEGAL_LAST_UPDATED}</p>
         </div>
       </section>
@@ -34,8 +34,8 @@ export default function LegalPage({ title, intro, sections }: LegalPageProps) {
       <div className="container mx-auto px-4 sm:px-6 py-8 sm:py-12">
         <div className="grid gap-8 lg:grid-cols-[240px_1fr]">
           <aside className="lg:sticky lg:top-24 h-fit space-y-6">
-            <nav aria-label="Índice" className="rounded-lg border bg-white p-4">
-              <p className="mb-3 text-sm font-semibold text-gray-900">Contenido</p>
+            <nav aria-label="Índice" className="surface-card p-4">
+              <p className="mb-3 font-display text-sm font-bold text-foreground">Contenido</p>
               <ol className="space-y-2 text-sm">
                 {sections.map((section, index) => (
                   <li key={section.id}>
@@ -46,8 +46,8 @@ export default function LegalPage({ title, intro, sections }: LegalPageProps) {
                 ))}
               </ol>
             </nav>
-            <nav aria-label="Documentos legales" className="rounded-lg border bg-white p-4">
-              <p className="mb-3 text-sm font-semibold text-gray-900">Documentos legales</p>
+            <nav aria-label="Documentos legales" className="surface-card p-4">
+              <p className="mb-3 font-display text-sm font-bold text-foreground">Documentos legales</p>
               <ul className="space-y-2 text-sm">
                 {legalLinks.map((link) => (
                   <li key={link.href}>
@@ -60,11 +60,11 @@ export default function LegalPage({ title, intro, sections }: LegalPageProps) {
             </nav>
           </aside>
 
-          <article className="rounded-lg border bg-white p-6 sm:p-10 text-gray-700 leading-relaxed [&_a]:text-primary [&_a]:underline [&_h3]:mt-6 [&_h3]:mb-2 [&_h3]:font-semibold [&_h3]:text-gray-900 [&_li]:mb-1.5 [&_p]:mb-4 [&_ul]:mb-4 [&_ul]:list-disc [&_ul]:pl-6 [&_strong]:text-gray-900">
+          <article className="surface-card p-6 sm:p-10 text-foreground/80 leading-relaxed [&_a]:text-primary [&_a]:underline [&_h3]:mt-6 [&_h3]:mb-2 [&_h3]:font-bold [&_h3]:text-foreground [&_li]:mb-1.5 [&_p]:mb-4 [&_ul]:mb-4 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:marker:text-primary [&_strong]:text-foreground">
             <div className="mb-8 text-base sm:text-lg">{intro}</div>
             {sections.map((section, index) => (
               <section key={section.id} id={section.id} className="scroll-mt-24 border-t pt-6 mt-6 first-of-type:border-t-0 first-of-type:pt-0">
-                <h2 className="mb-4 text-xl sm:text-2xl font-bold text-gray-900">
+                <h2 className="mb-4 text-xl sm:text-2xl font-bold text-foreground">
                   {index + 1}. {section.title}
                 </h2>
                 {section.content}

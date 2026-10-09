@@ -32,29 +32,29 @@ export default async function BlogPage() {
   });
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="bg-white border-b">
+      <section className="page-hero">
         <div className="container mx-auto px-4 py-16">
           <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-4">
               Blog de Autoescuelas
             </h1>
-            <p className="text-xl text-gray-600 mb-8">
+            <p className="text-xl text-white/85 mb-8">
               Consejos, guías y noticias para ayudarte a obtener tu licencia de
               conducir
             </p>
             <div className="flex flex-wrap justify-center gap-2">
-              <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">
+              <span className="px-3 py-1 bg-signal text-signal-foreground font-semibold rounded-full text-sm">
                 Consejos de manejo
               </span>
-              <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">
+              <span className="px-3 py-1 bg-white/10 text-white ring-1 ring-white/20 rounded-full text-sm">
                 Guías paso a paso
               </span>
-              <span className="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">
+              <span className="px-3 py-1 bg-white/10 text-white ring-1 ring-white/20 rounded-full text-sm">
                 Noticias del sector
               </span>
-              <span className="px-3 py-1 bg-orange-100 text-orange-800 rounded-full text-sm">
+              <span className="px-3 py-1 bg-white/10 text-white ring-1 ring-white/20 rounded-full text-sm">
                 Tips para el examen
               </span>
             </div>

@@ -68,9 +68,9 @@ export default function ContactForm({ schoolName, schoolId }: ContactFormProps) 
   }
 
   return (
-    <Card className="w-full border-2 border-primary/20 bg-gradient-to-br from-primary/5 to-transparent">
+    <Card className="w-full overflow-hidden border-t-4 border-t-signal">
       <CardHeader className="pb-4">
-        <CardTitle className="text-xl font-semibold text-primary">
+        <CardTitle className="text-xl text-foreground">
           Solicitar Información
         </CardTitle>
         <p className="text-sm text-muted-foreground">
@@ -138,12 +138,13 @@ export default function ContactForm({ schoolName, schoolId }: ContactFormProps) 
 
           <Button 
             type="submit" 
-            className="w-full bg-primary hover:bg-primary/90 text-white font-medium py-2.5" 
+            variant="signal"
+            className="w-full font-bold py-2.5" 
             disabled={isSubmitting}
           >
             {isSubmitting ? (
               <>
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-current mr-2"></div>
                 Enviando...
               </>
             ) : (

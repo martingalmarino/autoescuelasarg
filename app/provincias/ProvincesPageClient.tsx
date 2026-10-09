@@ -20,10 +20,10 @@ export default function ProvincesPageClient({
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-blue-600 to-blue-800 py-8 sm:py-12">
+      <section className="page-hero py-10 sm:py-14">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="text-center text-white">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold mb-3">
               Autoescuelas por provincia
             </h1>
             <p className="text-lg sm:text-xl text-white/90 max-w-3xl mx-auto mb-6">
@@ -33,11 +33,11 @@ export default function ProvincesPageClient({
             </p>
             <div className="flex items-center justify-center space-x-6 text-white/80">
               <div className="flex items-center space-x-2">
-                <MapPin className="h-5 w-5" />
+                <MapPin className="h-5 w-5 text-signal" />
                 <span>{provinces.length} provincias</span>
               </div>
               <div className="flex items-center space-x-2">
-                <Users className="h-5 w-5" />
+                <Users className="h-5 w-5 text-signal" />
                 <span>
                   {provinces.reduce((total, p) => total + p.schoolsCount, 0)}{" "}
                   autoescuelas
@@ -59,20 +59,20 @@ export default function ProvincesPageClient({
                 onClick={() => handleProvinceClick(province)}
                 className="group"
               >
-                <Card className="h-full transition-all duration-200 hover:shadow-lg hover:-translate-y-1">
+                <Card className="surface-card-hover h-full">
                   <CardContent className="p-4 sm:p-6">
                     <div className="flex items-center justify-between mb-3">
-                      <div className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                        <MapPin className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
+                      <div className={`flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-lg shadow-sm group-hover:bg-primary transition-colors ${province.schoolsCount === 0 ? "bg-muted" : "bg-navy"}`}>
+                        <MapPin className={`h-5 w-5 sm:h-6 sm:w-6 group-hover:text-signal ${province.schoolsCount === 0 ? "text-muted-foreground" : "text-signal"}`} />
                       </div>
-                      <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
+                      <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-0.5 transition-all" />
                     </div>
 
-                    <h3 className="font-semibold text-lg sm:text-xl text-foreground group-hover:text-primary transition-colors mb-2">
+                    <h3 className="font-bold text-lg sm:text-xl text-foreground group-hover:text-primary transition-colors mb-2">
                       {province.name}
                     </h3>
 
-                    <p className="text-sm text-muted-foreground mb-3">
+                    <p className="mb-3 inline-flex rounded-full bg-muted px-2.5 py-0.5 text-xs font-medium text-muted-foreground group-hover:bg-accent group-hover:text-primary transition-colors">
                       {province.schoolsCount} autoescuelas
                     </p>
 
@@ -90,9 +90,9 @@ export default function ProvincesPageClient({
       </section>
 
       {/* CTA Section */}
-      <section className="py-12 sm:py-16 bg-muted/30">
+      <section className="py-12 sm:py-16 bg-muted/50">
         <div className="container mx-auto px-4 sm:px-6 text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold mb-4">
+          <h2 className="section-title inline-block text-2xl sm:text-3xl mb-4">
             ¿No encuentras tu provincia?
           </h2>
           <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
@@ -103,13 +103,13 @@ export default function ProvincesPageClient({
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/autoescuelas"
-              className="inline-flex items-center justify-center px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
+              className="inline-flex items-center justify-center px-6 py-3 bg-primary font-semibold text-primary-foreground rounded-lg shadow-sm hover:bg-primary/90 hover:shadow-md transition-all"
             >
               Ver todas las autoescuelas
             </Link>
             <Link
               href="/contacto"
-              className="inline-flex items-center justify-center px-6 py-3 border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-lg transition-colors"
+              className="inline-flex items-center justify-center px-6 py-3 border border-input bg-card font-semibold hover:border-primary/40 hover:bg-accent hover:text-accent-foreground rounded-lg transition-colors"
             >
               Contactar soporte
             </Link>

@@ -4,14 +4,14 @@ import { ArrowLeft, Home } from "lucide-react";
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+    <div className="min-h-screen bg-background flex items-center justify-center">
       <div className="max-w-md mx-auto text-center px-4">
         <div className="mb-8">
-          <h1 className="text-6xl font-bold text-gray-300 mb-4">404</h1>
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
+          <h1 className="inline-block rounded-2xl border-4 border-navy bg-signal px-8 py-3 font-display text-6xl font-extrabold text-signal-foreground shadow-card-hover mb-6">404</h1>
+          <h2 className="text-2xl font-bold text-foreground mb-4">
             Artículo no encontrado
           </h2>
-          <p className="text-gray-600 mb-8">
+          <p className="text-muted-foreground mb-8">
             El artículo que estás buscando no existe o ha sido eliminado.
           </p>
         </div>

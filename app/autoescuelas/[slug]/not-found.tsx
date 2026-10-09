@@ -9,8 +9,8 @@ export default function SchoolNotFound() {
     <div className="flex min-h-screen flex-col items-center justify-center space-y-6 px-4">
       <div className="text-center">
         <div className="text-6xl mb-4">🚗</div>
-        <h1 className="text-4xl font-bold text-primary mb-2">Autoescuela no encontrada</h1>
-        <h2 className="text-xl font-semibold text-foreground mb-4">
+        <h1 className="section-title text-center text-4xl font-extrabold text-navy mb-4">Autoescuela no encontrada</h1>
+        <h2 className="text-xl font-bold text-foreground mb-4">
           La autoescuela que buscas no existe
         </h2>
         <p className="text-muted-foreground max-w-md">

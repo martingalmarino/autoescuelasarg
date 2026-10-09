@@ -166,11 +166,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {/* Breadcrumb */}
-      <div className="bg-white border-b">
+      <div className="bg-card border-b">
         <div className="container mx-auto px-4 py-4">
-          <nav className="text-sm text-gray-500">
+          <nav className="text-sm text-muted-foreground">
             <a href="/" className="hover:text-primary">
               Inicio
             </a>
@@ -179,7 +179,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               Blog
             </a>
             <span className="mx-2">/</span>
-            <span className="text-gray-900">{article.title}</span>
+            <span className="font-medium text-foreground">{article.title}</span>
           </nav>
         </div>
       </div>

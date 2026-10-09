@@ -51,14 +51,14 @@ export default function ProvincePageClient({
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative min-h-[280px] sm:min-h-[320px] bg-gradient-to-r from-blue-600 to-blue-800">
+      <section className="page-hero min-h-[280px] sm:min-h-[320px]">
         {province.imageUrl && (
           <div className="absolute inset-0">
             <Image
               src={province.imageUrl}
               alt={province.name}
               fill
-              className="object-cover opacity-20"
+              className="object-cover opacity-15 mix-blend-luminosity"
               priority
             />
           </div>
@@ -72,7 +72,7 @@ export default function ProvincePageClient({
               <ArrowLeft className="h-4 w-4 mr-2" />
               Volver a provincias
             </Link>
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2 sm:mb-3 leading-tight">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold mb-2 sm:mb-3 leading-tight">
               Autoescuelas en {province.name}
             </h1>
             <p className="text-sm sm:text-base md:text-lg lg:text-xl text-white/90 max-w-2xl leading-relaxed mb-3 sm:mb-4">
@@ -82,12 +82,12 @@ export default function ProvincePageClient({
             </p>
             <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-6 space-y-2 sm:space-y-0 text-white/80">
               <div className="flex items-center space-x-2 text-sm sm:text-base">
-                <MapPin className="h-4 w-4 sm:h-5 sm:w-5" />
+                <MapPin className="h-4 w-4 sm:h-5 sm:w-5 text-signal" />
                 <span>{province.schoolsCount} autoescuelas</span>
               </div>
               {cities && cities.length > 0 && (
                 <div className="flex items-center space-x-2 text-sm sm:text-base">
-                  <Users className="h-4 w-4 sm:h-5 sm:w-5" />
+                  <Users className="h-4 w-4 sm:h-5 sm:w-5 text-signal" />
                   <span>{cities.length} ciudades</span>
                 </div>
               )}
@@ -98,9 +98,9 @@ export default function ProvincePageClient({
 
       {/* Cities Section */}
       {cities && cities.length > 0 && (
-        <section className="py-12 sm:py-16 bg-muted/30">
+        <section className="py-12 sm:py-16 bg-muted/50">
           <div className="container mx-auto px-4 sm:px-6">
-            <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8">
+            <h2 className="section-title text-center text-2xl sm:text-3xl mb-8">
               Ciudades en {province.name}
             </h2>
             <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-4xl mx-auto">
@@ -110,11 +110,11 @@ export default function ProvincePageClient({
                   href={`/provincias/${province.slug}/${city.slug}`}
                   className="group"
                 >
-                  <Card className="h-full transition-all duration-200 hover:shadow-lg hover:-translate-y-1">
+                  <Card className="surface-card-hover h-full">
                     <CardContent className="p-4 sm:p-6">
                       <div className="flex items-center justify-between">
                         <div>
-                          <h3 className="font-semibold text-lg group-hover:text-primary transition-colors">
+                          <h3 className="font-bold text-lg group-hover:text-primary transition-colors">
                             {city.name}
                           </h3>
                           <p className="text-sm text-muted-foreground mt-1">
@@ -137,7 +137,7 @@ export default function ProvincePageClient({
         <div className="container mx-auto px-4 sm:px-6">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
             <div>
-              <h2 className="text-2xl sm:text-3xl font-bold mb-2">
+              <h2 className="section-title text-2xl sm:text-3xl mb-2">
                 Autoescuelas en {province.name}
               </h2>
               <p className="text-muted-foreground">
@@ -160,10 +160,10 @@ export default function ProvincePageClient({
                   onClick={() => handleSchoolClick(school.id, school.name)}
                   className="group"
                 >
-                  <Card className="h-full transition-all duration-200 hover:shadow-lg hover:-translate-y-1">
+                  <Card className="surface-card-hover h-full overflow-hidden">
                     <CardContent className="p-0">
                       {/* Image */}
-                      <div className="relative h-48 w-full overflow-hidden rounded-t-lg">
+                      <div className="relative h-48 w-full overflow-hidden">
                         {school.imageUrl ? (
                           <Image
                             src={school.imageUrl}
@@ -182,7 +182,7 @@ export default function ProvincePageClient({
 
                         {/* Logo overlay */}
                         {school.logoUrl && (
-                          <div className="absolute top-2 right-2 w-12 h-12 rounded-lg overflow-hidden bg-white shadow-md border-2 border-white">
+                          <div className="absolute top-2.5 right-2.5 w-12 h-12 rounded-lg overflow-hidden bg-white shadow-card ring-1 ring-black/5">
                             <Image
                               src={school.logoUrl}
                               alt={`Logo de ${school.name}`}
@@ -197,14 +197,14 @@ export default function ProvincePageClient({
                       {/* Content */}
                       <div className="p-4 sm:p-6">
                         {/* Name */}
-                        <h3 className="mb-2 text-lg sm:text-xl font-semibold text-foreground group-hover:text-primary transition-colors">
+                        <h3 className="mb-2 text-lg sm:text-xl font-bold leading-snug text-foreground group-hover:text-primary transition-colors">
                           {school.name}
                         </h3>
 
                         {/* Rating */}
                         <div className="mb-3 flex items-center space-x-2">
                           <div className="flex items-center space-x-1">
-                            <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                            <Star className="h-4 w-4 fill-signal text-signal" />
                             <span className="text-sm font-medium text-foreground">
                               {formatRating(school.rating)}
                             </span>
@@ -234,7 +234,7 @@ export default function ProvincePageClient({
 
                         {/* Price Range */}
                         {school.priceMin && school.priceMax && (
-                          <div className="text-sm font-medium text-primary">
+                          <div className="inline-flex rounded-md bg-accent px-2 py-0.5 text-sm font-semibold text-primary">
                             {formatPrice(school.priceMin)} -{" "}
                             {formatPrice(school.priceMax)}
                           </div>

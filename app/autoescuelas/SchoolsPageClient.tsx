@@ -171,10 +171,10 @@ export default function SchoolsPageClient({
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-blue-600 to-blue-800 py-8 sm:py-12">
+      <section className="page-hero py-10 sm:py-14">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="text-center text-white">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold mb-3">
               Todas las autoescuelas de Argentina
             </h1>
             <p className="text-lg sm:text-xl text-white/90 max-w-3xl mx-auto mb-6">
@@ -183,11 +183,11 @@ export default function SchoolsPageClient({
             </p>
             <div className="flex items-center justify-center space-x-6 text-white/80">
               <div className="flex items-center space-x-2">
-                <MapPin className="h-5 w-5" />
+                <MapPin className="h-5 w-5 text-signal" />
                 <span>{totalSchools} autoescuelas</span>
               </div>
               <div className="flex items-center space-x-2">
-                <Users className="h-5 w-5" />
+                <Users className="h-5 w-5 text-signal" />
                 <span>{provinces.length} provincias</span>
               </div>
             </div>
@@ -196,9 +196,9 @@ export default function SchoolsPageClient({
       </section>
 
       {/* Filters Section */}
-      <section className="py-6 sm:py-8 bg-muted/30">
+      <section className="py-6 sm:py-8 bg-muted/40">
         <div className="container mx-auto px-4 sm:px-6">
-          <div className="bg-white rounded-lg shadow-sm border p-4 sm:p-6">
+          <div className="surface-card p-4 sm:p-6">
             {/* Mobile: Simple search + one filter, Desktop: Full filters */}
             <div className="space-y-4">
               {/* Search - Always visible */}
@@ -304,7 +304,7 @@ export default function SchoolsPageClient({
             {(searchTerm ||
               (selectedProvince && selectedProvince !== "all") ||
               (selectedCity && selectedCity !== "all")) && (
-              <div className="mt-4 pt-4 border-t border-gray-100">
+              <div className="mt-4 pt-4 border-t border-border/60">
                 {/* Mobile: Simple clear button */}
                 <div className="block md:hidden">
                   <Button
@@ -409,10 +409,10 @@ export default function SchoolsPageClient({
                     onClick={() => handleSchoolClick(school.id, school.name)}
                     className="group"
                   >
-                    <Card className="h-full transition-all duration-200 hover:shadow-lg hover:-translate-y-1">
+                    <Card className="surface-card-hover h-full overflow-hidden">
                       <CardContent className="p-0">
                         {/* Image */}
-                        <div className="relative h-48 w-full overflow-hidden rounded-t-lg">
+                        <div className="relative h-48 w-full overflow-hidden">
                           {school.imageUrl ? (
                             <Image
                               src={school.imageUrl}
@@ -431,7 +431,7 @@ export default function SchoolsPageClient({
 
                           {/* Logo overlay */}
                           {school.logoUrl && (
-                            <div className="absolute top-3 right-3 w-14 h-14 rounded-lg overflow-hidden bg-white shadow-lg border-2 border-white">
+                            <div className="absolute top-3 right-3 w-14 h-14 rounded-lg overflow-hidden bg-white shadow-card ring-1 ring-black/5">
                               <Image
                                 src={school.logoUrl}
                                 alt={`Logo de ${school.name}`}
@@ -446,14 +446,14 @@ export default function SchoolsPageClient({
                         {/* Content */}
                         <div className="p-3 sm:p-4 lg:p-6">
                           {/* Name */}
-                          <h3 className="mb-2 text-base sm:text-lg lg:text-xl font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-2">
+                          <h3 className="mb-2 text-base sm:text-lg lg:text-xl font-bold leading-snug text-foreground group-hover:text-primary transition-colors line-clamp-2">
                             {school.name}
                           </h3>
 
                           {/* Rating */}
                           <div className="mb-2 sm:mb-3 flex flex-col sm:flex-row sm:items-center space-y-1 sm:space-y-0 sm:space-x-2">
                             <div className="flex items-center space-x-1">
-                              <Star className="h-3 w-3 sm:h-4 sm:w-4 fill-yellow-400 text-yellow-400" />
+                              <Star className="h-3 w-3 sm:h-4 sm:w-4 fill-signal text-signal" />
                               <span className="text-xs sm:text-sm font-medium text-foreground">
                                 {formatRating(school.rating)}
                               </span>
@@ -483,7 +483,7 @@ export default function SchoolsPageClient({
 
                           {/* Price Range */}
                           {school.priceMin && school.priceMax && (
-                            <div className="text-xs sm:text-sm font-medium text-primary mb-2 sm:mb-3">
+                            <div className="inline-flex rounded-md bg-accent px-2 py-0.5 text-xs sm:text-sm font-semibold text-primary mb-2 sm:mb-3">
                               {formatPrice(school.priceMin)} -{" "}
                               {formatPrice(school.priceMax)}
                             </div>

@@ -133,7 +133,7 @@ export default function AdvancedSearch({ provinces, cities }: AdvancedSearchProp
       <div className="relative">
         <div className="flex gap-2">
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
             <Input
               type="text"
               placeholder="Buscar autoescuelas, ciudades, provincias..."
@@ -166,7 +166,7 @@ export default function AdvancedSearch({ provinces, cities }: AdvancedSearchProp
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               {/* Provincia */}
               <div>
-                <label className="text-sm font-medium text-gray-700 mb-1 block">
+                <label className="text-sm font-semibold text-foreground mb-1 block">
                   Provincia
                 </label>
                 <Select
@@ -191,7 +191,7 @@ export default function AdvancedSearch({ provinces, cities }: AdvancedSearchProp
 
               {/* Ciudad */}
               <div>
-                <label className="text-sm font-medium text-gray-700 mb-1 block">
+                <label className="text-sm font-semibold text-foreground mb-1 block">
                   Ciudad
                 </label>
                 <Select
@@ -215,7 +215,7 @@ export default function AdvancedSearch({ provinces, cities }: AdvancedSearchProp
 
               {/* Rating mínimo */}
               <div>
-                <label className="text-sm font-medium text-gray-700 mb-1 block">
+                <label className="text-sm font-semibold text-foreground mb-1 block">
                   Rating mínimo
                 </label>
                 <Select
@@ -236,7 +236,7 @@ export default function AdvancedSearch({ provinces, cities }: AdvancedSearchProp
 
               {/* Precio máximo */}
               <div>
-                <label className="text-sm font-medium text-gray-700 mb-1 block">
+                <label className="text-sm font-semibold text-foreground mb-1 block">
                   Precio máximo
                 </label>
                 <Input
@@ -271,11 +271,11 @@ export default function AdvancedSearch({ provinces, cities }: AdvancedSearchProp
                   <div
                     key={school.id}
                     onClick={() => handleSchoolClick(school)}
-                    className="p-4 hover:bg-gray-50 cursor-pointer transition-colors"
+                    className="p-4 hover:bg-accent cursor-pointer transition-colors"
                   >
                     <div className="flex gap-4">
                       {/* Imagen */}
-                      <div className="w-16 h-16 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0 relative">
+                      <div className="w-16 h-16 rounded-lg overflow-hidden bg-muted flex-shrink-0 relative">
                         {school.imageUrl ? (
                           <Image
                             src={school.imageUrl}
@@ -297,13 +297,13 @@ export default function AdvancedSearch({ provinces, cities }: AdvancedSearchProp
                           {school._formatted?.name || school.name}
                         </h3>
                         
-                        <div className="flex items-center gap-2 text-sm text-gray-600 mb-2">
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
                           <MapPin className="h-4 w-4" />
                           <span>{school._formatted?.city || school.city}, {school._formatted?.province || school.province}</span>
                         </div>
 
                         {school.description && (
-                          <p className="text-sm text-gray-700 mb-2 line-clamp-2">
+                          <p className="text-sm text-foreground/80 mb-2 line-clamp-2">
                             {school._formatted?.description || school.description}
                           </p>
                         )}
@@ -311,9 +311,9 @@ export default function AdvancedSearch({ provinces, cities }: AdvancedSearchProp
                         <div className="flex items-center gap-4 text-sm">
                           {/* Rating */}
                           <div className="flex items-center gap-1">
-                            <Star className="h-4 w-4 text-yellow-400 fill-current" />
+                            <Star className="h-4 w-4 text-signal fill-current" />
                             <span className="font-medium">{school.rating.toFixed(1)}</span>
-                            <span className="text-gray-500">({school.reviewsCount})</span>
+                            <span className="text-muted-foreground">({school.reviewsCount})</span>
                           </div>
 
                           {/* Precio */}
@@ -353,8 +353,8 @@ export default function AdvancedSearch({ provinces, cities }: AdvancedSearchProp
                 ))}
               </div>
             ) : (
-              <div className="p-8 text-center text-gray-500">
-                <Search className="h-12 w-12 mx-auto mb-4 text-gray-300" />
+              <div className="p-8 text-center text-muted-foreground">
+                <Search className="h-12 w-12 mx-auto mb-4 text-border" />
                 <p>No se encontraron resultados para tu búsqueda</p>
                 <p className="text-sm">Intenta con otros términos o ajusta los filtros</p>
               </div>
