@@ -19,6 +19,8 @@ export interface Product {
   /** Precio de referencia en pesos; se muestra aclarando que puede cambiar. */
   price?: number
   originalPrice?: number
+  /** Porcentaje de descuento tal como lo muestra Mercado Libre; si falta, se calcula con los precios. */
+  discount?: number
   installments?: { count: number; amount: number }
   badge?: ProductBadge
   /** Por qué lo recomendamos, en una o dos oraciones. */
