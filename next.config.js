@@ -15,6 +15,12 @@ const nextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'http2.mlstatic.com',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
   async rewrites() {

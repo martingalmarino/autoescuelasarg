@@ -57,6 +57,14 @@ export default function Footer() {
               </li>
               <li>
                 <Link 
+                  href="/productos-para-conductores" 
+                  className="text-navy-foreground/70 hover:text-signal transition-colors"
+                >
+                  Productos recomendados
+                </Link>
+              </li>
+              <li>
+                <Link 
                   href="/contacto" 
                   className="text-navy-foreground/70 hover:text-signal transition-colors"
                 >

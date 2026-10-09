@@ -2,6 +2,7 @@ import { MetadataRoute } from 'next'
 import { prisma } from '@/lib/database'
 import { SITE_URL } from '@/lib/seo'
 import { getAvailableTests } from '@/lib/driving-tests'
+import { PRICES_CHECKED_ON } from '@/lib/products'
 
 export const revalidate = 86400
 
@@ -58,6 +59,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           })),
         ]
       : []),
+    {
+      url: `${baseUrl}/productos-para-conductores`,
+      lastModified: new Date(PRICES_CHECKED_ON),
+      changeFrequency: 'weekly',
+      priority: 0.5,
+    },
     ...['/terminos', '/privacidad', '/cookies'].map(path => ({
       url: `${baseUrl}${path}`,
       lastModified: new Date('2026-10-09'),
