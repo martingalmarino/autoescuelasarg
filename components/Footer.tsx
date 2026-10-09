@@ -1,5 +1,6 @@
 import Link from 'next/link'
-import { Car, Mail, Phone } from 'lucide-react'
+import { Mail, Phone } from 'lucide-react'
+import Logo from '@/components/Logo'
 
 export default function Footer() {
   return (
@@ -9,13 +10,8 @@ export default function Footer() {
         <div className="grid gap-6 sm:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5">
           {/* Brand */}
           <div className="space-y-3 sm:space-y-4">
-            <Link href="/" className="flex items-center space-x-2">
-              <div className="flex h-7 w-7 sm:h-9 sm:w-9 items-center justify-center rounded-lg bg-signal">
-                <Car className="h-4 w-4 sm:h-5 sm:w-5 text-navy" />
-              </div>
-              <span className="font-display text-lg sm:text-xl font-extrabold tracking-tight text-white">
-                Autoescuelas<span className="text-signal">.ar</span>
-              </span>
+            <Link href="/" className="inline-flex items-center">
+              <Logo tone="dark" />
             </Link>
             <p className="text-xs sm:text-sm text-navy-foreground/70">
               El directorio más completo de escuelas de manejo en Argentina. 
