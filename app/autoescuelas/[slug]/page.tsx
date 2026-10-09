@@ -1,8 +1,15 @@
 import { Metadata } from 'next'
-import { getSchoolBySlug } from '@/lib/mock-data'
-import { getSchoolBySlugFromDB } from '@/lib/database'
-import { formatPrice, formatRating, formatReviews } from '@/lib/utils'
+import { notFound } from 'next/navigation'
+import { getSchoolBySlugFromDB, getRelatedSchools } from '@/lib/database'
+import { formatRating, formatReviews } from '@/lib/utils'
 import SchoolPageClient from './SchoolPageClient'
+
+// ISR: 24 h. Las fichas se generan en la primera visita; el admin invalida la caché al editar.
+export const revalidate = 86400
+
+export async function generateStaticParams() {
+  return []
+}
 
 interface SchoolPageProps {
   params: {
@@ -35,6 +42,19 @@ export async function generateMetadata({ params }: SchoolPageProps): Promise<Met
   }
 }
 
-export default function SchoolPage({ params }: SchoolPageProps) {
-  return <SchoolPageClient params={params} />
+export default async function SchoolPage({ params }: SchoolPageProps) {
+  const school = await getSchoolBySlugFromDB(params.slug)
+
+  if (!school) {
+    notFound()
+  }
+
+  const relatedSchools = school.isActive
+    ? await getRelatedSchools(school).catch((error) => {
+        console.error(`Error fetching related schools for ${params.slug}:`, error)
+        return []
+      })
+    : []
+
+  return <SchoolPageClient school={school} relatedSchools={relatedSchools} />
 }

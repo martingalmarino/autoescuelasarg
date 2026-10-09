@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { PrismaClient } from '@prisma/client'
+import { prisma } from '@/lib/db'
 import { indexSchools, indexProvinces, indexCities, SearchSchool, SearchProvince, SearchCity } from '@/lib/search'
-
-const prisma = new PrismaClient()
 
 export const dynamic = 'force-dynamic'
 
@@ -95,7 +93,5 @@ export async function POST(request: NextRequest) {
       },
       { status: 500 }
     )
-  } finally {
-    await prisma.$disconnect()
   }
 }

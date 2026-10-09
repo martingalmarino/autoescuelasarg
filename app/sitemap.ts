@@ -1,8 +1,10 @@
 import { MetadataRoute } from 'next'
 import { prisma } from '@/lib/database'
 
+export const revalidate = 86400
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://autoescuelas.ar'
+  const baseUrl = 'https://www.autoescuelas.ar'
 
   // Páginas estáticas
   const staticPages: MetadataRoute.Sitemap = [
@@ -52,7 +54,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Obtener todas las ciudades activas
     const cities = await prisma.city.findMany({
       where: { isActive: true },
-      include: {
+      select: {
+        slug: true,
+        updatedAt: true,
         province: {
           select: { slug: true }
         }
@@ -63,14 +67,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Obtener todas las autoescuelas activas
     const schools = await prisma.drivingSchool.findMany({
       where: { isActive: true },
-      include: {
-        city: {
-          include: {
-            province: {
-              select: { slug: true }
-            }
-          }
-        }
+      select: {
+        slug: true,
+        updatedAt: true,
       },
       orderBy: { createdAt: 'desc' }
     })

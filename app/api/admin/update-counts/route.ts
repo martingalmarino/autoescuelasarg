@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/database'
+import { revalidatePublicPages } from '@/lib/revalidate'
 
 export const dynamic = 'force-dynamic'
 
@@ -60,6 +61,8 @@ export async function POST(request: NextRequest) {
     }
 
     console.log('✅ Contadores actualizados correctamente!')
+
+    revalidatePublicPages()
 
     return NextResponse.json({
       success: true,

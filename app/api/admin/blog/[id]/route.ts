@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/database";
+import { revalidatePublicPages } from "@/lib/revalidate";
 
 // GET - Obtener artículo por ID
 export async function GET(
@@ -103,6 +104,8 @@ export async function PUT(
       },
     });
 
+    revalidatePublicPages();
+
     return NextResponse.json(article);
   } catch (error) {
     console.error("Error updating blog article:", error);
@@ -133,6 +136,8 @@ export async function DELETE(
     await prisma.blogArticle.delete({
       where: { id: params.id },
     });
+
+    revalidatePublicPages();
 
     return NextResponse.json({ message: "Artículo eliminado correctamente" });
   } catch (error) {

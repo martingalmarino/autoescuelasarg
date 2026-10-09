@@ -11,7 +11,7 @@ import SafeHTML from "./SafeHTML";
 
 interface BlogContentProps {
   article: BlogArticle;
-  relatedArticles?: BlogArticle[];
+  relatedArticles?: Omit<BlogArticle, "content">[];
   className?: string;
 }
 

@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { PrismaClient } from '@prisma/client'
+import { prisma } from '@/lib/db'
 import { createSlug } from '@/lib/utils'
-
-const prisma = new PrismaClient()
+import { revalidatePublicPages } from '@/lib/revalidate'
 
 export const dynamic = 'force-dynamic'
 
@@ -128,6 +127,8 @@ export async function POST(request: NextRequest) {
         data: { schoolsCount: { increment: 1 } }
       })
     ])
+
+    revalidatePublicPages()
 
     // Transform to match DrivingSchool interface
     const transformedSchool = {

@@ -1,9 +1,11 @@
 import { Metadata } from 'next'
-import { getActiveProvinces, getAllSchoolsFromDB } from '@/lib/database'
+import {
+  getActiveSchoolsCount,
+  getCachedActiveProvinces,
+  getCityNamesWithSchools,
+  getSchoolsPage,
+} from '@/lib/database'
 import SchoolsPageClient from './SchoolsPageClient'
-
-// Forzar revalidación dinámica
-export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: 'Las mejores Autoescuelas de Argentina',
@@ -29,16 +31,32 @@ interface SchoolsPageProps {
   }
 }
 
+function activeFilter(value?: string) {
+  return value && value !== 'all' ? value : undefined
+}
+
 export default async function SchoolsPage({ searchParams }: SchoolsPageProps) {
-  // Usar datos de la base de datos
-  const [provinces, schools] = await Promise.all([
-    getActiveProvinces(),
-    getAllSchoolsFromDB()
+  const province = activeFilter(searchParams.province)
+  const city = province ? activeFilter(searchParams.city) : undefined
+
+  const [provinces, totalSchools, result, cities] = await Promise.all([
+    getCachedActiveProvinces(),
+    getActiveSchoolsCount(),
+    getSchoolsPage({
+      page: parseInt(searchParams.page || '1') || 1,
+      province,
+      city,
+      search: searchParams.search,
+      sort: searchParams.sort,
+    }),
+    province ? getCityNamesWithSchools(province) : Promise.resolve([]),
   ])
-  
-  return <SchoolsPageClient 
-    schools={schools} 
+
+  return <SchoolsPageClient
+    result={result}
+    totalSchools={totalSchools}
     provinces={provinces}
+    cities={cities}
     searchParams={searchParams}
   />
 }

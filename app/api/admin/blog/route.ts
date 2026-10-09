@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/database";
+import { revalidatePublicPages } from "@/lib/revalidate";
 
 // GET - Listar artículos de blog
 export async function GET(request: NextRequest) {
@@ -125,6 +126,8 @@ export async function POST(request: NextRequest) {
         sortOrder: sortOrder || 0,
       },
     });
+
+    revalidatePublicPages();
 
     return NextResponse.json(article, { status: 201 });
   } catch (error) {

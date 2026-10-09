@@ -1,9 +1,20 @@
 import { Metadata } from 'next'
-import { getProvinceBySlugFromDB, getSchoolsByProvinceSlug, getActiveCitiesByProvince } from '@/lib/database'
+import { notFound } from 'next/navigation'
+import { getActiveProvinces, getProvinceBySlugFromDB, getSchoolsByProvinceSlug, getActiveCitiesByProvince } from '@/lib/database'
 import ProvincePageClient from './ProvincePageClient'
 
-// Forzar revalidación dinámica
-export const dynamic = 'force-dynamic'
+// ISR: 24 h. El admin invalida la caché al editar datos.
+export const revalidate = 86400
+
+export async function generateStaticParams() {
+  try {
+    const provinces = await getActiveProvinces()
+    return provinces.map((province) => ({ slug: province.slug }))
+  } catch (error) {
+    console.error('Error generating province params:', error)
+    return []
+  }
+}
 
 interface ProvincePageProps {
   params: {
@@ -37,17 +48,18 @@ export async function generateMetadata({ params }: ProvincePageProps): Promise<M
 }
 
 export default async function ProvincePage({ params }: ProvincePageProps) {
-  const [province, schools, cities] = await Promise.all([
+  const [province, schools] = await Promise.all([
     getProvinceBySlugFromDB(params.slug),
     getSchoolsByProvinceSlug(params.slug),
-    getProvinceBySlugFromDB(params.slug).then(async (province) => {
-      if (!province) return []
-      return getActiveCitiesByProvince(province.id)
-    })
   ])
-  
+
+  if (!province) {
+    notFound()
+  }
+
+  const cities = await getActiveCitiesByProvince(province.id)
+
   return <ProvincePageClient 
-    params={params} 
     province={province}
     schools={schools}
     cities={cities}

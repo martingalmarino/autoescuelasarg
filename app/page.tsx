@@ -6,8 +6,8 @@ import JsonLd from "@/components/SEO/JsonLd";
 import { FAQ } from "@/lib/types";
 import { getActiveProvinces, getFeaturedSchools } from "@/lib/database";
 
-// Forzar revalidación dinámica
-export const dynamic = "force-dynamic";
+// ISR: 24 h. El admin invalida la caché al editar datos.
+export const revalidate = 86400;
 
 // FAQ data - contenido estático que puede quedarse hardcodeado
 const faqData: FAQ[] = [

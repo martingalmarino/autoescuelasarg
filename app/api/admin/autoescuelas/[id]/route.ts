@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { PrismaClient } from '@prisma/client'
-
-const prisma = new PrismaClient()
+import { prisma } from '@/lib/db'
+import { revalidatePublicPages } from '@/lib/revalidate'
 
 export const dynamic = 'force-dynamic'
 
@@ -145,6 +144,8 @@ export async function PATCH(
       },
     })
 
+    revalidatePublicPages()
+
     // Transform to match DrivingSchool interface
     const transformedSchool = {
       ...school,
@@ -205,6 +206,8 @@ export async function DELETE(
           data: { schoolsCount: provinceCount }
         })
       ])
+
+    revalidatePublicPages()
 
     return NextResponse.json({ 
       success: true, 

@@ -1,10 +1,91 @@
-import { PrismaClient } from '@prisma/client'
+import { cache } from 'react'
+import { unstable_cache } from 'next/cache'
+import { Prisma } from '@prisma/client'
+import { prisma } from './db'
+import type { SchoolSummary, SchoolsPage } from './types'
 
-const prisma = new PrismaClient()
+// Tiempo de vida de la caché de páginas públicas (24 h). Las ediciones del admin la invalidan antes.
+export const PUBLIC_REVALIDATE_SECONDS = 86400
+export const SCHOOLS_CACHE_TAG = 'schools'
+export const SCHOOLS_PER_PAGE = 12
 
-// Funciones optimizadas para consultas frecuentes
+const DESCRIPTION_EXCERPT_LENGTH = 180
 
-export async function getActiveProvinces() {
+const schoolSummarySelect = {
+  id: true,
+  name: true,
+  slug: true,
+  rating: true,
+  reviewsCount: true,
+  imageUrl: true,
+  logoUrl: true,
+  priceMin: true,
+  priceMax: true,
+  description: true,
+  phone: true,
+  email: true,
+  isFeatured: true,
+  isVerified: true,
+  city: {
+    select: {
+      name: true,
+      slug: true,
+      province: { select: { name: true, slug: true } },
+    },
+  },
+} satisfies Prisma.DrivingSchoolSelect
+
+type SchoolSummaryRow = Prisma.DrivingSchoolGetPayload<{ select: typeof schoolSummarySelect }>
+
+const defaultSchoolOrder: Prisma.DrivingSchoolOrderByWithRelationInput[] = [
+  { isFeatured: 'desc' },
+  { sortOrder: 'asc' },
+  { rating: 'desc' },
+]
+
+export function htmlToExcerpt(html: string | null | undefined, maxLength = DESCRIPTION_EXCERPT_LENGTH) {
+  if (!html) return null
+  const text = html
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/\s+/g, ' ')
+    .trim()
+  if (!text) return null
+  if (text.length <= maxLength) return text
+  const cut = text.slice(0, maxLength)
+  const lastSpace = cut.lastIndexOf(' ')
+  return `${(lastSpace > 0 ? cut.slice(0, lastSpace) : cut).trimEnd()}…`
+}
+
+function toSchoolSummary(school: SchoolSummaryRow): SchoolSummary {
+  return {
+    id: school.id,
+    name: school.name,
+    slug: school.slug,
+    rating: school.rating,
+    reviewsCount: school.reviewsCount,
+    city: school.city.name,
+    citySlug: school.city.slug,
+    province: school.city.province.name,
+    provinceSlug: school.city.province.slug,
+    imageUrl: school.imageUrl,
+    logoUrl: school.logoUrl,
+    priceMin: school.priceMin,
+    priceMax: school.priceMax,
+    description: htmlToExcerpt(school.description),
+    phone: school.phone,
+    email: school.email,
+    isFeatured: school.isFeatured,
+    isVerified: school.isVerified,
+  }
+}
+
+export const getActiveProvinces = cache(async () => {
   const provinces = await prisma.province.findMany({
     where: { isActive: true },
     orderBy: { sortOrder: 'asc' },
@@ -24,22 +105,21 @@ export async function getActiveProvinces() {
     },
   })
 
-  // Transform to match Province interface
   return provinces.map(province => ({
     id: province.id,
     name: province.name,
     slug: province.slug,
     description: province.description || undefined,
     imageUrl: province.imageUrl || undefined,
-    schoolsCount: province._count.schools, // Usar el conteo real de la base de datos
+    schoolsCount: province._count.schools,
   }))
-}
+})
 
-export async function getActiveCitiesByProvince(provinceId: string) {
+export const getActiveCitiesByProvince = cache(async (provinceId: string) => {
   const cities = await prisma.city.findMany({
-    where: { 
+    where: {
       provinceId,
-      isActive: true 
+      isActive: true
     },
     orderBy: { sortOrder: 'asc' },
     select: {
@@ -60,256 +140,45 @@ export async function getActiveCitiesByProvince(provinceId: string) {
     id: city.id,
     name: city.name,
     slug: city.slug,
-    schoolsCount: city._count.schools, // Usar el conteo real
+    schoolsCount: city._count.schools,
   }))
-}
+})
 
-export async function getFeaturedSchools(limit: number = 8) {
+export const getFeaturedSchools = cache(async (limit: number = 8): Promise<SchoolSummary[]> => {
   const schools = await prisma.drivingSchool.findMany({
-    where: { 
-      isActive: true
-    },
+    where: { isActive: true },
     orderBy: [
       { isFeatured: 'desc' },
       { rating: 'desc' },
       { sortOrder: 'asc' }
     ],
     take: limit,
-    include: {
-      city: {
-        select: {
-          name: true,
-          province: {
-            select: {
-              name: true,
-            },
-          },
-        },
-      },
-    },
+    select: schoolSummarySelect,
   })
 
-  // Transform to match DrivingSchool interface
-  return schools.map(school => ({
-    ...school,
-    city: school.city.name,
-    province: school.city.province.name,
-    hours: school.hours || undefined,
-  }))
-}
+  return schools.map(toSchoolSummary)
+})
 
-export async function getSchoolsByProvinceSlug(provinceSlug: string, limit: number = 20) {
+export const getSchoolsByProvinceSlug = cache(async (provinceSlug: string, limit: number = 20): Promise<SchoolSummary[]> => {
   try {
-    const province = await prisma.province.findUnique({
-      where: { slug: provinceSlug },
-    })
-
-    if (!province) {
-      return []
-    }
-
     const schools = await prisma.drivingSchool.findMany({
-      where: { 
-        provinceId: province.id,
-        isActive: true 
+      where: {
+        province: { slug: provinceSlug },
+        isActive: true
       },
-      orderBy: [
-        { isFeatured: 'desc' },
-        { sortOrder: 'asc' },
-        { rating: 'desc' },
-      ],
+      orderBy: defaultSchoolOrder,
       take: limit,
-      include: {
-        city: {
-          select: {
-            name: true,
-            province: {
-              select: {
-                name: true,
-              },
-            },
-          },
-        },
-      },
+      select: schoolSummarySelect,
     })
 
-    // Transform to match DrivingSchool interface
-    return schools.map(school => ({
-      ...school,
-      city: school.city.name,
-      province: school.city.province.name,
-      hours: school.hours || undefined,
-    }))
+    return schools.map(toSchoolSummary)
   } catch (error) {
     console.error(`Error fetching schools for province ${provinceSlug}:`, error)
     return []
   }
-}
+})
 
-export async function getSchoolsByProvince(provinceId: string, limit: number = 20) {
-  const schools = await prisma.drivingSchool.findMany({
-    where: { 
-      provinceId,
-      isActive: true 
-    },
-    orderBy: [
-      { isFeatured: 'desc' },
-      { sortOrder: 'asc' },
-      { rating: 'desc' },
-    ],
-    take: limit,
-    include: {
-      city: {
-        select: {
-          name: true,
-          province: {
-            select: {
-              name: true,
-            },
-          },
-        },
-      },
-    },
-  })
-
-  // Transform to match DrivingSchool interface
-  return schools.map(school => ({
-    ...school,
-    city: school.city.name,
-    province: school.city.province.name,
-    hours: school.hours || undefined,
-  }))
-}
-
-export async function getSchoolsByCity(cityId: string, limit: number = 20) {
-  const schools = await prisma.drivingSchool.findMany({
-    where: { 
-      cityId,
-      isActive: true 
-    },
-    orderBy: [
-      { isFeatured: 'desc' },
-      { sortOrder: 'asc' },
-      { rating: 'desc' },
-    ],
-    take: limit,
-    include: {
-      city: {
-        select: {
-          name: true,
-          province: {
-            select: {
-              name: true,
-            },
-          },
-        },
-      },
-    },
-  })
-
-  // Transform to match DrivingSchool interface
-  return schools.map(school => ({
-    ...school,
-    city: school.city.name,
-    province: school.city.province.name,
-    hours: school.hours || undefined,
-  }))
-}
-
-export async function getSchoolBySlug(slug: string) {
-  return prisma.drivingSchool.findUnique({
-    where: { slug },
-    include: {
-      city: {
-        select: {
-          name: true,
-          province: {
-            select: {
-              name: true,
-            },
-          },
-        },
-      },
-      reviews: {
-        orderBy: { createdAt: 'desc' },
-        take: 10,
-      },
-      courses: {
-        where: { isActive: true },
-        orderBy: { name: 'asc' },
-      },
-    },
-  })
-}
-
-export async function searchSchools(query: string, filters?: {
-  provinceId?: string
-  cityId?: string
-  minRating?: number
-  maxPrice?: number
-  minPrice?: number
-}) {
-  const where: any = {
-    isActive: true,
-    OR: [
-      { name: { contains: query, mode: 'insensitive' } },
-      { description: { contains: query, mode: 'insensitive' } },
-      { address: { contains: query, mode: 'insensitive' } },
-    ],
-  }
-
-  if (filters?.provinceId) {
-    where.provinceId = filters.provinceId
-  }
-
-  if (filters?.cityId) {
-    where.cityId = filters.cityId
-  }
-
-  if (filters?.minRating) {
-    where.rating = { gte: filters.minRating }
-  }
-
-  if (filters?.maxPrice) {
-    where.priceMax = { lte: filters.maxPrice }
-  }
-
-  if (filters?.minPrice) {
-    where.priceMin = { gte: filters.minPrice }
-  }
-
-  const schools = await prisma.drivingSchool.findMany({
-    where,
-    orderBy: [
-      { isFeatured: 'desc' },
-      { rating: 'desc' },
-      { reviewsCount: 'desc' },
-    ],
-    take: 50,
-    include: {
-      city: {
-        select: {
-          name: true,
-          province: {
-            select: {
-              name: true,
-            },
-          },
-        },
-      },
-    },
-  })
-
-  // Transform to match DrivingSchool interface
-  return schools.map(school => ({
-    ...school,
-    city: school.city.name,
-    province: school.city.province.name,
-    hours: school.hours || undefined,
-  }))
-}
-
-export async function getSchoolBySlugFromDB(slug: string) {
+export const getSchoolBySlugFromDB = cache(async (slug: string) => {
   try {
     const school = await prisma.drivingSchool.findUnique({
       where: { slug },
@@ -317,9 +186,11 @@ export async function getSchoolBySlugFromDB(slug: string) {
         city: {
           select: {
             name: true,
+            slug: true,
             province: {
               select: {
                 name: true,
+                slug: true,
               },
             },
           },
@@ -331,6 +202,13 @@ export async function getSchoolBySlugFromDB(slug: string) {
         reviews: {
           orderBy: { createdAt: 'desc' },
           take: 10,
+          select: {
+            id: true,
+            rating: true,
+            comment: true,
+            author: true,
+            createdAt: true,
+          },
         },
       },
     })
@@ -340,16 +218,59 @@ export async function getSchoolBySlugFromDB(slug: string) {
     return {
       ...school,
       city: school.city.name,
+      citySlug: school.city.slug,
       province: school.city.province.name,
+      provinceSlug: school.city.province.slug,
       hours: school.hours || undefined,
     }
   } catch (error) {
     console.error(`Error fetching school ${slug}:`, error)
     return null
   }
+})
+
+// Otras autoescuelas de la misma ciudad; si hay menos de 4, completa con la misma provincia.
+export async function getRelatedSchools(
+  school: { id: string; cityId: string; provinceId: string },
+  limit: number = 6
+): Promise<SchoolSummary[]> {
+  const relatedOrder: Prisma.DrivingSchoolOrderByWithRelationInput[] = [
+    { isFeatured: 'desc' },
+    { rating: 'desc' },
+    { reviewsCount: 'desc' },
+  ]
+
+  const sameCity = await prisma.drivingSchool.findMany({
+    where: {
+      cityId: school.cityId,
+      isActive: true,
+      id: { not: school.id },
+    },
+    orderBy: relatedOrder,
+    take: limit,
+    select: schoolSummarySelect,
+  })
+
+  if (sameCity.length >= 4) {
+    return sameCity.map(toSchoolSummary)
+  }
+
+  const sameProvince = await prisma.drivingSchool.findMany({
+    where: {
+      provinceId: school.provinceId,
+      cityId: { not: school.cityId },
+      isActive: true,
+      id: { not: school.id },
+    },
+    orderBy: relatedOrder,
+    take: limit - sameCity.length,
+    select: schoolSummarySelect,
+  })
+
+  return [...sameCity, ...sameProvince].map(toSchoolSummary)
 }
 
-export async function getProvinceBySlugFromDB(slug: string) {
+export const getProvinceBySlugFromDB = cache(async (slug: string) => {
   try {
     const province = await prisma.province.findUnique({
       where: { slug },
@@ -378,41 +299,9 @@ export async function getProvinceBySlugFromDB(slug: string) {
     console.error(`Error fetching province ${slug}:`, error)
     return null
   }
-}
+})
 
-export async function getAllSchoolsFromDB() {
-  const schools = await prisma.drivingSchool.findMany({
-    where: { isActive: true },
-    include: {
-      city: {
-        select: {
-          name: true,
-          province: {
-            select: {
-              name: true,
-            },
-          },
-        },
-      },
-    },
-    orderBy: [
-      { isFeatured: 'desc' },
-      { sortOrder: 'asc' },
-      { rating: 'desc' },
-    ],
-  })
-
-  // Transform to match DrivingSchool interface
-  return schools.map(school => ({
-    ...school,
-    city: school.city.name,
-    province: school.city.province.name,
-    hours: school.hours || undefined,
-  }))
-}
-
-// Function to get city by province and city slugs
-export async function getCityBySlugFromDB(provinceSlug: string, citySlug: string) {
+export const getCityBySlugFromDB = cache(async (provinceSlug: string, citySlug: string) => {
   try {
     const city = await prisma.city.findFirst({
       where: {
@@ -454,63 +343,126 @@ export async function getCityBySlugFromDB(provinceSlug: string, citySlug: string
     console.error(`Error fetching city ${citySlug} in province ${provinceSlug}:`, error)
     return null
   }
-}
+})
 
-// Function to get schools by province and city slugs
-export async function getSchoolsByCitySlug(provinceSlug: string, citySlug: string, limit: number = 20) {
+export const getSchoolsByCitySlug = cache(async (provinceSlug: string, citySlug: string, limit: number = 20): Promise<SchoolSummary[]> => {
   try {
-    const city = await prisma.city.findFirst({
-      where: {
-        slug: citySlug,
-        isActive: true,
-        province: {
-          slug: provinceSlug,
-          isActive: true
-        }
-      }
-    })
-
-    if (!city) {
-      return []
-    }
-
     const schools = await prisma.drivingSchool.findMany({
-      where: { 
-        cityId: city.id,
-        isActive: true 
-      },
-      orderBy: [
-        { isFeatured: 'desc' },
-        { sortOrder: 'asc' },
-        { rating: 'desc' },
-      ],
-      take: limit,
-      include: {
+      where: {
+        isActive: true,
         city: {
-          select: {
-            name: true,
-            province: {
-              select: {
-                name: true,
-              },
-            },
-          },
-        },
+          slug: citySlug,
+          isActive: true,
+          province: {
+            slug: provinceSlug,
+            isActive: true
+          }
+        }
       },
+      orderBy: defaultSchoolOrder,
+      take: limit,
+      select: schoolSummarySelect,
     })
 
-    // Transform to match DrivingSchool interface
-    return schools.map(school => ({
-      ...school,
-      city: school.city.name,
-      province: school.city.province.name,
-      hours: school.hours || undefined,
-    }))
+    return schools.map(toSchoolSummary)
   } catch (error) {
     console.error(`Error fetching schools for city ${citySlug} in province ${provinceSlug}:`, error)
     return []
   }
+})
+
+export type SchoolSort = 'rating_desc' | 'rating_asc' | 'name_asc' | 'name_desc' | 'price_asc' | 'price_desc'
+
+export interface SchoolsQuery {
+  page?: number
+  province?: string
+  city?: string
+  search?: string
+  sort?: string
 }
+
+const sortOrders: Record<SchoolSort, Prisma.DrivingSchoolOrderByWithRelationInput[]> = {
+  rating_desc: [{ rating: 'desc' }, { name: 'asc' }],
+  rating_asc: [{ rating: 'asc' }, { name: 'asc' }],
+  name_asc: [{ name: 'asc' }],
+  name_desc: [{ name: 'desc' }],
+  price_asc: [{ priceMin: { sort: 'asc', nulls: 'first' } }, { name: 'asc' }],
+  price_desc: [{ priceMin: { sort: 'desc', nulls: 'last' } }, { name: 'asc' }],
+}
+
+async function querySchoolsPage(query: SchoolsQuery): Promise<SchoolsPage> {
+  const where: Prisma.DrivingSchoolWhereInput = { isActive: true }
+  const cityFilter: Prisma.CityWhereInput = {}
+
+  if (query.province) {
+    cityFilter.province = { name: { equals: query.province, mode: 'insensitive' } }
+  }
+  if (query.city) {
+    cityFilter.name = { equals: query.city, mode: 'insensitive' }
+  }
+  if (query.province || query.city) {
+    where.city = cityFilter
+  }
+
+  const search = query.search?.trim()
+  if (search) {
+    where.OR = [
+      { name: { contains: search, mode: 'insensitive' } },
+      { city: { name: { contains: search, mode: 'insensitive' } } },
+      { city: { province: { name: { contains: search, mode: 'insensitive' } } } },
+    ]
+  }
+
+  const sort = (query.sort && query.sort in sortOrders ? query.sort : 'rating_desc') as SchoolSort
+  const total = await prisma.drivingSchool.count({ where })
+  const totalPages = Math.max(1, Math.ceil(total / SCHOOLS_PER_PAGE))
+  const page = Math.min(Math.max(1, query.page || 1), totalPages)
+
+  const schools = await prisma.drivingSchool.findMany({
+    where,
+    orderBy: [...sortOrders[sort], { id: 'asc' }],
+    skip: (page - 1) * SCHOOLS_PER_PAGE,
+    take: SCHOOLS_PER_PAGE,
+    select: schoolSummarySelect,
+  })
+
+  return { schools: schools.map(toSchoolSummary), total, page, totalPages }
+}
+
+export const getSchoolsPage = unstable_cache(querySchoolsPage, ['schools-page'], {
+  revalidate: PUBLIC_REVALIDATE_SECONDS,
+  tags: [SCHOOLS_CACHE_TAG],
+})
+
+// Ciudades con al menos una autoescuela activa en la provincia (por nombre), para el filtro.
+export const getCityNamesWithSchools = unstable_cache(
+  async (provinceName: string) => {
+    const cities = await prisma.city.findMany({
+      where: {
+        isActive: true,
+        province: { name: { equals: provinceName, mode: 'insensitive' } },
+        schools: { some: { isActive: true } },
+      },
+      orderBy: { name: 'asc' },
+      select: { name: true },
+    })
+    return cities.map(city => city.name)
+  },
+  ['city-names-with-schools'],
+  { revalidate: PUBLIC_REVALIDATE_SECONDS, tags: [SCHOOLS_CACHE_TAG] }
+)
+
+export const getActiveSchoolsCount = unstable_cache(
+  async () => prisma.drivingSchool.count({ where: { isActive: true } }),
+  ['active-schools-count'],
+  { revalidate: PUBLIC_REVALIDATE_SECONDS, tags: [SCHOOLS_CACHE_TAG] }
+)
+
+export const getCachedActiveProvinces = unstable_cache(
+  async () => getActiveProvinces(),
+  ['active-provinces'],
+  { revalidate: PUBLIC_REVALIDATE_SECONDS, tags: [SCHOOLS_CACHE_TAG] }
+)
 
 export async function getDatabaseStats() {
   const [provinces, cities, schools] = await Promise.all([

@@ -1,7 +1,5 @@
 "use client"
 
-import { useState, useEffect } from 'react'
-import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 import { 
@@ -24,15 +22,9 @@ import { Badge } from '@/components/ui/badge'
 import ContactForm from '@/components/ContactForm'
 import SafeHTML from '@/components/SafeHTML'
 import RelatedSchools from '@/components/RelatedSchools'
-import { getSchoolBySlug } from '@/lib/mock-data'
 import { formatPrice, formatRating, formatReviews } from '@/lib/utils'
 import { analyticsEvents } from '@/lib/analytics'
-
-interface SchoolPageClientProps {
-  params: {
-    slug: string
-  }
-}
+import { SchoolSummary } from '@/lib/types'
 
 interface Course {
   id: string
@@ -41,10 +33,6 @@ interface Course {
   duration?: number | null
   price?: number | null
   includes?: string[]
-  schoolId: string
-  isActive: boolean
-  createdAt: Date
-  updatedAt: Date
 }
 
 interface Review {
@@ -52,10 +40,7 @@ interface Review {
   rating: number
   comment?: string | null
   author: string
-  email?: string | null
-  schoolId: string
   createdAt: Date
-  updatedAt: Date
 }
 
 interface DrivingSchool {
@@ -65,7 +50,9 @@ interface DrivingSchool {
   rating: number
   reviewsCount: number
   city: string
+  citySlug: string
   province: string
+  provinceSlug: string
   imageUrl?: string | null
   logoUrl?: string | null
   priceMin?: number | null
@@ -82,59 +69,14 @@ interface DrivingSchool {
   isFeatured?: boolean
   courses?: Course[]
   reviews?: Review[]
-  createdAt: Date
-  updatedAt: Date
 }
 
-export default function SchoolPageClient({ params }: SchoolPageClientProps) {
-  const [school, setSchool] = useState<DrivingSchool | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+interface SchoolPageClientProps {
+  school: DrivingSchool
+  relatedSchools: SchoolSummary[]
+}
 
-  useEffect(() => {
-    const fetchSchool = async () => {
-      try {
-        setLoading(true)
-        const response = await fetch(`/api/autoescuelas/${params.slug}`)
-        if (response.ok) {
-          const data = await response.json()
-          if (data.success && data.school) {
-            setSchool(data.school)
-          } else {
-            setError('Autoescuela no encontrada')
-          }
-        } else if (response.status === 404) {
-          setError('Autoescuela no encontrada')
-        } else {
-          setError('Error al cargar la autoescuela')
-        }
-      } catch (err) {
-        setError('Error de conexión')
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchSchool()
-  }, [params.slug])
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gray-50 py-8">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="text-center p-8">
-            <div className="animate-spin inline-block w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full mb-4"></div>
-            <div className="text-blue-600">Cargando autoescuela...</div>
-          </div>
-        </div>
-      </div>
-    )
-  }
-
-  if (error || !school) {
-    notFound()
-  }
-
+export default function SchoolPageClient({ school, relatedSchools }: SchoolPageClientProps) {
   const handleContactClick = (type: 'phone' | 'email' | 'website') => {
     analyticsEvents.ctaViewAll(`contact_${type}`)
   }
@@ -157,7 +99,7 @@ export default function SchoolPageClient({ params }: SchoolPageClientProps) {
         <div className="relative z-10 container mx-auto px-4 sm:px-6 py-6 sm:py-8 h-full flex items-center">
           <div className="text-white w-full">
             <Link 
-              href={`/provincias/${school.province.toLowerCase().replace(/\s+/g, '-')}`}
+              href={`/provincias/${school.provinceSlug}`}
               className="inline-flex items-center text-white/80 hover:text-white mb-3 sm:mb-4 transition-colors text-sm sm:text-base"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
@@ -475,7 +417,12 @@ export default function SchoolPageClient({ params }: SchoolPageClientProps) {
       </div>
 
       {/* Related Schools Section */}
-      <RelatedSchools currentSchoolSlug={params.slug} />
+      <RelatedSchools
+        schools={relatedSchools}
+        city={school.city}
+        citySlug={school.citySlug}
+        provinceSlug={school.provinceSlug}
+      />
     </div>
   )
 }

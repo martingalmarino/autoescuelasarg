@@ -1,23 +1,20 @@
 "use client";
 
-import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import {
   MapPin,
   Star,
   Users,
-  Clock,
   Phone,
   Mail,
-  Globe,
   ArrowLeft,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { formatPrice, formatRating, formatReviews } from "@/lib/utils";
 import { analyticsEvents } from "@/lib/analytics";
-import SafeHTML from "@/components/SafeHTML";
+import { SchoolSummary } from "@/lib/types";
 
 interface City {
   id: string;
@@ -36,51 +33,17 @@ interface Province {
   cities?: City[];
 }
 
-interface DrivingSchool {
-  id: string;
-  name: string;
-  slug: string;
-  rating: number;
-  reviewsCount: number;
-  city: string;
-  province: string;
-  imageUrl?: string | null;
-  logoUrl?: string | null;
-  priceMin?: number | null;
-  priceMax?: number | null;
-  description?: string | null;
-  address?: string | null;
-  phone?: string | null;
-  email?: string | null;
-  website?: string | null;
-  hours?: string | null;
-  services?: string[];
-  isActive?: boolean;
-  isVerified?: boolean;
-  isFeatured?: boolean;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
 interface ProvincePageClientProps {
-  params: {
-    slug: string;
-  };
-  province?: Province | null;
-  schools?: DrivingSchool[];
-  cities?: City[];
+  province: Province;
+  schools: SchoolSummary[];
+  cities: City[];
 }
 
 export default function ProvincePageClient({
-  params,
   province,
   schools,
   cities,
 }: ProvincePageClientProps) {
-  if (!province) {
-    notFound();
-  }
-
   const handleSchoolClick = (schoolId: string, schoolName: string) => {
     analyticsEvents.clickSchoolCard(schoolId, schoolName);
   };
@@ -264,9 +227,9 @@ export default function ProvincePageClient({
 
                         {/* Description */}
                         {school.description && (
-                          <div className="mb-3 text-sm text-muted-foreground line-clamp-2">
-                            <SafeHTML content={school.description} />
-                          </div>
+                          <p className="mb-3 text-sm text-muted-foreground line-clamp-2">
+                            {school.description}
+                          </p>
                         )}
 
                         {/* Price Range */}

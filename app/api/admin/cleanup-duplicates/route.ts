@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { execSync } from 'child_process'
+import { revalidatePublicPages } from '@/lib/revalidate'
 
 export const dynamic = 'force-dynamic'
 
@@ -9,6 +10,8 @@ export async function POST(request: NextRequest) {
     
     // Ejecutar el script de limpieza de duplicados
     const output = execSync('npx tsx scripts/cleanup-duplicate-schools.ts', { encoding: 'utf-8' })
+
+    revalidatePublicPages()
 
     return NextResponse.json({
       success: true,
