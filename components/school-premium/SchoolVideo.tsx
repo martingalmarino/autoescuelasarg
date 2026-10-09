@@ -3,8 +3,15 @@
 import { useState } from 'react'
 import { Play } from 'lucide-react'
 
+interface SchoolVideoProps {
+  videoId: string
+  title: string
+  thumbnailUrl?: string
+  onPlay?: () => void
+}
+
 // Carga el reproductor de YouTube recién al hacer clic, para no sumar peso a la ficha.
-export default function SchoolVideo({ videoId, title }: { videoId: string; title: string }) {
+export default function SchoolVideo({ videoId, title, thumbnailUrl, onPlay }: SchoolVideoProps) {
   const [playing, setPlaying] = useState(false)
 
   return (
@@ -20,13 +27,13 @@ export default function SchoolVideo({ videoId, title }: { videoId: string; title
       ) : (
         <button
           type="button"
-          onClick={() => setPlaying(true)}
+          onClick={onPlay ?? (() => setPlaying(true))}
           className="group absolute inset-0 h-full w-full"
           aria-label={`Reproducir video: ${title}`}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={`https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`}
+            src={thumbnailUrl ?? `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`}
             alt=""
             loading="lazy"
             className="h-full w-full object-cover opacity-90 transition-opacity group-hover:opacity-100"

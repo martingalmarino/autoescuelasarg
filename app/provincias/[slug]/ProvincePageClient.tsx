@@ -1,5 +1,6 @@
 "use client";
 
+import { Fragment } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -15,6 +16,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { formatPrice, formatRating, formatReviews } from "@/lib/utils";
 import { analyticsEvents } from "@/lib/analytics";
 import { SchoolSummary } from "@/lib/types";
+import ForSchoolsBanner from "@/components/claims/ForSchoolsBanner";
+
+const BANNER_AFTER = 6;
 
 interface City {
   id: string;
@@ -153,117 +157,121 @@ export default function ProvincePageClient({
 
           {schools && schools.length > 0 ? (
             <div className="grid gap-6 sm:gap-8 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
-              {schools.map((school) => (
-                <Link
-                  key={school.id}
-                  href={`/autoescuelas/${school.slug}`}
-                  onClick={() => handleSchoolClick(school.id, school.name)}
-                  className="group"
-                >
-                  <Card className="surface-card-hover h-full overflow-hidden">
-                    <CardContent className="p-0">
-                      {/* Image */}
-                      <div className="relative h-48 w-full overflow-hidden">
-                        {school.imageUrl ? (
-                          <Image
-                            src={school.imageUrl}
-                            alt={school.name}
-                            fill
-                            className="object-cover transition-transform duration-200 group-hover:scale-105"
-                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                          />
-                        ) : (
-                          <div className="flex h-full items-center justify-center bg-muted">
-                            <div className="text-4xl text-muted-foreground">
-                              🚗
+              {schools.map((school, index) => (
+                <Fragment key={school.id}>
+                  <Link
+                    href={`/autoescuelas/${school.slug}`}
+                    onClick={() => handleSchoolClick(school.id, school.name)}
+                    className="group"
+                  >
+                    <Card className="surface-card-hover h-full overflow-hidden">
+                      <CardContent className="p-0">
+                        {/* Image */}
+                        <div className="relative h-48 w-full overflow-hidden">
+                          {school.imageUrl ? (
+                            <Image
+                              src={school.imageUrl}
+                              alt={school.name}
+                              fill
+                              className="object-cover transition-transform duration-200 group-hover:scale-105"
+                              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                            />
+                          ) : (
+                            <div className="flex h-full items-center justify-center bg-muted">
+                              <div className="text-4xl text-muted-foreground">
+                                🚗
+                              </div>
+                            </div>
+                          )}
+
+                          {/* Logo overlay */}
+                          {school.logoUrl && (
+                            <div className="absolute top-2.5 right-2.5 w-12 h-12 rounded-lg overflow-hidden bg-white shadow-card ring-1 ring-black/5">
+                              <Image
+                                src={school.logoUrl}
+                                alt={`Logo de ${school.name}`}
+                                fill
+                                className="object-contain p-1"
+                                sizes="48px"
+                              />
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Content */}
+                        <div className="p-4 sm:p-6">
+                          {/* Name */}
+                          <h3 className="mb-2 text-lg sm:text-xl font-bold leading-snug text-foreground group-hover:text-primary transition-colors">
+                            {school.name}
+                          </h3>
+
+                          {/* Rating */}
+                          <div className="mb-3 flex items-center space-x-2">
+                            <div className="flex items-center space-x-1">
+                              <Star className="h-4 w-4 fill-signal text-signal" />
+                              <span className="text-sm font-medium text-foreground">
+                                {formatRating(school.rating)}
+                              </span>
+                            </div>
+                            <div className="flex items-center space-x-1 text-muted-foreground">
+                              <Users className="h-3 w-3" />
+                              <span className="text-xs">
+                                {formatReviews(school.reviewsCount)} reseñas
+                              </span>
                             </div>
                           </div>
-                        )}
 
-                        {/* Logo overlay */}
-                        {school.logoUrl && (
-                          <div className="absolute top-2.5 right-2.5 w-12 h-12 rounded-lg overflow-hidden bg-white shadow-card ring-1 ring-black/5">
-                            <Image
-                              src={school.logoUrl}
-                              alt={`Logo de ${school.name}`}
-                              fill
-                              className="object-contain p-1"
-                              sizes="48px"
-                            />
-                          </div>
-                        )}
-                      </div>
-
-                      {/* Content */}
-                      <div className="p-4 sm:p-6">
-                        {/* Name */}
-                        <h3 className="mb-2 text-lg sm:text-xl font-bold leading-snug text-foreground group-hover:text-primary transition-colors">
-                          {school.name}
-                        </h3>
-
-                        {/* Rating */}
-                        <div className="mb-3 flex items-center space-x-2">
-                          <div className="flex items-center space-x-1">
-                            <Star className="h-4 w-4 fill-signal text-signal" />
-                            <span className="text-sm font-medium text-foreground">
-                              {formatRating(school.rating)}
+                          {/* Location */}
+                          <div className="mb-3 flex items-center space-x-1 text-muted-foreground">
+                            <MapPin className="h-3 w-3" />
+                            <span className="text-sm">
+                              {school.city}, {school.province}
                             </span>
                           </div>
-                          <div className="flex items-center space-x-1 text-muted-foreground">
-                            <Users className="h-3 w-3" />
-                            <span className="text-xs">
-                              {formatReviews(school.reviewsCount)} reseñas
-                            </span>
+
+                          {/* Description */}
+                          {school.description && (
+                            <p className="mb-3 text-sm text-muted-foreground line-clamp-2">
+                              {school.description}
+                            </p>
+                          )}
+
+                          {/* Price Range */}
+                          {school.priceMin && school.priceMax && (
+                            <div className="inline-flex rounded-md bg-accent px-2 py-0.5 text-sm font-semibold text-primary">
+                              {formatPrice(school.priceMin)} -{" "}
+                              {formatPrice(school.priceMax)}
+                            </div>
+                          )}
+
+                          {/* Contact Info */}
+                          <div className="mt-4 pt-4 border-t flex items-center justify-between">
+                            <div className="flex items-center space-x-3 text-xs text-muted-foreground">
+                              {school.phone && (
+                                <div className="flex items-center space-x-1">
+                                  <Phone className="h-3 w-3" />
+                                  <span>Llamar</span>
+                                </div>
+                              )}
+                              {school.email && (
+                                <div className="flex items-center space-x-1">
+                                  <Mail className="h-3 w-3" />
+                                  <span>Email</span>
+                                </div>
+                              )}
+                            </div>
+                            <div className="text-primary text-sm font-medium">
+                              Ver detalles →
+                            </div>
                           </div>
                         </div>
-
-                        {/* Location */}
-                        <div className="mb-3 flex items-center space-x-1 text-muted-foreground">
-                          <MapPin className="h-3 w-3" />
-                          <span className="text-sm">
-                            {school.city}, {school.province}
-                          </span>
-                        </div>
-
-                        {/* Description */}
-                        {school.description && (
-                          <p className="mb-3 text-sm text-muted-foreground line-clamp-2">
-                            {school.description}
-                          </p>
-                        )}
-
-                        {/* Price Range */}
-                        {school.priceMin && school.priceMax && (
-                          <div className="inline-flex rounded-md bg-accent px-2 py-0.5 text-sm font-semibold text-primary">
-                            {formatPrice(school.priceMin)} -{" "}
-                            {formatPrice(school.priceMax)}
-                          </div>
-                        )}
-
-                        {/* Contact Info */}
-                        <div className="mt-4 pt-4 border-t flex items-center justify-between">
-                          <div className="flex items-center space-x-3 text-xs text-muted-foreground">
-                            {school.phone && (
-                              <div className="flex items-center space-x-1">
-                                <Phone className="h-3 w-3" />
-                                <span>Llamar</span>
-                              </div>
-                            )}
-                            {school.email && (
-                              <div className="flex items-center space-x-1">
-                                <Mail className="h-3 w-3" />
-                                <span>Email</span>
-                              </div>
-                            )}
-                          </div>
-                          <div className="text-primary text-sm font-medium">
-                            Ver detalles →
-                          </div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </Link>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                  {index === Math.min(BANNER_AFTER, schools.length) - 1 && (
+                    <ForSchoolsBanner place={province.name} className="col-span-full" />
+                  )}
+                </Fragment>
               ))}
             </div>
           ) : (
@@ -278,6 +286,7 @@ export default function ProvincePageClient({
               <Button asChild>
                 <Link href="/provincias">Ver otras provincias</Link>
               </Button>
+              <ForSchoolsBanner place={province.name} className="mt-10 text-left" />
             </div>
           )}
         </div>

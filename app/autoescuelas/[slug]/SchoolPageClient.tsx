@@ -98,12 +98,31 @@ interface DrivingSchool {
   reviews?: Review[]
 }
 
+export type DemoAction = Exclude<SchoolEventType, 'view'> | 'video'
+
 interface SchoolPageClientProps {
   school: DrivingSchool
   relatedSchools: SchoolSummary[]
+  /** Ficha de ejemplo: no registra métricas y los botones explican qué hacen en lugar de ejecutarse. */
+  demo?: {
+    videoPoster: string
+    onAction: (action: DemoAction) => void
+  }
 }
 
-export default function SchoolPageClient({ school, relatedSchools }: SchoolPageClientProps) {
+function PremiumTag({ className = 'ml-auto' }: { className?: string }) {
+  return (
+    <span
+      className={`${className} inline-flex shrink-0 items-center gap-1 rounded-full bg-signal px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide text-signal-foreground`}
+    >
+      <Crown className="h-3 w-3" />
+      Premium
+    </span>
+  )
+}
+
+export default function SchoolPageClient({ school, relatedSchools, demo }: SchoolPageClientProps) {
+  const isDemo = Boolean(demo)
   const premium = school.isPremium
   const whatsappLink = premium
     ? whatsappUrl(school.whatsapp, `Hola ${school.name}, vi su ficha en Autoescuelas.ar y quisiera consultar por clases de manejo.`)
@@ -116,11 +135,20 @@ export default function SchoolPageClient({ school, relatedSchools }: SchoolPageC
   const promotion = premium ? school.promotion : null
   const yearsActive = premium && school.foundedYear ? new Date().getFullYear() - school.foundedYear : 0
 
-  useEffect(() => {
-    trackSchoolView(school.id)
-  }, [school.id])
+  const showDemoVideo = premium && !videoId && Boolean(demo)
+  // En la ficha de ejemplo los enlaces no llevan a ningún lado, ni siquiera antes de que cargue el JavaScript.
+  const contactHref = (url: string) => (demo ? '#' : url)
 
-  const handleContactClick = (type: SchoolEventType) => {
+  useEffect(() => {
+    if (!isDemo) trackSchoolView(school.id)
+  }, [school.id, isDemo])
+
+  const handleContactClick = (type: Exclude<SchoolEventType, 'view'>, event: React.MouseEvent) => {
+    if (demo) {
+      event.preventDefault()
+      demo.onAction(type)
+      return
+    }
     trackSchoolEvent(school.id, type)
   }
 
@@ -224,12 +252,13 @@ export default function SchoolPageClient({ school, relatedSchools }: SchoolPageC
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-8">
             {promotion && (
-              <div className="flex items-start gap-3 rounded-xl border-2 border-signal bg-signal/15 p-4 sm:p-5">
+              <div className="relative flex items-start gap-3 rounded-xl border-2 border-signal bg-signal/15 p-4 sm:p-5">
                 <Tag className="mt-0.5 h-5 w-5 shrink-0 text-navy" />
                 <div>
                   <p className="text-xs font-bold uppercase tracking-wide text-navy">Promoción</p>
                   <p className="font-semibold text-foreground">{promotion}</p>
                 </div>
+                {demo && <PremiumTag className="absolute -top-2.5 right-3" />}
               </div>
             )}
 
@@ -256,6 +285,7 @@ export default function SchoolPageClient({ school, relatedSchools }: SchoolPageC
                   <CardTitle className="flex items-center gap-2">
                     <ListChecks className="h-5 w-5 text-primary" />
                     Detalles del servicio
+                    {demo && <PremiumTag />}
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -280,6 +310,7 @@ export default function SchoolPageClient({ school, relatedSchools }: SchoolPageC
                   <CardTitle className="flex items-center gap-2">
                     <Camera className="h-5 w-5 text-primary" />
                     Fotos
+                    {demo && <PremiumTag />}
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -288,16 +319,22 @@ export default function SchoolPageClient({ school, relatedSchools }: SchoolPageC
               </Card>
             )}
 
-            {videoId && (
+            {(videoId || showDemoVideo) && (
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <PlayCircle className="h-5 w-5 text-primary" />
                     Video
+                    {demo && <PremiumTag />}
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <SchoolVideo videoId={videoId} title={`Video de ${school.name}`} />
+                  <SchoolVideo
+                    videoId={videoId ?? ''}
+                    title={`Video de ${school.name}`}
+                    thumbnailUrl={showDemoVideo ? demo?.videoPoster : undefined}
+                    onPlay={demo ? () => demo.onAction('video') : undefined}
+                  />
                 </CardContent>
               </Card>
             )}
@@ -340,12 +377,14 @@ export default function SchoolPageClient({ school, relatedSchools }: SchoolPageC
                           )}
                         </div>
                         <p className="text-muted-foreground mb-3">{course.description}</p>
-                        <div className="flex items-center space-x-4 text-sm text-muted-foreground mb-3">
-                          <div className="flex items-center space-x-1">
-                            <Clock className="h-4 w-4" />
-                            <span>{course.duration}</span>
+                        {course.duration ? (
+                          <div className="flex items-center space-x-4 text-sm text-muted-foreground mb-3">
+                            <div className="flex items-center space-x-1">
+                              <Clock className="h-4 w-4" />
+                              <span>{course.duration} {course.duration === 1 ? 'hora' : 'horas'}</span>
+                            </div>
                           </div>
-                        </div>
+                        ) : null}
                         <div>
                           {course.includes && course.includes.length > 0 && (
                             <>
@@ -408,9 +447,12 @@ export default function SchoolPageClient({ school, relatedSchools }: SchoolPageC
 
             {faqs.length > 0 && (
               <Card>
-                <JsonLd type="FAQPage" data={faqs} />
+                {!demo && <JsonLd type="FAQPage" data={faqs} />}
                 <CardHeader>
-                  <CardTitle>Preguntas frecuentes</CardTitle>
+                  <CardTitle className="flex items-center gap-2">
+                    Preguntas frecuentes
+                    {demo && <PremiumTag />}
+                  </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <Accordion type="single" collapsible>
@@ -430,13 +472,16 @@ export default function SchoolPageClient({ school, relatedSchools }: SchoolPageC
           <div className="space-y-6">
             {(whatsappLink || directionsLink) && (
               <div className="space-y-2 rounded-xl border-t-4 border-t-signal bg-card p-4 shadow-card">
-                <p className="font-display font-bold text-foreground">Contactá a {school.name}</p>
+                <div className="flex items-start gap-2">
+                  <p className="font-display font-bold text-foreground">Contactá a {school.name}</p>
+                  {demo && <PremiumTag />}
+                </div>
                 {whatsappLink && (
                   <a
-                    href={whatsappLink}
-                    target="_blank"
+                    href={contactHref(whatsappLink)}
+                    target={demo ? undefined : "_blank"}
                     rel="noopener noreferrer"
-                    onClick={() => handleContactClick('whatsapp')}
+                    onClick={event => handleContactClick('whatsapp', event)}
                     className="flex h-11 w-full items-center justify-center gap-2 rounded-md bg-[#25d366] px-4 font-bold text-white shadow-sm transition-colors hover:bg-[#1ebe5b]"
                   >
                     <MessageCircle className="h-5 w-5" />
@@ -446,7 +491,7 @@ export default function SchoolPageClient({ school, relatedSchools }: SchoolPageC
                 <div className="grid grid-cols-2 gap-2">
                   {school.phone && (
                     <Button variant="outline" asChild>
-                      <a href={`tel:${school.phone}`} onClick={() => handleContactClick('phone')}>
+                      <a href={contactHref(`tel:${school.phone}`)} onClick={event => handleContactClick('phone', event)}>
                         <Phone className="h-4 w-4 mr-2" />
                         Llamar
                       </a>
@@ -455,10 +500,10 @@ export default function SchoolPageClient({ school, relatedSchools }: SchoolPageC
                   {directionsLink && (
                     <Button variant="outline" asChild className={school.phone ? '' : 'col-span-2'}>
                       <a
-                        href={directionsLink}
-                        target="_blank"
+                        href={contactHref(directionsLink)}
+                        target={demo ? undefined : "_blank"}
                         rel="noopener noreferrer"
-                        onClick={() => handleContactClick('directions')}
+                        onClick={event => handleContactClick('directions', event)}
                       >
                         <Navigation className="h-4 w-4 mr-2" />
                         Cómo llegar
@@ -473,6 +518,7 @@ export default function SchoolPageClient({ school, relatedSchools }: SchoolPageC
             <ContactForm 
               schoolName={school.name}
               schoolId={school.id}
+              demo={isDemo}
             />
 
             {/* Contact Card */}
@@ -497,8 +543,8 @@ export default function SchoolPageClient({ school, relatedSchools }: SchoolPageC
                     <div>
                       <p className="font-medium">Teléfono</p>
                       <a 
-                        href={`tel:${school.phone}`}
-                        onClick={() => handleContactClick('phone')}
+                        href={contactHref(`tel:${school.phone}`)}
+                        onClick={event => handleContactClick('phone', event)}
                         className="text-sm text-primary hover:underline"
                       >
                         {school.phone}
@@ -513,8 +559,8 @@ export default function SchoolPageClient({ school, relatedSchools }: SchoolPageC
                     <div>
                       <p className="font-medium">Email</p>
                       <a 
-                        href={`mailto:${school.email}`}
-                        onClick={() => handleContactClick('email')}
+                        href={contactHref(`mailto:${school.email}`)}
+                        onClick={event => handleContactClick('email', event)}
                         className="text-sm text-primary hover:underline"
                       >
                         {school.email}
@@ -529,10 +575,10 @@ export default function SchoolPageClient({ school, relatedSchools }: SchoolPageC
                     <div>
                       <p className="font-medium">Sitio Web</p>
                       <a 
-                        href={school.website}
-                        target="_blank"
+                        href={contactHref(school.website)}
+                        target={demo ? undefined : "_blank"}
                         rel={premium ? 'noopener noreferrer' : 'nofollow noopener noreferrer'}
-                        onClick={() => handleContactClick('website')}
+                        onClick={event => handleContactClick('website', event)}
                         className="inline-flex items-center gap-1 text-sm text-primary hover:underline"
                       >
                         Visitar sitio web
@@ -555,7 +601,7 @@ export default function SchoolPageClient({ school, relatedSchools }: SchoolPageC
                 <div className="pt-4 space-y-2">
                   {school.phone && (
                     <Button className="w-full" asChild>
-                      <a href={`tel:${school.phone}`} onClick={() => handleContactClick('phone')}>
+                      <a href={contactHref(`tel:${school.phone}`)} onClick={event => handleContactClick('phone', event)}>
                         <Phone className="h-4 w-4 mr-2" />
                         Llamar Ahora
                       </a>
@@ -563,7 +609,7 @@ export default function SchoolPageClient({ school, relatedSchools }: SchoolPageC
                   )}
                   {school.email && (
                     <Button variant="outline" className="w-full" asChild>
-                      <a href={`mailto:${school.email}`} onClick={() => handleContactClick('email')}>
+                      <a href={contactHref(`mailto:${school.email}`)} onClick={event => handleContactClick('email', event)}>
                         <Mail className="h-4 w-4 mr-2" />
                         Enviar Email
                       </a>
@@ -617,7 +663,7 @@ export default function SchoolPageClient({ school, relatedSchools }: SchoolPageC
               </CardContent>
             </Card>
 
-            <ClaimCta slug={school.slug} isClaimed={school.isClaimed} isPremium={school.isPremium} />
+            {!demo && <ClaimCta slug={school.slug} isClaimed={school.isClaimed} isPremium={school.isPremium} />}
           </div>
         </div>
       </div>

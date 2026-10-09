@@ -1,5 +1,6 @@
 import { Suspense } from "react";
-import { BadgeCheck, BarChart3, Check, ClipboardList, Crown, MessageCircle, PhoneCall, Sparkles } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight, BadgeCheck, BarChart3, Check, ClipboardList, Crown, MessageCircle, PhoneCall, Sparkles } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import ClaimForm from "@/components/claims/ClaimForm";
@@ -110,7 +111,7 @@ export default function ForSchoolsPage() {
                 <a href="#reclamar">Reclamar mi ficha gratis</a>
               </Button>
               <Button asChild size="lg" variant="outline" className="border-white/30 bg-transparent text-white hover:bg-white/10 hover:text-white">
-                <a href="#planes">Ver beneficios Premium</a>
+                <Link href="/para-autoescuelas/ejemplo-premium">Ver una ficha Premium de ejemplo</Link>
               </Button>
             </div>
           </div>
@@ -161,9 +162,20 @@ export default function ForSchoolsPage() {
                     </li>
                   ))}
                 </ul>
-                <Button asChild variant={tier.highlighted ? "signal" : "default"} className="w-full font-bold sm:w-auto sm:self-start">
-                  <a href={tier.cta.href}>{tier.cta.label}</a>
-                </Button>
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+                  <Button asChild variant={tier.highlighted ? "signal" : "default"} className="w-full font-bold sm:w-auto">
+                    <a href={tier.cta.href}>{tier.cta.label}</a>
+                  </Button>
+                  {tier.highlighted && (
+                    <Link
+                      href="/para-autoescuelas/ejemplo-premium"
+                      className="inline-flex items-center justify-center gap-1 text-sm font-semibold text-signal hover:underline"
+                    >
+                      Ver ficha de ejemplo
+                      <ArrowRight className="h-4 w-4" />
+                    </Link>
+                  )}
+                </div>
               </div>
             ))}
           </div>

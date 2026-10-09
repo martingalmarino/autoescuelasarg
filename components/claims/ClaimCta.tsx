@@ -33,14 +33,19 @@ export default function ClaimCta({ slug, isClaimed, isPremium }: ClaimCtaProps) 
         <div>
           <p className="font-semibold text-foreground">{content.title}</p>
           <p className="mt-1 text-sm text-muted-foreground">{content.text}</p>
-          <Link
-            href={content.link}
-            rel="nofollow"
-            className="mt-2 inline-flex items-center gap-1 text-sm font-semibold text-primary hover:underline"
-          >
-            {content.label}
-            <ArrowRight className="h-3.5 w-3.5" />
-          </Link>
+          <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1">
+            <Link
+              href={content.link}
+              rel="nofollow"
+              className="inline-flex items-center gap-1 text-sm font-semibold text-primary hover:underline"
+            >
+              {content.label}
+              <ArrowRight className="h-3.5 w-3.5" />
+            </Link>
+            <Link href="/para-autoescuelas/ejemplo-premium" className="text-sm text-muted-foreground hover:text-primary hover:underline">
+              Ver ficha Premium de ejemplo
+            </Link>
+          </div>
         </div>
       </div>
     </div>

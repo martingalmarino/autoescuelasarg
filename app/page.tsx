@@ -2,6 +2,7 @@ import HeroLocation from "@/components/HeroLocation";
 import TopRatedGrid from "@/components/TopRatedGrid";
 import FAQAccordion from "@/components/FAQAccordion";
 import ProvincesIndex from "@/components/ProvincesIndex";
+import ForSchoolsBanner from "@/components/claims/ForSchoolsBanner";
 import JsonLd from "@/components/SEO/JsonLd";
 import { FAQ } from "@/lib/types";
 import { getActiveProvinces, getFeaturedSchools } from "@/lib/database";
@@ -75,6 +76,12 @@ export default async function HomePage() {
             </h3>
           </div>
           <ProvincesIndex provinces={provinces} />
+        </div>
+      </section>
+
+      <section className="pb-10 sm:pb-16">
+        <div className="container px-4 sm:px-6">
+          <ForSchoolsBanner />
         </div>
       </section>
 

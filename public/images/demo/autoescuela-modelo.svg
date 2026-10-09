@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Autoescuela Modelo">
+  <rect x="4" y="4" width="112" height="112" rx="26" fill="#14213d"/>
+  <circle cx="60" cy="54" r="30" fill="none" stroke="#ffc105" stroke-width="8"/>
+  <circle cx="60" cy="54" r="7" fill="#ffc105"/>
+  <path d="M32 50h21M67 50h21M60 61v23" stroke="#ffc105" stroke-width="8" stroke-linecap="round"/>
+  <text x="60" y="104" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" letter-spacing="2" fill="#ffffff">MODELO</text>
+</svg>
