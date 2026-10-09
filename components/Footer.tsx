@@ -101,6 +101,26 @@ export default function Footer() {
                   Calculadora de Patentes
                 </a>
               </li>
+              <li>
+                <a 
+                  href="https://www.patentearba.com/" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-navy-foreground/70 hover:text-signal transition-colors"
+                >
+                  Patente Arba
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="https://www.autoschinos.ar/" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-navy-foreground/70 hover:text-signal transition-colors"
+                >
+                  Autos Chinos en Argentina
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -143,7 +163,13 @@ export default function Footer() {
               © 2025 Autoescuelas.ar. Todos los derechos reservados.
             </p>
             <p className="text-xs sm:text-sm text-navy-foreground/70">
-              Hecho con ❤️ en Argentina
+              Desarrollado por{" "}
+              <a
+                href="mailto:m.galmarino@gmail.com"
+                className="font-semibold text-white hover:text-signal transition-colors"
+              >
+                Martín Galmarino
+              </a>
             </p>
           </div>
         </div>
