@@ -10,8 +10,9 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
-  { href: "/autoescuelas", label: "Todas las autoescuelas" },
+  { href: "/autoescuelas", label: "Todas las autoescuelas", shortLabel: "Autoescuelas" },
   { href: "/provincias", label: "Por provincia" },
+  { href: "/test-de-conducir", label: "Test de conducir" },
   { href: "/blog", label: "Blog" },
 ];
 
@@ -47,14 +48,21 @@ export default function Header() {
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "relative rounded-md px-3 py-2 text-sm font-medium transition-colors hover:text-foreground",
+                  "relative whitespace-nowrap rounded-md px-3 py-2 text-sm font-medium transition-colors hover:text-foreground",
                   "after:absolute after:inset-x-3 after:-bottom-[14px] after:h-0.5 after:rounded-full after:bg-signal after:transition-opacity",
                   isActive
                     ? "text-foreground after:opacity-100"
                     : "text-muted-foreground after:opacity-0 hover:after:opacity-60"
                 )}
               >
-                {link.label}
+                {link.shortLabel ? (
+                  <>
+                    <span className="lg:hidden">{link.shortLabel}</span>
+                    <span className="hidden lg:inline">{link.label}</span>
+                  </>
+                ) : (
+                  link.label
+                )}
               </Link>
             );
           })}
@@ -63,7 +71,7 @@ export default function Header() {
         {/* Search */}
         <div className="flex items-center">
           {/* Mobile: Icon only, Desktop: Full search */}
-          <div className="hidden sm:block">
+          <div className="hidden lg:block">
             <form
               onSubmit={handleSearch}
               className="flex items-center space-x-2"
@@ -73,7 +81,7 @@ export default function Header() {
                 placeholder="Buscar autoescuelas..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-48 sm:w-64 h-9 rounded-full bg-muted/60 border-transparent px-4 focus-visible:bg-card"
+                className="w-48 xl:w-64 h-9 rounded-full bg-muted/60 border-transparent px-4 focus-visible:bg-card"
               />
               <Button type="submit" size="sm" className="h-9 w-9 rounded-full p-0" aria-label="Buscar">
                 <Search className="h-4 w-4" />
@@ -82,7 +90,7 @@ export default function Header() {
           </div>
 
           {/* Mobile: Search icon only */}
-          <div className="block sm:hidden">
+          <div className="block lg:hidden">
             <Button
               variant="ghost"
               size="sm"

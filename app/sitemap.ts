@@ -1,6 +1,7 @@
 import { MetadataRoute } from 'next'
 import { prisma } from '@/lib/database'
 import { SITE_URL } from '@/lib/seo'
+import { getAvailableTests } from '@/lib/driving-tests'
 
 export const revalidate = 86400
 
@@ -8,6 +9,7 @@ const activeSchoolsCount = { _count: { select: { schools: { where: { isActive: t
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = SITE_URL
+  const availableTests = getAvailableTests()
 
   const staticPages: MetadataRoute.Sitemap = [
     {
@@ -40,6 +42,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'monthly',
       priority: 0.4,
     },
+    ...(availableTests.length > 0
+      ? [
+          {
+            url: `${baseUrl}/test-de-conducir`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly' as const,
+            priority: 0.8,
+          },
+          ...availableTests.map(test => ({
+            url: `${baseUrl}/test-de-conducir/${test.slug}`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly' as const,
+            priority: 0.8,
+          })),
+        ]
+      : []),
     ...['/terminos', '/privacidad', '/cookies'].map(path => ({
       url: `${baseUrl}${path}`,
       lastModified: new Date('2026-10-09'),
