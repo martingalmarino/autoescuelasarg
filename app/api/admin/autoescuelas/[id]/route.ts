@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
 import { revalidatePublicPages } from '@/lib/revalidate'
+import { premiumUpdateData } from '@/lib/premium-input'
 
 export const dynamic = 'force-dynamic'
 
@@ -106,6 +107,7 @@ export async function PATCH(
     if (body.sortOrder !== undefined) updateData.sortOrder = parseInt(body.sortOrder)
     if (body.imageUrl !== undefined) updateData.imageUrl = body.imageUrl
     if (body.logoUrl !== undefined) updateData.logoUrl = body.logoUrl
+    Object.assign(updateData, premiumUpdateData(body, existingSchool))
 
     // Si se cambia el nombre, actualizar el slug
     if (body.name && body.name !== existingSchool.name) {

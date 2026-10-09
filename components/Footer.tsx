@@ -65,6 +65,14 @@ export default function Footer() {
               </li>
               <li>
                 <Link 
+                  href="/para-autoescuelas" 
+                  className="text-navy-foreground/70 hover:text-signal transition-colors"
+                >
+                  ¿Tenés una autoescuela?
+                </Link>
+              </li>
+              <li>
+                <Link 
                   href="/contacto" 
                   className="text-navy-foreground/70 hover:text-signal transition-colors"
                 >

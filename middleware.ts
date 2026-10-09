@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+import { isAdminRequest, unauthorizedResponse } from '@/lib/admin-auth'
 
 // Función para normalizar texto removiendo acentos y caracteres especiales
 function normalizeSlug(text: string): string {
@@ -57,30 +58,12 @@ export function middleware(request: NextRequest) {
     }
   }
 
-  // Verificar si la ruta es /admin pero NO es /admin/login ni /api/admin/auth
-  if (pathname.startsWith('/admin') && 
-      pathname !== '/admin/login' && 
-      !pathname.startsWith('/api/admin/auth')) {
-    // Verificar si hay credenciales en las cookies
-    const authCookie = request.cookies.get('admin-auth')
-    
-    if (!authCookie) {
-      // Redirigir a la página de login
-      return NextResponse.redirect(new URL('/admin/login', request.url))
-    }
-    
-    // Verificar que la cookie sea válida
-    try {
-      const authData = JSON.parse(authCookie.value)
-      const expectedUsername = process.env.ADMIN_USERNAME || 'admin'
-      const expectedPassword = process.env.ADMIN_PASSWORD || 'admin123'
-      
-      if (authData.username !== expectedUsername || authData.password !== expectedPassword) {
-        // Credenciales inválidas, redirigir a login
-        return NextResponse.redirect(new URL('/admin/login', request.url))
-      }
-    } catch (error) {
-      // Cookie inválida, redirigir a login
+  if (pathname.startsWith('/api/admin') && !pathname.startsWith('/api/admin/auth')) {
+    if (!isAdminRequest(request)) return unauthorizedResponse()
+  }
+
+  if (pathname.startsWith('/admin') && pathname !== '/admin/login') {
+    if (!isAdminRequest(request)) {
       return NextResponse.redirect(new URL('/admin/login', request.url))
     }
   }
@@ -91,5 +74,6 @@ export function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     '/((?!api|_next/static|_next/image|images/|favicon.ico|.*\\.(?:png|jpe?g|gif|svg|webp|avif|ico)$).*)',
+    '/api/admin/:path*',
   ],
 }

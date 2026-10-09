@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Plus, Database, Search, Upload, Edit, Trash2, FileText, BookOpen } from 'lucide-react'
+import { Plus, Database, Search, Upload, Edit, Trash2, FileText, BookOpen, Crown, BadgeCheck, BarChart3 } from 'lucide-react'
 
 export default function AdminPage() {
   const [stats, setStats] = useState<{provinces: number, schools: number, cities: number} | null>(null)
@@ -192,6 +192,34 @@ export default function AdminPage() {
                 <Button variant="outline" className="w-full justify-start">
                   <Trash2 className="h-4 w-4 mr-2" />
                   Limpiar Datos
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center">
+                <Crown className="h-5 w-5 mr-2" />
+                Fichas premium
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-gray-600 mb-4">
+                Reclamos de dueños, y visitas, clics y consultas de cada ficha por mes.
+              </p>
+              <div className="space-y-3">
+                <Button asChild className="w-full">
+                  <Link href="/admin/reclamos">
+                    <BadgeCheck className="h-4 w-4 mr-2" />
+                    Reclamos de fichas
+                  </Link>
+                </Button>
+                <Button asChild variant="outline" className="w-full">
+                  <Link href="/admin/metricas">
+                    <BarChart3 className="h-4 w-4 mr-2" />
+                    Métricas por ficha
+                  </Link>
                 </Button>
               </div>
             </CardContent>

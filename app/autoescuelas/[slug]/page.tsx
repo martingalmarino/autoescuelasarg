@@ -65,7 +65,7 @@ export default async function SchoolPage({ params }: SchoolPageProps) {
     notFound()
   }
 
-  const relatedSchools = school.isActive
+  const relatedSchools = school.isActive && !school.isPremium
     ? await getRelatedSchools(school).catch((error) => {
         console.error(`Error fetching related schools for ${params.slug}:`, error)
         return []

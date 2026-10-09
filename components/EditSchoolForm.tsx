@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { X, Plus, Trash2 } from 'lucide-react'
 import ImageUpload from '@/components/ImageUpload'
 import RichTextEditor from '@/components/RichTextEditor'
+import { SCHOOL_FEATURE_OPTIONS, isPremiumActive, parseFaqs, type SchoolFaq } from '@/lib/premium'
 
 interface Province {
   id: string
@@ -45,9 +46,27 @@ interface DrivingSchool {
   isActive?: boolean
   isVerified?: boolean
   isFeatured?: boolean
+  ownerName?: string | null
+  ownerEmail?: string | null
+  ownerPhone?: string | null
+  plan?: 'FREE' | 'PREMIUM'
+  planExpiresAt?: string | Date | null
+  whatsapp?: string | null
+  gallery?: string[]
+  videoUrl?: string | null
+  promotion?: string | null
+  faqs?: unknown
+  features?: string[]
+  foundedYear?: number | null
+  licenseNumber?: string | null
   createdAt: Date
   updatedAt: Date
 }
+
+const toDateInput = (value: string | Date | null | undefined) =>
+  value
+    ? new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Argentina/Buenos_Aires' }).format(new Date(value))
+    : ''
 
 interface EditSchoolFormProps {
   school: DrivingSchool
@@ -60,7 +79,7 @@ export default function EditSchoolForm({ school, onClose, onSuccess }: EditSchoo
   const [error, setError] = useState<string | null>(null)
   const [provinces, setProvinces] = useState<Province[]>([])
   const [cities, setCities] = useState<City[]>([])
-  const [selectedProvince, setSelectedProvince] = useState('')
+  const [selectedProvince, setSelectedProvince] = useState(school.provinceId || '')
   const [services, setServices] = useState<string[]>(school.services || [''])
 
   const [formData, setFormData] = useState({
@@ -79,15 +98,32 @@ export default function EditSchoolForm({ school, onClose, onSuccess }: EditSchoo
     provinceId: school.provinceId || '',
     imageUrl: school.imageUrl || '',
     logoUrl: school.logoUrl || '',
-    isActive: school.isActive || true,
+    isActive: school.isActive ?? true,
     isVerified: school.isVerified || false,
-    isFeatured: school.isFeatured || false,
+    ownerName: school.ownerName || '',
+    ownerEmail: school.ownerEmail || '',
+    ownerPhone: school.ownerPhone || '',
+    plan: school.plan || 'FREE',
+    planExpiresAt: toDateInput(school.planExpiresAt),
+    whatsapp: school.whatsapp || '',
+    videoUrl: school.videoUrl || '',
+    promotion: school.promotion || '',
+    foundedYear: school.foundedYear?.toString() || '',
+    licenseNumber: school.licenseNumber || '',
   })
+  const [gallery, setGallery] = useState<string[]>(school.gallery || [])
+  const [galleryUploadKey, setGalleryUploadKey] = useState(0)
+  const [features, setFeatures] = useState<string[]>(school.features || [])
+  const [extraFeatures, setExtraFeatures] = useState(
+    (school.features || []).filter(feature => SCHOOL_FEATURE_OPTIONS.indexOf(feature) === -1).join(', ')
+  )
+  const [faqs, setFaqs] = useState<SchoolFaq[]>(parseFaqs(school.faqs))
 
   // Cargar provincias al montar el componente
   useEffect(() => {
     fetchProvinces()
-  }, [])
+    if (school.provinceId) fetchCities(school.provinceId)
+  }, [school.provinceId])
 
   const fetchProvinces = async () => {
     try {
@@ -158,6 +194,19 @@ export default function EditSchoolForm({ school, onClose, onSuccess }: EditSchoo
     setFormData(prev => ({ ...prev, logoUrl: '' }))
   }
 
+  const toggleFeature = (feature: string, checked: boolean) => {
+    setFeatures(prev => (checked ? [...prev, feature] : prev.filter(item => item !== feature)))
+  }
+
+  const updateFaq = (index: number, field: keyof SchoolFaq, value: string) => {
+    setFaqs(prev => prev.map((faq, i) => (i === index ? { ...faq, [field]: value } : faq)))
+  }
+
+  const premiumActive = isPremiumActive({
+    plan: formData.plan,
+    planExpiresAt: formData.planExpiresAt ? `${formData.planExpiresAt}T23:59:59-03:00` : null,
+  })
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
@@ -177,6 +226,12 @@ export default function EditSchoolForm({ school, onClose, onSuccess }: EditSchoo
           services: filteredServices,
           priceMin: formData.priceMin ? parseInt(formData.priceMin) : null,
           priceMax: formData.priceMax ? parseInt(formData.priceMax) : null,
+          gallery,
+          features: [
+            ...features.filter(feature => SCHOOL_FEATURE_OPTIONS.indexOf(feature) !== -1),
+            ...extraFeatures.split(',').map(feature => feature.trim()).filter(Boolean),
+          ],
+          faqs,
         }),
       })
 
@@ -496,6 +551,243 @@ export default function EditSchoolForm({ school, onClose, onSuccess }: EditSchoo
               </CardContent>
             </Card>
 
+            {/* Dueño y plan */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Dueño y plan</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label htmlFor="school-plan" className="block text-sm font-medium mb-1">Plan</label>
+                    <select
+                      id="school-plan"
+                      value={formData.plan}
+                      onChange={(e) => handleInputChange('plan', e.target.value)}
+                      className="w-full p-2 border border-gray-300 rounded-md"
+                    >
+                      <option value="FREE">Gratis</option>
+                      <option value="PREMIUM">Premium</option>
+                    </select>
+                  </div>
+                  {formData.plan === 'PREMIUM' && (
+                    <div>
+                      <label htmlFor="school-plan-expires" className="block text-sm font-medium mb-1">
+                        Vence el (vacío = sin vencimiento)
+                      </label>
+                      <Input
+                        id="school-plan-expires"
+                        type="date"
+                        value={formData.planExpiresAt}
+                        onChange={(e) => handleInputChange('planExpiresAt', e.target.value)}
+                      />
+                    </div>
+                  )}
+                </div>
+                {formData.plan === 'PREMIUM' && (
+                  <p className={`text-sm ${premiumActive ? 'text-green-700' : 'text-red-700'}`}>
+                    {premiumActive
+                      ? 'Premium vigente: la ficha muestra el contenido premium y aparece como destacada.'
+                      : 'La fecha de vencimiento ya pasó: la ficha se muestra como gratuita.'}
+                  </p>
+                )}
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div>
+                    <label htmlFor="school-owner-name" className="block text-sm font-medium mb-1">Responsable</label>
+                    <Input
+                      id="school-owner-name"
+                      value={formData.ownerName}
+                      onChange={(e) => handleInputChange('ownerName', e.target.value)}
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="school-owner-email" className="block text-sm font-medium mb-1">Email del responsable</label>
+                    <Input
+                      id="school-owner-email"
+                      type="email"
+                      value={formData.ownerEmail}
+                      onChange={(e) => handleInputChange('ownerEmail', e.target.value)}
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="school-owner-phone" className="block text-sm font-medium mb-1">Teléfono del responsable</label>
+                    <Input
+                      id="school-owner-phone"
+                      value={formData.ownerPhone}
+                      onChange={(e) => handleInputChange('ownerPhone', e.target.value)}
+                    />
+                  </div>
+                </div>
+                <p className="text-xs text-gray-500">
+                  Datos privados: no se muestran en el sitio. Con email o teléfono cargado, la ficha cuenta como reclamada.
+                </p>
+              </CardContent>
+            </Card>
+
+            {/* Contenido premium */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Contenido premium</CardTitle>
+                <p className="text-sm text-gray-500">Se muestra en la ficha solo mientras el plan Premium esté vigente.</p>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label htmlFor="school-whatsapp" className="block text-sm font-medium mb-1">WhatsApp</label>
+                    <Input
+                      id="school-whatsapp"
+                      value={formData.whatsapp}
+                      onChange={(e) => handleInputChange('whatsapp', e.target.value)}
+                      placeholder="Ej: +54 9 351 123-4567"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="school-video" className="block text-sm font-medium mb-1">Video de YouTube</label>
+                    <Input
+                      id="school-video"
+                      value={formData.videoUrl}
+                      onChange={(e) => handleInputChange('videoUrl', e.target.value)}
+                      placeholder="https://www.youtube.com/watch?v=..."
+                    />
+                  </div>
+                  <div className="md:col-span-2">
+                    <label htmlFor="school-promotion" className="block text-sm font-medium mb-1">Promoción vigente</label>
+                    <Input
+                      id="school-promotion"
+                      value={formData.promotion}
+                      maxLength={200}
+                      onChange={(e) => handleInputChange('promotion', e.target.value)}
+                      placeholder="Ej: 20% de descuento en la primera clase hasta el 31 de octubre"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="school-founded" className="block text-sm font-medium mb-1">Año de inicio</label>
+                    <Input
+                      id="school-founded"
+                      type="number"
+                      min="1900"
+                      max={new Date().getFullYear()}
+                      value={formData.foundedYear}
+                      onChange={(e) => handleInputChange('foundedYear', e.target.value)}
+                      placeholder="Ej: 1998"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="school-license" className="block text-sm font-medium mb-1">N° de habilitación</label>
+                    <Input
+                      id="school-license"
+                      value={formData.licenseNumber}
+                      onChange={(e) => handleInputChange('licenseNumber', e.target.value)}
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <p className="text-sm font-medium mb-2">Detalles del servicio</p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    {SCHOOL_FEATURE_OPTIONS.map(feature => (
+                      <label key={feature} className="flex items-center gap-2 text-sm">
+                        <input
+                          type="checkbox"
+                          checked={features.indexOf(feature) !== -1}
+                          onChange={(e) => toggleFeature(feature, e.target.checked)}
+                          className="rounded"
+                        />
+                        {feature}
+                      </label>
+                    ))}
+                  </div>
+                  <label htmlFor="school-extra-features" className="block text-sm font-medium mt-3 mb-1">
+                    Otros detalles (separados por coma)
+                  </label>
+                  <Input
+                    id="school-extra-features"
+                    value={extraFeatures}
+                    onChange={(e) => setExtraFeatures(e.target.value)}
+                  />
+                </div>
+
+                <div>
+                  <p className="text-sm font-medium mb-2">Galería de fotos ({gallery.length}/12)</p>
+                  {gallery.length > 0 && (
+                    <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 mb-3">
+                      {gallery.map((url, index) => (
+                        <div key={url} className="relative aspect-square overflow-hidden rounded-md border bg-gray-50">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img src={url} alt={`Foto ${index + 1}`} className="h-full w-full object-cover" />
+                          <button
+                            type="button"
+                            onClick={() => setGallery(prev => prev.filter(item => item !== url))}
+                            className="absolute right-1 top-1 rounded-full bg-white/90 p-1 shadow"
+                            aria-label={`Quitar foto ${index + 1}`}
+                          >
+                            <X className="h-3 w-3" />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  {gallery.length < 12 && (
+                    <ImageUpload
+                      key={galleryUploadKey}
+                      onUpload={(url) => {
+                        setGallery(prev => [...prev, url])
+                        setGalleryUploadKey(key => key + 1)
+                      }}
+                      folder="autoescuelas/galeria"
+                    />
+                  )}
+                </div>
+
+                <div>
+                  <p className="text-sm font-medium mb-2">Preguntas frecuentes</p>
+                  <div className="space-y-3">
+                    {faqs.map((faq, index) => (
+                      <div key={index} className="rounded-md border p-3 space-y-2">
+                        <div className="flex gap-2">
+                          <Input
+                            value={faq.question}
+                            onChange={(e) => updateFaq(index, 'question', e.target.value)}
+                            placeholder="Pregunta"
+                            aria-label={`Pregunta ${index + 1}`}
+                          />
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="icon"
+                            onClick={() => setFaqs(prev => prev.filter((_, i) => i !== index))}
+                            aria-label={`Quitar pregunta ${index + 1}`}
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </div>
+                        <textarea
+                          value={faq.answer}
+                          onChange={(e) => updateFaq(index, 'answer', e.target.value)}
+                          placeholder="Respuesta"
+                          aria-label={`Respuesta ${index + 1}`}
+                          rows={2}
+                          className="w-full p-2 border border-gray-300 rounded-md text-sm"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                  {faqs.length < 10 && (
+                    <Button
+                      type="button"
+                      variant="outline"
+                      className="w-full mt-3"
+                      onClick={() => setFaqs(prev => [...prev, { question: '', answer: '' }])}
+                    >
+                      <Plus className="h-4 w-4 mr-2" />
+                      Agregar pregunta
+                    </Button>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+
             {/* Opciones */}
             <Card>
               <CardHeader>
@@ -523,15 +815,9 @@ export default function EditSchoolForm({ school, onClose, onSuccess }: EditSchoo
                     <span className="text-sm">Autoescuela verificada</span>
                   </label>
 
-                  <label className="flex items-center space-x-2">
-                    <input
-                      type="checkbox"
-                      checked={formData.isFeatured}
-                      onChange={(e) => handleInputChange('isFeatured', e.target.checked)}
-                      className="rounded"
-                    />
-                    <span className="text-sm">Autoescuela destacada</span>
-                  </label>
+                  <p className="text-xs text-gray-500">
+                    &quot;Destacada&quot; se activa sola mientras el plan Premium esté vigente.
+                  </p>
                 </div>
               </CardContent>
             </Card>

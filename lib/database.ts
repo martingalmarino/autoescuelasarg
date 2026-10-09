@@ -3,6 +3,7 @@ import { unstable_cache } from 'next/cache'
 import { Prisma } from '@prisma/client'
 import { prisma } from './db'
 import type { SchoolSummary, SchoolsPage } from './types'
+import { isPremiumActive, parseFaqs } from './premium'
 
 // Tiempo de vida de la caché de páginas públicas (24 h). Las ediciones del admin la invalidan antes.
 export const PUBLIC_REVALIDATE_SECONDS = 86400
@@ -42,6 +43,27 @@ const defaultSchoolOrder: Prisma.DrivingSchoolOrderByWithRelationInput[] = [
   { sortOrder: 'asc' },
   { rating: 'desc' },
 ]
+
+type SchoolPrivateFields = {
+  ownerName: string | null
+  ownerEmail: string | null
+  ownerPhone: string | null
+  claimedAt: Date | null
+  plan: string
+  planExpiresAt: Date | null
+  faqs: Prisma.JsonValue | null
+}
+
+/** Quita los datos del dueño y del plan; deja solo indicadores calculados para el sitio público. */
+export function withoutPrivateSchoolFields<T extends SchoolPrivateFields>(school: T) {
+  const { ownerName, ownerEmail, ownerPhone, claimedAt, plan, planExpiresAt, faqs, ...rest } = school
+  return {
+    ...rest,
+    faqs: parseFaqs(faqs),
+    isClaimed: claimedAt !== null,
+    isPremium: isPremiumActive({ plan, planExpiresAt }),
+  }
+}
 
 export function htmlToExcerpt(html: string | null | undefined, maxLength = DESCRIPTION_EXCERPT_LENGTH) {
   if (!html) return null
@@ -216,7 +238,7 @@ export const getSchoolBySlugFromDB = cache(async (slug: string) => {
     if (!school) return null
 
     return {
-      ...school,
+      ...withoutPrivateSchoolFields(school),
       city: school.city.name,
       citySlug: school.city.slug,
       province: school.city.province.name,
