@@ -20,6 +20,7 @@ const PLACE_NAME_ALIASES: Record<string, string> = {
   'buenos-aires-ciudad': 'CABA',
   'ciudad-neuquen': 'Neuquén Capital',
   resistenca: 'Resistencia',
+  'rio-tercero': 'Río Tercero',
   'viila-madero': 'Villa Madero',
 }
 

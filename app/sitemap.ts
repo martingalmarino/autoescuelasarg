@@ -60,7 +60,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         orderBy: { sortOrder: 'asc' },
       }),
       prisma.drivingSchool.findMany({
-        where: { isActive: true },
+        where: { isActive: true, slug: { not: '' } },
         select: { slug: true, updatedAt: true },
         orderBy: { createdAt: 'desc' },
       }),
