@@ -1,7 +1,5 @@
-import { PrismaClient } from '@prisma/client'
+import { prisma } from '@/lib/db'
 import AdvancedSearch from '@/components/AdvancedSearch'
-
-const prisma = new PrismaClient()
 
 export const dynamic = 'force-dynamic'
 

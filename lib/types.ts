@@ -29,6 +29,35 @@ export interface DrivingSchool {
   updatedAt: Date;
 }
 
+// Datos mínimos para tarjetas y listados. `description` es texto plano recortado.
+export interface SchoolSummary {
+  id: string;
+  name: string;
+  slug: string;
+  rating: number;
+  reviewsCount: number;
+  city: string;
+  citySlug: string;
+  province: string;
+  provinceSlug: string;
+  imageUrl: string | null;
+  logoUrl: string | null;
+  priceMin: number | null;
+  priceMax: number | null;
+  description: string | null;
+  phone: string | null;
+  email: string | null;
+  isFeatured: boolean;
+  isVerified: boolean;
+}
+
+export interface SchoolsPage {
+  schools: SchoolSummary[];
+  total: number;
+  page: number;
+  totalPages: number;
+}
+
 export interface Course {
   id: string;
   name: string;

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/database";
+import { revalidatePublicPages } from "@/lib/revalidate";
 
 export const dynamic = "force-dynamic";
 
@@ -65,6 +66,8 @@ export async function PATCH(
       },
     });
 
+    revalidatePublicPages();
+
     return NextResponse.json({ success: true, data: city });
   } catch (error: any) {
     console.error(`Error updating city ${params.id}:`, error);
@@ -118,6 +121,8 @@ export async function DELETE(
     await prisma.city.delete({
       where: { id },
     });
+
+    revalidatePublicPages();
 
     return NextResponse.json({
       success: true,

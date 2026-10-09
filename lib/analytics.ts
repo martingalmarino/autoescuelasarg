@@ -5,7 +5,9 @@ import { AnalyticsEvent } from './types'
 export const trackEvent = (event: AnalyticsEvent) => {
   // En un entorno real, aquí enviarías el evento a tu servicio de analytics
   // Por ejemplo: Google Analytics, Mixpanel, etc.
-  console.log('Analytics Event:', event)
+  if (process.env.NODE_ENV !== 'production') {
+    console.log('Analytics Event:', event)
+  }
   
   // Ejemplo para Google Analytics 4:
   // if (typeof window !== 'undefined' && window.gtag) {

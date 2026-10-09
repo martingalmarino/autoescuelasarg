@@ -4,11 +4,11 @@ import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import SchoolCard from './SchoolCard'
-import { DrivingSchool } from '@/lib/types'
+import { SchoolSummary } from '@/lib/types'
 import { analyticsEvents } from '@/lib/analytics'
 
 interface TopRatedGridProps {
-  schools: DrivingSchool[]
+  schools: SchoolSummary[]
 }
 
 // Skeleton component for loading state

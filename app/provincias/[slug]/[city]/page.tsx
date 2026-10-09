@@ -1,9 +1,14 @@
 import { Metadata } from 'next'
+import { notFound } from 'next/navigation'
 import { getCityBySlugFromDB, getSchoolsByCitySlug } from '@/lib/database'
 import CityPageClient from './CityPageClient'
 
-// Forzar revalidación dinámica
-export const dynamic = 'force-dynamic'
+// ISR: 24 h. Las ciudades se generan en la primera visita y quedan cacheadas.
+export const revalidate = 86400
+
+export async function generateStaticParams() {
+  return []
+}
 
 interface CityPageProps {
   params: {
@@ -41,10 +46,10 @@ export default async function CityPage({ params }: CityPageProps) {
     getCityBySlugFromDB(params.slug, params.city),
     getSchoolsByCitySlug(params.slug, params.city)
   ])
-  
-  return <CityPageClient 
-    params={params} 
-    city={city}
-    schools={schools}
-  />
+
+  if (!city) {
+    notFound()
+  }
+
+  return <CityPageClient city={city} schools={schools} />
 }

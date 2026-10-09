@@ -1,6 +1,9 @@
 import { Metadata } from "next";
-import { Suspense } from "react";
-import BlogPageClientSimple from "./BlogPageClientSimple";
+import { prisma } from "@/lib/database";
+import BlogArticleList from "./BlogArticleList";
+
+// ISR: 24 h. El admin invalida la caché al publicar o editar artículos.
+export const revalidate = 86400;
 
 export const metadata: Metadata = {
   title: "Blog - Autoescuelas.ar | Consejos y guías para obtener tu licencia",
@@ -26,7 +29,25 @@ export const metadata: Metadata = {
   },
 };
 
-export default function BlogPage() {
+export default async function BlogPage() {
+  const articles = await prisma.blogArticle.findMany({
+    where: { isPublished: true },
+    orderBy: [{ isFeatured: "desc" }, { publishedAt: "desc" }],
+    take: 10,
+    select: {
+      id: true,
+      title: true,
+      slug: true,
+      excerpt: true,
+      featuredImage: true,
+      category: true,
+      isFeatured: true,
+      readingTime: true,
+      publishedAt: true,
+      createdAt: true,
+    },
+  });
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
@@ -61,48 +82,9 @@ export default function BlogPage() {
       {/* Content */}
       <section className="py-12">
         <div className="container mx-auto px-4">
-          <Suspense fallback={<BlogLoadingSkeleton />}>
-            <BlogPageClientSimple />
-          </Suspense>
+          <BlogArticleList articles={articles} />
         </div>
       </section>
-    </div>
-  );
-}
-
-function BlogLoadingSkeleton() {
-  return (
-    <div className="max-w-6xl mx-auto">
-      {/* Featured article skeleton */}
-      <div className="mb-12">
-        <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-          <div className="h-64 bg-gray-200 animate-pulse"></div>
-          <div className="p-6">
-            <div className="h-4 bg-gray-200 rounded w-20 mb-3 animate-pulse"></div>
-            <div className="h-8 bg-gray-200 rounded w-3/4 mb-3 animate-pulse"></div>
-            <div className="h-4 bg-gray-200 rounded w-full mb-2 animate-pulse"></div>
-            <div className="h-4 bg-gray-200 rounded w-2/3 animate-pulse"></div>
-          </div>
-        </div>
-      </div>
-
-      {/* Articles grid skeleton */}
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {[...Array(6)].map((_, i) => (
-          <div
-            key={i}
-            className="bg-white rounded-lg shadow-sm overflow-hidden"
-          >
-            <div className="h-48 bg-gray-200 animate-pulse"></div>
-            <div className="p-6">
-              <div className="h-4 bg-gray-200 rounded w-16 mb-3 animate-pulse"></div>
-              <div className="h-6 bg-gray-200 rounded w-full mb-2 animate-pulse"></div>
-              <div className="h-4 bg-gray-200 rounded w-3/4 mb-2 animate-pulse"></div>
-              <div className="h-4 bg-gray-200 rounded w-1/2 animate-pulse"></div>
-            </div>
-          </div>
-        ))}
-      </div>
     </div>
   );
 }

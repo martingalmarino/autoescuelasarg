@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { execSync } from 'child_process'
+import { revalidatePublicPages } from '@/lib/revalidate'
 
 export const dynamic = 'force-dynamic'
 
@@ -7,6 +8,8 @@ export async function GET(request: NextRequest) {
   try {
     // Ejecutar el script de normalización de slugs
     const output = execSync('npx tsx scripts/normalize-slugs.ts', { encoding: 'utf-8' })
+
+    revalidatePublicPages()
 
     return NextResponse.json({
       success: true,

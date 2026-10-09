@@ -1,18 +1,16 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useEffect, useRef, useTransition } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import {
   Search,
-  Filter,
   MapPin,
   Star,
   Users,
   Phone,
   Mail,
-  ChevronDown,
   X,
   ArrowLeft,
   ArrowRight,
@@ -28,14 +26,15 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { DrivingSchool, Province } from "@/lib/types";
+import { Province, SchoolsPage } from "@/lib/types";
 import { formatPrice, formatRating, formatReviews } from "@/lib/utils";
 import { analyticsEvents } from "@/lib/analytics";
-import SafeHTML from "@/components/SafeHTML";
 
 interface SchoolsPageClientProps {
-  schools: DrivingSchool[];
+  result: SchoolsPage;
+  totalSchools: number;
   provinces: Province[];
+  cities: string[];
   searchParams: {
     page?: string;
     province?: string;
@@ -45,16 +44,17 @@ interface SchoolsPageClientProps {
   };
 }
 
-const ITEMS_PER_PAGE = 12;
+const SEARCH_DEBOUNCE_MS = 400;
 
 export default function SchoolsPageClient({
-  schools,
+  result,
+  totalSchools,
   provinces,
+  cities: availableCities,
   searchParams,
 }: SchoolsPageClientProps) {
-  // Updated to use priceMin/priceMax instead of priceRange
   const router = useRouter();
-  const urlSearchParams = useSearchParams();
+  const [isPending, startTransition] = useTransition();
 
   const [searchTerm, setSearchTerm] = useState(searchParams.search || "");
   const [selectedProvince, setSelectedProvince] = useState(
@@ -62,118 +62,75 @@ export default function SchoolsPageClient({
   );
   const [selectedCity, setSelectedCity] = useState(searchParams.city || "all");
   const [sortBy, setSortBy] = useState(searchParams.sort || "rating_desc");
-  const [currentPage, setCurrentPage] = useState(
-    parseInt(searchParams.page || "1")
-  );
 
-  // Filtrar y ordenar autoescuelas
-  const filteredAndSortedSchools = useMemo(() => {
-    let filtered = schools;
+  const { schools: paginatedSchools, total, page: currentPage, totalPages } = result;
 
-    // Filtro por búsqueda
-    if (searchTerm) {
-      filtered = filtered.filter(
-        (school) =>
-          school.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          school.city.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          school.province.toLowerCase().includes(searchTerm.toLowerCase())
-      );
+  // Última búsqueda enviada a la URL; evita pisar lo que el usuario sigue escribiendo.
+  const lastSearchSent = useRef(searchParams.search || "");
+  const searchTimeout = useRef<ReturnType<typeof setTimeout>>();
+
+  useEffect(() => {
+    const incoming = searchParams.search || "";
+    if (incoming !== lastSearchSent.current) {
+      lastSearchSent.current = incoming;
+      setSearchTerm(incoming);
+    }
+  }, [searchParams.search]);
+
+  useEffect(() => {
+    setSelectedProvince(searchParams.province || "all");
+    setSelectedCity(searchParams.city || "all");
+    setSortBy(searchParams.sort || "rating_desc");
+  }, [searchParams.province, searchParams.city, searchParams.sort]);
+
+  useEffect(() => () => clearTimeout(searchTimeout.current), []);
+
+  const updateURL = (
+    params: Record<string, string>,
+    { scroll = false, replace = false } = {}
+  ) => {
+    if (!("search" in params)) {
+      clearTimeout(searchTimeout.current);
+      lastSearchSent.current = searchTerm;
+      params = { ...params, search: searchTerm };
     }
 
-    // Filtro por provincia
-    if (selectedProvince && selectedProvince !== "all") {
-      filtered = filtered.filter(
-        (school) =>
-          school.province.toLowerCase() === selectedProvince.toLowerCase()
-      );
-    }
-
-    // Filtro por ciudad
-    if (selectedCity && selectedCity !== "all") {
-      filtered = filtered.filter(
-        (school) => school.city.toLowerCase() === selectedCity.toLowerCase()
-      );
-    }
-
-    // Ordenamiento
-    switch (sortBy) {
-      case "rating_desc":
-        filtered.sort((a, b) => b.rating - a.rating);
-        break;
-      case "rating_asc":
-        filtered.sort((a, b) => a.rating - b.rating);
-        break;
-      case "name_asc":
-        filtered.sort((a, b) => a.name.localeCompare(b.name));
-        break;
-      case "name_desc":
-        filtered.sort((a, b) => b.name.localeCompare(a.name));
-        break;
-      case "price_asc":
-        filtered.sort((a, b) => {
-          const aPrice = a.priceMin || 0;
-          const bPrice = b.priceMin || 0;
-          return aPrice - bPrice;
-        });
-        break;
-      case "price_desc":
-        filtered.sort((a, b) => {
-          const aPrice = a.priceMin || 0;
-          const bPrice = b.priceMin || 0;
-          return bPrice - aPrice;
-        });
-        break;
-    }
-
-    return filtered;
-  }, [schools, searchTerm, selectedProvince, selectedCity, sortBy]);
-
-  // Paginación
-  const totalPages = Math.ceil(
-    filteredAndSortedSchools.length / ITEMS_PER_PAGE
-  );
-  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const paginatedSchools = filteredAndSortedSchools.slice(
-    startIndex,
-    startIndex + ITEMS_PER_PAGE
-  );
-
-  // Obtener ciudades únicas de la provincia seleccionada
-  const availableCities = useMemo(() => {
-    if (!selectedProvince || selectedProvince === "all") return [];
-    const provinceSchools = schools.filter(
-      (school) =>
-        school.province.toLowerCase() === selectedProvince.toLowerCase()
-    );
-    return Array.from(
-      new Set(provinceSchools.map((school) => school.city))
-    ).sort();
-  }, [selectedProvince, schools]);
-
-  const updateURL = (params: Record<string, string>) => {
-    const newSearchParams = new URLSearchParams(urlSearchParams.toString());
+    const newSearchParams = new URLSearchParams();
+    Object.entries(searchParams).forEach(([key, value]) => {
+      if (value) newSearchParams.set(key, value);
+    });
 
     Object.entries(params).forEach(([key, value]) => {
-      if (value && value !== "all") {
+      if (value && value !== "all" && !(key === "page" && value === "1")) {
         newSearchParams.set(key, value);
       } else {
         newSearchParams.delete(key);
       }
     });
 
-    router.push(`/autoescuelas?${newSearchParams.toString()}`);
+    const query = newSearchParams.toString();
+    const url = query ? `/autoescuelas?${query}` : "/autoescuelas";
+    startTransition(() => {
+      if (replace) {
+        router.replace(url, { scroll });
+      } else {
+        router.push(url, { scroll });
+      }
+    });
   };
 
   const handleSearch = (value: string) => {
     setSearchTerm(value);
-    setCurrentPage(1);
-    updateURL({ search: value, page: "1" });
+    clearTimeout(searchTimeout.current);
+    searchTimeout.current = setTimeout(() => {
+      lastSearchSent.current = value;
+      updateURL({ search: value, page: "1" }, { replace: true });
+    }, SEARCH_DEBOUNCE_MS);
   };
 
   const handleProvinceChange = (value: string) => {
     setSelectedProvince(value);
     setSelectedCity("all");
-    setCurrentPage(1);
     updateURL({
       province: value,
       city: "all",
@@ -183,28 +140,28 @@ export default function SchoolsPageClient({
 
   const handleCityChange = (value: string) => {
     setSelectedCity(value);
-    setCurrentPage(1);
     updateURL({ city: value, page: "1" });
   };
 
   const handleSortChange = (value: string) => {
     setSortBy(value);
-    setCurrentPage(1);
     updateURL({ sort: value, page: "1" });
   };
 
   const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-    updateURL({ page: page.toString() });
+    updateURL({ page: page.toString() }, { scroll: true });
   };
 
   const clearFilters = () => {
+    clearTimeout(searchTimeout.current);
+    lastSearchSent.current = "";
     setSearchTerm("");
     setSelectedProvince("all");
     setSelectedCity("all");
     setSortBy("rating_desc");
-    setCurrentPage(1);
-    router.push("/autoescuelas");
+    startTransition(() => {
+      router.push("/autoescuelas", { scroll: false });
+    });
   };
 
   const handleSchoolClick = (schoolId: string, schoolName: string) => {
@@ -227,7 +184,7 @@ export default function SchoolsPageClient({
             <div className="flex items-center justify-center space-x-6 text-white/80">
               <div className="flex items-center space-x-2">
                 <MapPin className="h-5 w-5" />
-                <span>{schools.length} autoescuelas</span>
+                <span>{totalSchools} autoescuelas</span>
               </div>
               <div className="flex items-center space-x-2">
                 <Users className="h-5 w-5" />
@@ -425,11 +382,16 @@ export default function SchoolsPageClient({
 
       {/* Results Section */}
       <section className="py-6 sm:py-8">
-        <div className="container mx-auto px-4 sm:px-6">
+        <div
+          className={`container mx-auto px-4 sm:px-6 transition-opacity ${
+            isPending ? "opacity-60" : ""
+          }`}
+          aria-busy={isPending}
+        >
           {/* Results Header */}
           <div className="mb-4 sm:mb-6">
             <h2 className="text-lg sm:text-xl md:text-2xl font-bold mb-1">
-              {filteredAndSortedSchools.length} autoescuelas encontradas
+              {total} autoescuelas encontradas
             </h2>
             <p className="text-sm sm:text-base text-muted-foreground">
               Página {currentPage} de {totalPages}
@@ -514,9 +476,9 @@ export default function SchoolsPageClient({
 
                           {/* Description */}
                           {school.description && (
-                            <div className="mb-2 sm:mb-3 text-xs sm:text-sm text-muted-foreground line-clamp-2">
-                              <SafeHTML content={school.description} />
-                            </div>
+                            <p className="mb-2 sm:mb-3 text-xs sm:text-sm text-muted-foreground line-clamp-2">
+                              {school.description}
+                            </p>
                           )}
 
                           {/* Price Range */}

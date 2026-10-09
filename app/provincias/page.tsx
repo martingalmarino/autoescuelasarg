@@ -2,8 +2,8 @@ import { Metadata } from 'next'
 import { getActiveProvinces } from '@/lib/database'
 import ProvincesPageClient from './ProvincesPageClient'
 
-// Force dynamic rendering to get fresh data
-export const dynamic = 'force-dynamic'
+// ISR: 24 h. El admin invalida la caché al editar datos.
+export const revalidate = 86400
 
 export const metadata: Metadata = {
   title: 'Todas las Provincias - Autoescuelas.ar',

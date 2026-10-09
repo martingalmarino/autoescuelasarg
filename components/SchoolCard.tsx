@@ -4,12 +4,12 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Star, MapPin, Users } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
-import { DrivingSchool } from '@/lib/types'
+import { SchoolSummary } from '@/lib/types'
 import { formatRating, formatReviews, formatPrice } from '@/lib/utils'
 import { analyticsEvents } from '@/lib/analytics'
 
 interface SchoolCardProps {
-  school: DrivingSchool
+  school: SchoolSummary
 }
 
 export default function SchoolCard({ school }: SchoolCardProps) {

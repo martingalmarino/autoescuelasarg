@@ -1,17 +1,25 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { cache } from "react";
 import { prisma } from "@/lib/database";
 import BlogContent from "@/components/BlogContent";
 import JsonLd from "@/components/SEO/JsonLd";
 import { BlogArticle } from "@/lib/types";
 
+// ISR: 24 h. Los artículos se generan en la primera visita; el admin invalida la caché al editar.
+export const revalidate = 86400;
+
+export async function generateStaticParams() {
+  return [];
+}
+
 interface BlogPostPageProps {
   params: { slug: string };
 }
 
-async function getArticle(
+const getArticle = cache(async (
   slug: string
-): Promise<{ article: BlogArticle; relatedArticles: BlogArticle[] } | null> {
+): Promise<{ article: BlogArticle; relatedArticles: Omit<BlogArticle, "content">[] } | null> => {
   try {
     const article = await prisma.blogArticle.findUnique({
       where: {
@@ -47,7 +55,6 @@ async function getArticle(
           tags: true,
           isFeatured: true,
           sortOrder: true,
-          content: true,
           metaTitle: true,
           metaDescription: true,
           isPublished: true,
@@ -60,7 +67,7 @@ async function getArticle(
     console.error("Error fetching article:", error);
     return null;
   }
-}
+});
 
 export async function generateMetadata({
   params,

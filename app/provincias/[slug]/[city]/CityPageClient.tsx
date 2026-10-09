@@ -1,14 +1,13 @@
 "use client"
 
-import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
-import { MapPin, Star, Users, Clock, Phone, Mail, Globe, ArrowLeft } from 'lucide-react'
+import { MapPin, Star, Users, ArrowLeft } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { formatPrice, formatRating, formatReviews } from '@/lib/utils'
 import { analyticsEvents } from '@/lib/analytics'
-import SafeHTML from '@/components/SafeHTML'
+import { SchoolSummary } from '@/lib/types'
 
 interface City {
   id: string
@@ -22,47 +21,12 @@ interface City {
   }
 }
 
-interface DrivingSchool {
-  id: string
-  name: string
-  slug: string
-  rating: number
-  reviewsCount: number
-  city: string
-  province: string
-  imageUrl?: string | null
-  logoUrl?: string | null
-  priceMin?: number | null
-  priceMax?: number | null
-  description?: string | null
-  address?: string | null
-  phone?: string | null
-  email?: string | null
-  website?: string | null
-  hours?: string | null
-  services?: string[]
-  isActive?: boolean
-  isVerified?: boolean
-  isFeatured?: boolean
-  createdAt: Date
-  updatedAt: Date
-}
-
 interface CityPageClientProps {
-  params: {
-    slug: string
-    city: string
-  }
-  city?: City | null
-  schools?: DrivingSchool[]
+  city: City
+  schools: SchoolSummary[]
 }
 
-export default function CityPageClient({ params, city, schools }: CityPageClientProps) {
-
-  if (!city) {
-    notFound()
-  }
-
+export default function CityPageClient({ city, schools }: CityPageClientProps) {
   const handleSchoolClick = (schoolId: string, schoolName: string) => {
     analyticsEvents.clickSchoolCard(schoolId, schoolName)
   }
@@ -182,9 +146,9 @@ export default function CityPageClient({ params, city, schools }: CityPageClient
                       </div>
                       
                       {school.description && (
-                        <div className="text-sm text-gray-600 mb-3 line-clamp-2">
-                          <SafeHTML content={school.description} />
-                        </div>
+                        <p className="text-sm text-gray-600 mb-3 line-clamp-2">
+                          {school.description}
+                        </p>
                       )}
                       
                       {school.priceMin && school.priceMax && (

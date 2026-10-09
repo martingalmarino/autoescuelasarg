@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
+    formats: ['image/avif', 'image/webp'],
     remotePatterns: [
       {
         protocol: 'https',
@@ -26,6 +27,15 @@ const nextConfig = {
   },
   async headers() {
     return [
+      {
+        source: '/images/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=86400, stale-while-revalidate=604800',
+          },
+        ],
+      },
       {
         source: '/sitemap.xml',
         headers: [

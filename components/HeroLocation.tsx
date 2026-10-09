@@ -2,7 +2,9 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
+import Image from 'next/image'
 import { MapPin, ChevronDown } from 'lucide-react'
+import heroImage from '@/public/images/hero-image.jpg'
 import { Button } from '@/components/ui/button'
 import { analyticsEvents } from '@/lib/analytics'
 import { createSlug } from '@/lib/utils'
@@ -100,13 +102,14 @@ export default function HeroLocation() {
   return (
     <section className="relative min-h-[70vh] sm:min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat sm:bg-center"
-        style={{
-          backgroundImage: "url('/images/hero-image.jpg')",
-          backgroundPosition: "center top",
-          backgroundSize: "cover"
-        }}
+      <Image
+        src={heroImage}
+        alt=""
+        fill
+        priority
+        sizes="100vw"
+        placeholder="blur"
+        className="object-cover object-top"
       />
       
       {/* Dark Overlay */}
