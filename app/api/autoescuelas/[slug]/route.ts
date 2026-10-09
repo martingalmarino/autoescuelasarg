@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
+import { withoutPrivateSchoolFields } from '@/lib/database'
 
 export const dynamic = 'force-dynamic'
 
@@ -29,6 +30,7 @@ export async function GET(
         reviews: {
           orderBy: { createdAt: 'desc' },
           take: 10,
+          select: { id: true, rating: true, comment: true, author: true, createdAt: true },
         },
       },
     })
@@ -42,7 +44,7 @@ export async function GET(
 
     // Transform to match DrivingSchool interface
     const transformedSchool = {
-      ...school,
+      ...withoutPrivateSchoolFields(school),
       city: school.city.name,
       province: school.city.province.name,
       hours: school.hours || undefined,

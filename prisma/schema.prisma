@@ -91,6 +91,24 @@ model DrivingSchool {
   // SEO
   metaTitle   String?
   metaDescription String?
+
+  // Dueño (ficha reclamada). Datos privados: nunca se envían al sitio público.
+  ownerName   String?
+  ownerEmail  String?
+  ownerPhone  String?
+  claimedAt   DateTime?
+
+  // Plan premium. isFeatured se deriva del plan vigente.
+  plan          SchoolPlan @default(FREE)
+  planExpiresAt DateTime?
+  whatsapp      String?
+  gallery       String[]   @default([])
+  videoUrl      String?
+  promotion     String?
+  faqs          Json?      // [{ question, answer }]
+  features      String[]   @default([])
+  foundedYear   Int?
+  licenseNumber String?
   
   // Timestamps
   createdAt   DateTime @default(now())
@@ -102,7 +120,10 @@ model DrivingSchool {
   reviews     Review[]
   courses     Course[]
   contacts    Contact[]
+  claims      SchoolClaim[]
+  events      SchoolEvent[]
 
+  @@index([plan, planExpiresAt])
   @@index([provinceId, isActive])
   @@index([cityId, isActive])
   @@index([isFeatured, isActive])
@@ -165,6 +186,50 @@ model Contact {
   @@index([status])
   @@index([createdAt])
   @@map("contacts")
+}
+
+enum SchoolPlan {
+  FREE
+  PREMIUM
+}
+
+model SchoolClaim {
+  id          String   @id @default(cuid())
+  // Vacío cuando el dueño escribe el nombre en /para-autoescuelas sin elegir una ficha.
+  schoolId    String?
+  schoolName  String
+  city        String?
+  name        String
+  role        String
+  email       String
+  phone       String
+  message     String?
+  interest    String   @default("claim") // claim, premium
+  status      String   @default("pending") // pending, approved, rejected
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  school      DrivingSchool? @relation(fields: [schoolId], references: [id], onDelete: SetNull)
+
+  @@index([status, createdAt])
+  @@index([schoolId])
+  @@map("school_claims")
+}
+
+// Contadores diarios por ficha: vistas y clics en los botones de contacto.
+model SchoolEvent {
+  id        String   @id @default(cuid())
+  schoolId  String
+  date      DateTime @db.Date
+  type      String   // view, whatsapp, phone, website, email, directions
+  count     Int      @default(0)
+
+  school    DrivingSchool @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+
+  @@unique([schoolId, date, type])
+  @@index([date])
+  @@map("school_events")
 }
 
 model BlogArticle {

@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { 
@@ -14,7 +15,17 @@ import {
   CheckCircle,
   Calendar,
   DollarSign,
-  Award
+  Award,
+  BadgeCheck,
+  Crown,
+  ExternalLink,
+  FileCheck,
+  Camera,
+  ListChecks,
+  MessageCircle,
+  Navigation,
+  PlayCircle,
+  Tag
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -22,8 +33,14 @@ import { Badge } from '@/components/ui/badge'
 import ContactForm from '@/components/ContactForm'
 import SafeHTML from '@/components/SafeHTML'
 import RelatedSchools from '@/components/RelatedSchools'
+import ClaimCta from '@/components/claims/ClaimCta'
+import JsonLd from '@/components/SEO/JsonLd'
+import SchoolGallery from '@/components/school-premium/SchoolGallery'
+import SchoolVideo from '@/components/school-premium/SchoolVideo'
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 import { formatPrice, formatRating, formatReviews } from '@/lib/utils'
-import { analyticsEvents } from '@/lib/analytics'
+import { mapsUrl, whatsappUrl, youtubeVideoId, type SchoolEventType, type SchoolFaq } from '@/lib/premium'
+import { trackSchoolEvent, trackSchoolView } from '@/lib/school-tracking'
 import { SchoolSummary } from '@/lib/types'
 
 interface Course {
@@ -67,6 +84,16 @@ interface DrivingSchool {
   isActive?: boolean
   isVerified?: boolean
   isFeatured?: boolean
+  isClaimed: boolean
+  isPremium: boolean
+  whatsapp?: string | null
+  gallery?: string[]
+  videoUrl?: string | null
+  promotion?: string | null
+  faqs?: SchoolFaq[]
+  features?: string[]
+  foundedYear?: number | null
+  licenseNumber?: string | null
   courses?: Course[]
   reviews?: Review[]
 }
@@ -77,8 +104,24 @@ interface SchoolPageClientProps {
 }
 
 export default function SchoolPageClient({ school, relatedSchools }: SchoolPageClientProps) {
-  const handleContactClick = (type: 'phone' | 'email' | 'website') => {
-    analyticsEvents.ctaViewAll(`contact_${type}`)
+  const premium = school.isPremium
+  const whatsappLink = premium
+    ? whatsappUrl(school.whatsapp, `Hola ${school.name}, vi su ficha en Autoescuelas.ar y quisiera consultar por clases de manejo.`)
+    : null
+  const directionsLink = premium && school.address ? mapsUrl([school.address, school.city, school.province]) : null
+  const videoId = premium ? youtubeVideoId(school.videoUrl) : null
+  const gallery = premium ? school.gallery ?? [] : []
+  const features = premium ? school.features ?? [] : []
+  const faqs = premium ? school.faqs ?? [] : []
+  const promotion = premium ? school.promotion : null
+  const yearsActive = premium && school.foundedYear ? new Date().getFullYear() - school.foundedYear : 0
+
+  useEffect(() => {
+    trackSchoolView(school.id)
+  }, [school.id])
+
+  const handleContactClick = (type: SchoolEventType) => {
+    trackSchoolEvent(school.id, type)
   }
 
   return (
@@ -127,6 +170,22 @@ export default function SchoolPageClient({ school, relatedSchools }: SchoolPageC
                   <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold leading-tight break-words">
                     {school.name}
                   </h1>
+                  {(premium || school.isVerified) && (
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      {premium && (
+                        <span className="inline-flex items-center gap-1 rounded-full bg-signal px-2.5 py-1 text-xs font-bold text-signal-foreground">
+                          <Crown className="h-3.5 w-3.5" />
+                          Destacada
+                        </span>
+                      )}
+                      {school.isVerified && (
+                        <span className="inline-flex items-center gap-1 rounded-full bg-white/15 px-2.5 py-1 text-xs font-semibold text-white">
+                          <BadgeCheck className="h-3.5 w-3.5" />
+                          Verificada
+                        </span>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -147,6 +206,14 @@ export default function SchoolPageClient({ school, relatedSchools }: SchoolPageC
                   <span className="text-sm sm:text-base">{formatPrice(school.priceMin)} - {formatPrice(school.priceMax)}</span>
                 </div>
               )}
+              {yearsActive > 0 && (
+                <div className="flex items-center space-x-2">
+                  <Award className="h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0" />
+                  <span className="text-sm sm:text-base">
+                    {yearsActive} {yearsActive === 1 ? 'año' : 'años'} de trayectoria
+                  </span>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -156,6 +223,16 @@ export default function SchoolPageClient({ school, relatedSchools }: SchoolPageC
         <div className="grid gap-8 lg:grid-cols-3">
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-8">
+            {promotion && (
+              <div className="flex items-start gap-3 rounded-xl border-2 border-signal bg-signal/15 p-4 sm:p-5">
+                <Tag className="mt-0.5 h-5 w-5 shrink-0 text-navy" />
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-wide text-navy">Promoción</p>
+                  <p className="font-semibold text-foreground">{promotion}</p>
+                </div>
+              </div>
+            )}
+
             {/* Description */}
             {school.description && (
               <Card>
@@ -169,6 +246,58 @@ export default function SchoolPageClient({ school, relatedSchools }: SchoolPageC
                     content={school.description} 
                     className="text-muted-foreground leading-relaxed"
                   />
+                </CardContent>
+              </Card>
+            )}
+
+            {features.length > 0 && (
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <ListChecks className="h-5 w-5 text-primary" />
+                    Detalles del servicio
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <ul className="flex flex-wrap gap-2">
+                    {features.map(feature => (
+                      <li
+                        key={feature}
+                        className="inline-flex items-center gap-1.5 rounded-full bg-accent px-3 py-1 text-sm font-medium text-primary"
+                      >
+                        <CheckCircle className="h-3.5 w-3.5" />
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
+            )}
+
+            {gallery.length > 0 && (
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Camera className="h-5 w-5 text-primary" />
+                    Fotos
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <SchoolGallery images={gallery} schoolName={school.name} />
+                </CardContent>
+              </Card>
+            )}
+
+            {videoId && (
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <PlayCircle className="h-5 w-5 text-primary" />
+                    Video
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <SchoolVideo videoId={videoId} title={`Video de ${school.name}`} />
                 </CardContent>
               </Card>
             )}
@@ -276,10 +405,70 @@ export default function SchoolPageClient({ school, relatedSchools }: SchoolPageC
                 </CardContent>
               </Card>
             )}
+
+            {faqs.length > 0 && (
+              <Card>
+                <JsonLd type="FAQPage" data={faqs} />
+                <CardHeader>
+                  <CardTitle>Preguntas frecuentes</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <Accordion type="single" collapsible>
+                    {faqs.map((faq, index) => (
+                      <AccordionItem key={index} value={`faq-${index}`}>
+                        <AccordionTrigger className="text-left">{faq.question}</AccordionTrigger>
+                        <AccordionContent className="whitespace-pre-line text-muted-foreground">{faq.answer}</AccordionContent>
+                      </AccordionItem>
+                    ))}
+                  </Accordion>
+                </CardContent>
+              </Card>
+            )}
           </div>
 
           {/* Sidebar */}
           <div className="space-y-6">
+            {(whatsappLink || directionsLink) && (
+              <div className="space-y-2 rounded-xl border-t-4 border-t-signal bg-card p-4 shadow-card">
+                <p className="font-display font-bold text-foreground">Contactá a {school.name}</p>
+                {whatsappLink && (
+                  <a
+                    href={whatsappLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => handleContactClick('whatsapp')}
+                    className="flex h-11 w-full items-center justify-center gap-2 rounded-md bg-[#25d366] px-4 font-bold text-white shadow-sm transition-colors hover:bg-[#1ebe5b]"
+                  >
+                    <MessageCircle className="h-5 w-5" />
+                    Escribir por WhatsApp
+                  </a>
+                )}
+                <div className="grid grid-cols-2 gap-2">
+                  {school.phone && (
+                    <Button variant="outline" asChild>
+                      <a href={`tel:${school.phone}`} onClick={() => handleContactClick('phone')}>
+                        <Phone className="h-4 w-4 mr-2" />
+                        Llamar
+                      </a>
+                    </Button>
+                  )}
+                  {directionsLink && (
+                    <Button variant="outline" asChild className={school.phone ? '' : 'col-span-2'}>
+                      <a
+                        href={directionsLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => handleContactClick('directions')}
+                      >
+                        <Navigation className="h-4 w-4 mr-2" />
+                        Cómo llegar
+                      </a>
+                    </Button>
+                  )}
+                </div>
+              </div>
+            )}
+
             {/* Contact Form - Moved to top */}
             <ContactForm 
               schoolName={school.name}
@@ -342,12 +531,23 @@ export default function SchoolPageClient({ school, relatedSchools }: SchoolPageC
                       <a 
                         href={school.website}
                         target="_blank"
-                        rel="noopener noreferrer"
+                        rel={premium ? 'noopener noreferrer' : 'nofollow noopener noreferrer'}
                         onClick={() => handleContactClick('website')}
-                        className="text-sm text-primary hover:underline"
+                        className="inline-flex items-center gap-1 text-sm text-primary hover:underline"
                       >
                         Visitar sitio web
+                        <ExternalLink className="h-3 w-3" />
                       </a>
+                    </div>
+                  </div>
+                )}
+
+                {premium && school.licenseNumber && (
+                  <div className="flex items-center space-x-3">
+                    <FileCheck className="h-5 w-5 text-primary" />
+                    <div>
+                      <p className="font-medium">Habilitación</p>
+                      <p className="text-sm text-muted-foreground">N° {school.licenseNumber}</p>
                     </div>
                   </div>
                 )}
@@ -405,26 +605,31 @@ export default function SchoolPageClient({ school, relatedSchools }: SchoolPageC
                   <p className="text-sm text-muted-foreground">
                     Basado en {formatReviews(school.reviewsCount)} reseñas
                   </p>
-                  <div className="mt-4">
-                    <Badge variant="secondary" className="flex items-center space-x-1 w-fit mx-auto">
-                      <Award className="h-3 w-3" />
-                      <span>Verificada</span>
-                    </Badge>
-                  </div>
+                  {school.isVerified && (
+                    <div className="mt-4">
+                      <Badge variant="secondary" className="flex items-center space-x-1 w-fit mx-auto">
+                        <Award className="h-3 w-3" />
+                        <span>Verificada</span>
+                      </Badge>
+                    </div>
+                  )}
                 </div>
               </CardContent>
             </Card>
+
+            <ClaimCta slug={school.slug} isClaimed={school.isClaimed} isPremium={school.isPremium} />
           </div>
         </div>
       </div>
 
-      {/* Related Schools Section */}
-      <RelatedSchools
-        schools={relatedSchools}
-        city={school.city}
-        citySlug={school.citySlug}
-        provinceSlug={school.provinceSlug}
-      />
+      {!premium && (
+        <RelatedSchools
+          schools={relatedSchools}
+          city={school.city}
+          citySlug={school.citySlug}
+          provinceSlug={school.provinceSlug}
+        />
+      )}
     </div>
   )
 }

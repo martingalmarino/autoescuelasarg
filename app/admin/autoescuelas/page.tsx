@@ -5,10 +5,11 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
-import { Plus, Edit, Trash2, Eye, Search, LogOut, Mail, MapPin } from 'lucide-react'
+import { Plus, Edit, Trash2, Eye, Search, LogOut, Mail, MapPin, BadgeCheck } from 'lucide-react'
 import Link from 'next/link'
 import AddSchoolForm from '@/components/AddSchoolForm'
 import EditSchoolForm from '@/components/EditSchoolForm'
+import { isPremiumActive } from '@/lib/premium'
 
 interface DrivingSchool {
   id: string
@@ -33,6 +34,9 @@ interface DrivingSchool {
   isActive?: boolean
   isVerified?: boolean
   isFeatured?: boolean
+  plan?: 'FREE' | 'PREMIUM'
+  planExpiresAt?: string | null
+  claimedAt?: string | null
   createdAt: Date
   updatedAt: Date
 }
@@ -162,6 +166,12 @@ export default function AutoescuelasAdminPage() {
                     Ver Contactos
                   </Button>
                 </Link>
+                <Link href="/admin/reclamos">
+                  <Button variant="outline" className="flex items-center gap-2">
+                    <BadgeCheck className="h-4 w-4" />
+                    Reclamos
+                  </Button>
+                </Link>
                 <Link href="/admin/ciudades">
                   <Button variant="outline" className="flex items-center gap-2">
                     <MapPin className="h-4 w-4" />
@@ -263,8 +273,18 @@ export default function AutoescuelasAdminPage() {
                         <div className="flex items-center gap-3 mb-2">
                           <h3 className="text-lg font-semibold">{school.name}</h3>
                           <div className="flex gap-1">
-                            {school.isFeatured && (
+                            {school.plan === 'PREMIUM' && (
+                              <Badge variant="default" className={isPremiumActive(school) ? 'bg-yellow-500' : 'bg-gray-400'}>
+                                {isPremiumActive(school)
+                                  ? `Premium${school.planExpiresAt ? ` hasta ${new Date(school.planExpiresAt).toLocaleDateString('es-AR')}` : ''}`
+                                  : 'Premium vencido'}
+                              </Badge>
+                            )}
+                            {school.isFeatured && school.plan !== 'PREMIUM' && (
                               <Badge variant="default" className="bg-yellow-500">Destacada</Badge>
+                            )}
+                            {school.claimedAt && (
+                              <Badge variant="outline">Reclamada</Badge>
                             )}
                             {school.isVerified && (
                               <Badge variant="default" className="bg-green-500">Verificada</Badge>

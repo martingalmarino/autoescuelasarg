@@ -60,6 +60,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         ]
       : []),
     {
+      url: `${baseUrl}/para-autoescuelas`,
+      lastModified: new Date('2026-10-09'),
+      changeFrequency: 'monthly',
+      priority: 0.5,
+    },
+    {
       url: `${baseUrl}/productos-para-conductores`,
       lastModified: new Date(PRICES_CHECKED_ON),
       changeFrequency: 'weekly',

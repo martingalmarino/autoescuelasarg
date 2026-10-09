@@ -25,6 +25,7 @@ interface RichTextEditorProps {
 
 export default function RichTextEditor({ content, onChange, placeholder = "Escribe la descripción..." }: RichTextEditorProps) {
   const editor = useEditor({
+    immediatelyRender: false,
     extensions: [
       StarterKit.configure({
         bulletList: {
