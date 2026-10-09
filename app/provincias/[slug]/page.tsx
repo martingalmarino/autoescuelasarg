@@ -35,8 +35,9 @@ export async function generateMetadata({ params }: ProvincePageProps): Promise<M
   const topCities = province.cities
     .filter((city) => city.activeSchoolsCount > 0)
     .sort((a, b) => b.activeSchoolsCount - a.activeSchoolsCount)
-    .slice(0, 2)
     .map((city) => seoPlaceName(city.name, city.slug))
+    .filter((cityName) => cityName.toLocaleLowerCase('es-AR') !== name.toLocaleLowerCase('es-AR'))
+    .slice(0, 2)
 
   const countText = count === 1 ? '1 autoescuela' : `${count} autoescuelas`
   const description =
