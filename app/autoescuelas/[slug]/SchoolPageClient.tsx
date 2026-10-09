@@ -160,7 +160,9 @@ export default function SchoolPageClient({ school, relatedSchools }: SchoolPageC
             {school.description && (
               <Card>
                 <CardHeader>
-                  <CardTitle>Descripción</CardTitle>
+                  <h2 className="font-display text-2xl font-bold leading-tight tracking-tight">
+                    Sobre {school.name}
+                  </h2>
                 </CardHeader>
                 <CardContent>
                   <SafeHTML 
@@ -175,7 +177,7 @@ export default function SchoolPageClient({ school, relatedSchools }: SchoolPageC
             {school.services && school.services.length > 0 && (
               <Card>
                 <CardHeader>
-                  <CardTitle>Servicios</CardTitle>
+                  <CardTitle>Cursos de manejo ofrecidos</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="grid gap-3 sm:grid-cols-2">
