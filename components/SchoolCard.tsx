@@ -19,16 +19,16 @@ export default function SchoolCard({ school }: SchoolCardProps) {
 
   return (
     <Link href={`/autoescuelas/${school.slug}`} onClick={handleClick}>
-      <Card className="group h-full cursor-pointer transition-all duration-200 hover:shadow-lg hover:-translate-y-1">
+      <Card className="surface-card-hover group h-full cursor-pointer overflow-hidden">
         <CardContent className="p-0">
           {/* Image */}
-          <div className="relative h-40 sm:h-48 w-full overflow-hidden rounded-t-lg">
+          <div className="relative h-40 sm:h-48 w-full overflow-hidden">
             {school.imageUrl ? (
               <Image
                 src={school.imageUrl}
                 alt={school.name}
                 fill
-                className="object-cover transition-transform duration-200 group-hover:scale-105"
+                className="object-cover transition-transform duration-300 group-hover:scale-105"
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
               />
             ) : (
@@ -39,7 +39,7 @@ export default function SchoolCard({ school }: SchoolCardProps) {
             
             {/* Logo overlay */}
             {school.logoUrl && (
-              <div className="absolute top-2 right-2 w-12 h-12 sm:w-14 sm:h-14 rounded-lg overflow-hidden bg-white shadow-md border-2 border-white">
+              <div className="absolute top-2.5 right-2.5 w-12 h-12 sm:w-14 sm:h-14 rounded-lg overflow-hidden bg-white shadow-card ring-1 ring-black/5">
                 <Image
                   src={school.logoUrl}
                   alt={`Logo de ${school.name}`}
@@ -52,17 +52,17 @@ export default function SchoolCard({ school }: SchoolCardProps) {
           </div>
 
           {/* Content */}
-          <div className="p-3 sm:p-4">
+          <div className="p-3.5 sm:p-4">
             {/* Name */}
-            <h3 className="mb-2 line-clamp-2 text-base sm:text-lg font-semibold text-foreground group-hover:text-primary">
+            <h3 className="mb-2 line-clamp-2 font-display text-base sm:text-lg font-bold leading-snug text-foreground transition-colors group-hover:text-primary">
               {school.name}
             </h3>
 
             {/* Rating */}
             <div className="mb-2 sm:mb-3 flex items-center space-x-2">
               <div className="flex items-center space-x-1">
-                <Star className="h-3 w-3 sm:h-4 sm:w-4 fill-yellow-400 text-yellow-400" />
-                <span className="text-xs sm:text-sm font-medium text-foreground">
+                <Star className="h-3.5 w-3.5 sm:h-4 sm:w-4 fill-signal text-signal" />
+                <span className="text-xs sm:text-sm font-bold text-foreground">
                   {formatRating(school.rating)}
                 </span>
               </div>
@@ -76,7 +76,7 @@ export default function SchoolCard({ school }: SchoolCardProps) {
 
             {/* Location */}
             <div className="mb-2 sm:mb-3 flex items-center space-x-1 text-muted-foreground">
-              <MapPin className="h-3 w-3" />
+              <MapPin className="h-3 w-3 text-primary" />
               <span className="text-xs sm:text-sm">
                 {school.city}, {school.province}
               </span>
@@ -84,7 +84,7 @@ export default function SchoolCard({ school }: SchoolCardProps) {
 
             {/* Price Range */}
             {school.priceMin && school.priceMax && (
-              <div className="text-xs sm:text-sm font-medium text-primary">
+              <div className="inline-flex rounded-md bg-accent px-2 py-0.5 text-xs sm:text-sm font-semibold text-primary">
                 {formatPrice(school.priceMin)} - {formatPrice(school.priceMax)}
               </div>
             )}

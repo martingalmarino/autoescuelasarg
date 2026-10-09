@@ -67,24 +67,24 @@ export default function BlogContent({
             </Badge>
           )}
           {article.isFeatured && (
-            <Badge className="bg-yellow-500 hover:bg-yellow-600 text-xs sm:text-sm">
+            <Badge variant="signal" className="text-xs sm:text-sm">
               Destacado
             </Badge>
           )}
         </div>
 
-        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 leading-tight">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-foreground mb-4 leading-tight">
           {article.title}
         </h1>
 
         {article.excerpt && (
-          <p className="text-lg sm:text-xl text-gray-600 mb-6 leading-relaxed">
+          <p className="text-lg sm:text-xl text-muted-foreground mb-6 leading-relaxed">
             {article.excerpt}
           </p>
         )}
 
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-sm text-gray-500">
+          <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-sm text-muted-foreground">
             <span className="flex items-center">
               <User className="w-4 h-4 mr-2" />
               {article.author}
@@ -115,7 +115,7 @@ export default function BlogContent({
 
       {/* Imagen destacada */}
       {article.featuredImage && (
-        <div className="relative h-48 sm:h-64 md:h-80 lg:h-96 w-full mb-6 sm:mb-8 rounded-lg overflow-hidden">
+        <div className="relative h-48 sm:h-64 md:h-80 lg:h-96 w-full mb-6 sm:mb-8 rounded-xl overflow-hidden shadow-card">
           <Image
             src={article.featuredImage}
             alt={article.title}
@@ -136,8 +136,8 @@ export default function BlogContent({
       {article.tags && article.tags.length > 0 && (
         <div className="mb-6 sm:mb-8">
           <div className="flex items-center mb-3">
-            <Tag className="w-4 h-4 mr-2 text-gray-500" />
-            <span className="text-sm font-medium text-gray-700">
+            <Tag className="w-4 h-4 mr-2 text-primary" />
+            <span className="text-sm font-semibold text-foreground">
               Etiquetas:
             </span>
           </div>
@@ -162,8 +162,8 @@ export default function BlogContent({
 
       {/* Artículos relacionados */}
       {relatedArticles.length > 0 && (
-        <section className="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-gray-200">
-          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">
+        <section className="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-border">
+          <h2 className="section-title text-xl sm:text-2xl mb-4 sm:mb-6">
             Artículos relacionados
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
@@ -186,7 +186,7 @@ export default function BlogContent({
                       {relatedArticle.category}
                     </Badge>
                   )}
-                  <h3 className="font-semibold text-gray-900 line-clamp-2 mb-1 text-sm sm:text-base">
+                  <h3 className="font-bold text-foreground line-clamp-2 mb-1 text-sm sm:text-base">
                     <a
                       href={`/blog/${relatedArticle.slug}`}
                       className="hover:text-primary transition-colors"
@@ -194,10 +194,10 @@ export default function BlogContent({
                       {relatedArticle.title}
                     </a>
                   </h3>
-                  <p className="text-xs sm:text-sm text-gray-600 line-clamp-2 mb-2">
+                  <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2 mb-2">
                     {relatedArticle.excerpt}
                   </p>
-                  <div className="flex flex-wrap items-center text-xs text-gray-500 gap-2 sm:gap-3">
+                  <div className="flex flex-wrap items-center text-xs text-muted-foreground gap-2 sm:gap-3">
                     <span>
                       {formatDate(
                         relatedArticle.publishedAt || relatedArticle.createdAt

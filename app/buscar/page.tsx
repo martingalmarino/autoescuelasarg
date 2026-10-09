@@ -70,14 +70,14 @@ export default async function SearchPage() {
       }))
 
       return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-background">
           {/* Header */}
-          <div className="bg-white border-b">
+          <div className="bg-card border-b">
             <div className="container mx-auto px-4 py-8">
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">
+              <h1 className="text-3xl font-extrabold text-foreground mb-2">
                 Búsqueda Avanzada
               </h1>
-              <p className="text-gray-600">
+              <p className="text-muted-foreground">
                 Encuentra la autoescuela perfecta con nuestros filtros avanzados
               </p>
             </div>
@@ -92,23 +92,23 @@ export default async function SearchPage() {
 
             {/* Información adicional */}
             <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="bg-white p-6 rounded-lg shadow-sm">
+              <div className="surface-card p-6">
                 <h3 className="font-semibold text-lg mb-2">🔍 Búsqueda Inteligente</h3>
-                <p className="text-gray-600 text-sm">
+                <p className="text-muted-foreground text-sm">
                   Nuestra búsqueda encuentra autoescuelas por nombre, ubicación, servicios y más.
                 </p>
               </div>
               
-              <div className="bg-white p-6 rounded-lg shadow-sm">
+              <div className="surface-card p-6">
                 <h3 className="font-semibold text-lg mb-2">📍 Filtros por Ubicación</h3>
-                <p className="text-gray-600 text-sm">
+                <p className="text-muted-foreground text-sm">
                   Filtra por provincia y ciudad para encontrar autoescuelas cerca de ti.
                 </p>
               </div>
               
-              <div className="bg-white p-6 rounded-lg shadow-sm">
+              <div className="surface-card p-6">
                 <h3 className="font-semibold text-lg mb-2">⭐ Calidad Garantizada</h3>
-                <p className="text-gray-600 text-sm">
+                <p className="text-muted-foreground text-sm">
                   Filtra por rating y precio para encontrar las mejores opciones.
                 </p>
               </div>
@@ -122,14 +122,14 @@ export default async function SearchPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {/* Header */}
-      <div className="bg-white border-b">
+      <div className="bg-card border-b">
         <div className="container mx-auto px-4 py-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+          <h1 className="text-3xl font-extrabold text-foreground mb-2">
             Búsqueda Avanzada
           </h1>
-          <p className="text-gray-600">
+          <p className="text-muted-foreground">
             Encuentra la autoescuela perfecta con nuestros filtros avanzados
           </p>
         </div>
@@ -144,23 +144,23 @@ export default async function SearchPage() {
 
         {/* Información adicional */}
         <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-white p-6 rounded-lg shadow-sm">
+          <div className="surface-card p-6">
             <h3 className="font-semibold text-lg mb-2">🔍 Búsqueda Inteligente</h3>
-            <p className="text-gray-600 text-sm">
+            <p className="text-muted-foreground text-sm">
               Nuestra búsqueda encuentra autoescuelas por nombre, ubicación, servicios y más.
             </p>
           </div>
           
-          <div className="bg-white p-6 rounded-lg shadow-sm">
+          <div className="surface-card p-6">
             <h3 className="font-semibold text-lg mb-2">📍 Filtros por Ubicación</h3>
-            <p className="text-gray-600 text-sm">
+            <p className="text-muted-foreground text-sm">
               Filtra por provincia y ciudad para encontrar autoescuelas cerca de ti.
             </p>
           </div>
           
-          <div className="bg-white p-6 rounded-lg shadow-sm">
+          <div className="surface-card p-6">
             <h3 className="font-semibold text-lg mb-2">⭐ Calidad Garantizada</h3>
-            <p className="text-gray-600 text-sm">
+            <p className="text-muted-foreground text-sm">
               Filtra por rating y precio para encontrar las mejores opciones.
             </p>
           </div>

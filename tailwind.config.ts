@@ -51,6 +51,18 @@ const config: Config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        navy: {
+          DEFAULT: "hsl(var(--brand-navy))",
+          foreground: "hsl(var(--brand-navy-foreground))",
+        },
+        signal: {
+          DEFAULT: "hsl(var(--signal))",
+          foreground: "hsl(var(--signal-foreground))",
+        },
+      },
+      boxShadow: {
+        card: "0 1px 2px hsl(224 45% 12% / 0.04), 0 2px 8px hsl(224 45% 12% / 0.04)",
+        "card-hover": "0 4px 12px hsl(224 45% 12% / 0.08), 0 12px 32px hsl(224 45% 12% / 0.08)",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -72,7 +84,8 @@ const config: Config = {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-inter)', 'Inter', 'system-ui', 'sans-serif'],
+        display: ['var(--font-display)', 'var(--font-inter)', 'system-ui', 'sans-serif'],
       },
     },
   },

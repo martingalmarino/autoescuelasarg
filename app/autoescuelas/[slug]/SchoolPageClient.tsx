@@ -84,14 +84,14 @@ export default function SchoolPageClient({ school, relatedSchools }: SchoolPageC
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative min-h-[280px] sm:min-h-[320px] bg-gradient-to-r from-blue-600 to-blue-800">
+      <section className="page-hero min-h-[280px] sm:min-h-[320px]">
         {school.imageUrl && (
           <div className="absolute inset-0">
             <Image
               src={school.imageUrl}
               alt={school.name}
               fill
-              className="object-cover opacity-20"
+              className="object-cover opacity-15 mix-blend-luminosity"
               priority
             />
           </div>
@@ -111,7 +111,7 @@ export default function SchoolPageClient({ school, relatedSchools }: SchoolPageC
               <div className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4">
                 {/* Logo */}
                 {school.logoUrl && (
-                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg overflow-hidden bg-white shadow-lg border-2 border-white flex-shrink-0 self-start">
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden bg-white shadow-lg ring-4 ring-white/15 flex-shrink-0 self-start">
                     <Image
                       src={school.logoUrl}
                       alt={`Logo de ${school.name}`}
@@ -124,7 +124,7 @@ export default function SchoolPageClient({ school, relatedSchools }: SchoolPageC
                 
                 {/* Title - full width on mobile */}
                 <div className="flex-1 min-w-0">
-                  <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight break-words">
+                  <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold leading-tight break-words">
                     {school.name}
                   </h1>
                 </div>
@@ -138,7 +138,7 @@ export default function SchoolPageClient({ school, relatedSchools }: SchoolPageC
                 <span className="text-sm sm:text-base truncate">{school.city}, {school.province}</span>
               </div>
               <div className="flex items-center space-x-2">
-                <Star className="h-4 w-4 sm:h-5 sm:w-5 fill-yellow-400 text-yellow-400 flex-shrink-0" />
+                <Star className="h-4 w-4 sm:h-5 sm:w-5 fill-signal text-signal flex-shrink-0" />
                 <span className="text-sm sm:text-base">{formatRating(school.rating)} ({formatReviews(school.reviewsCount)} reseñas)</span>
               </div>
               {school.priceMin && school.priceMax && (
@@ -199,7 +199,7 @@ export default function SchoolPageClient({ school, relatedSchools }: SchoolPageC
                 <CardContent>
                   <div className="space-y-4">
                     {school.courses.map((course) => (
-                      <div key={course.id} className="border rounded-lg p-4">
+                      <div key={course.id} className="rounded-lg border border-l-4 border-l-primary bg-muted/30 p-4">
                         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3">
                           <h3 className="font-semibold text-lg">{course.name}</h3>
                           {course.price && (
@@ -256,8 +256,8 @@ export default function SchoolPageClient({ school, relatedSchools }: SchoolPageC
                                   key={i}
                                   className={`h-4 w-4 ${
                                     i < review.rating
-                                      ? 'fill-yellow-400 text-yellow-400'
-                                      : 'text-gray-300'
+                                      ? 'fill-signal text-signal'
+                                      : 'text-border'
                                   }`}
                                 />
                               ))}
@@ -396,9 +396,9 @@ export default function SchoolPageClient({ school, relatedSchools }: SchoolPageC
               </CardHeader>
               <CardContent>
                 <div className="text-center">
-                  <div className="flex items-center justify-center space-x-2 mb-2">
-                    <Star className="h-6 w-6 fill-yellow-400 text-yellow-400" />
-                    <span className="text-2xl font-bold">{formatRating(school.rating)}</span>
+                  <div className="mx-auto mb-3 inline-flex items-center justify-center space-x-2 rounded-xl border-4 border-navy bg-signal px-5 py-2.5 shadow-card">
+                    <Star className="h-6 w-6 fill-navy text-navy" />
+                    <span className="font-display text-3xl font-extrabold text-signal-foreground">{formatRating(school.rating)}</span>
                   </div>
                   <p className="text-sm text-muted-foreground">
                     Basado en {formatReviews(school.reviewsCount)} reseñas

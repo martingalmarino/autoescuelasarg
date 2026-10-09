@@ -67,10 +67,10 @@ export default async function HomePage() {
       <TopRatedGrid schools={featuredSchools} />
 
       {/* Provinces Index with new title */}
-      <section className="py-8 sm:py-12">
+      <section className="py-10 sm:py-16">
         <div className="container px-4 sm:px-6">
           <div className="text-center mb-8 sm:mb-12">
-            <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-foreground">
+            <h3 className="section-title mx-auto max-w-3xl text-2xl sm:text-3xl lg:text-4xl">
               Descubrí tu próxima escuela de conducción cercana a tu ubicación
             </h3>
           </div>

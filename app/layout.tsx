@@ -1,10 +1,16 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Inter, Plus_Jakarta_Sans } from 'next/font/google'
 import './globals.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 
-const inter = Inter({ subsets: ['latin'], display: 'swap' })
+const inter = Inter({ subsets: ['latin'], display: 'swap', variable: '--font-inter' })
+const display = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  weight: ['600', '700', '800'],
+  display: 'swap',
+  variable: '--font-display',
+})
 
 export const metadata: Metadata = {
   title: {
@@ -70,7 +76,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="es-AR">
+    <html lang="es-AR" className={`${inter.variable} ${display.variable}`}>
       <head>
         <script
           async
@@ -78,7 +84,7 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
       </head>
-      <body className={inter.className}>
+      <body className="font-sans antialiased">
         <Header />
         <main className="min-h-screen">
           {children}

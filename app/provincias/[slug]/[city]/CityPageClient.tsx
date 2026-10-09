@@ -32,10 +32,10 @@ export default function CityPageClient({ city, schools }: CityPageClientProps) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-blue-600 to-blue-800 text-white py-8 sm:py-12 md:py-16">
-        <div className="container mx-auto px-4 sm:px-6">
+      <section className="page-hero text-white py-10 sm:py-14 md:py-16">
+        <div className="relative container mx-auto px-4 sm:px-6">
           <div className="max-w-4xl w-full">
             <Link 
               href={`/provincias/${city.province.slug}`}
@@ -45,7 +45,7 @@ export default function CityPageClient({ city, schools }: CityPageClientProps) {
               Volver a {city.province.name}
             </Link>
             
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 leading-tight">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold mb-3 sm:mb-4 leading-tight">
               Autoescuelas en {city.name}
             </h1>
             <p className="text-sm sm:text-base md:text-lg lg:text-xl text-white/90 mb-4 sm:mb-6 leading-relaxed">
@@ -53,11 +53,11 @@ export default function CityPageClient({ city, schools }: CityPageClientProps) {
             </p>
             <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-6 space-y-2 sm:space-y-0 text-white/80">
               <div className="flex items-center space-x-2 text-sm sm:text-base">
-                <MapPin className="h-4 w-4 sm:h-5 sm:w-5" />
+                <MapPin className="h-4 w-4 sm:h-5 sm:w-5 text-signal" />
                 <span>{city.schoolsCount} autoescuelas</span>
               </div>
               <div className="flex items-center space-x-2 text-sm sm:text-base">
-                <Users className="h-4 w-4 sm:h-5 sm:w-5" />
+                <Users className="h-4 w-4 sm:h-5 sm:w-5 text-signal" />
                 <span>{city.province.name}</span>
               </div>
             </div>
@@ -69,7 +69,7 @@ export default function CityPageClient({ city, schools }: CityPageClientProps) {
       <section className="py-12 sm:py-16">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4 sm:mb-0">
+            <h2 className="section-title text-2xl sm:text-3xl mb-4 sm:mb-0">
               Autoescuelas en {city.name}
             </h2>
             <Link href="/autoescuelas">
@@ -88,30 +88,30 @@ export default function CityPageClient({ city, schools }: CityPageClientProps) {
                   onClick={() => handleSchoolClick(school.id, school.name)}
                   className="group"
                 >
-                  <Card className="h-full transition-all duration-200 hover:shadow-lg hover:-translate-y-1">
-                    <div className="relative h-48 overflow-hidden rounded-t-lg">
+                  <Card className="surface-card-hover h-full overflow-hidden">
+                    <div className="relative h-48 overflow-hidden">
                       {school.imageUrl ? (
                         <Image
                           src={school.imageUrl}
                           alt={school.name}
                           fill
-                          className="object-cover group-hover:scale-105 transition-transform duration-200"
+                          className="object-cover group-hover:scale-105 transition-transform duration-300"
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         />
                       ) : (
-                        <div className="w-full h-full bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center">
-                          <div className="text-center text-blue-600">
-                            <div className="w-16 h-16 mx-auto mb-2 bg-blue-200 rounded-full flex items-center justify-center">
+                        <div className="w-full h-full bg-accent flex items-center justify-center">
+                          <div className="text-center text-primary">
+                            <div className="w-16 h-16 mx-auto mb-2 bg-card shadow-card rounded-full flex items-center justify-center">
                               <span className="text-2xl">🚗</span>
                             </div>
-                            <p className="text-sm font-medium">{school.name}</p>
+                            <p className="text-sm font-semibold">{school.name}</p>
                           </div>
                         </div>
                       )}
                       
                       {/* Logo overlay */}
                       {school.logoUrl && (
-                        <div className="absolute top-2 left-2 w-12 h-12 rounded-lg overflow-hidden bg-white shadow-md border-2 border-white">
+                        <div className="absolute top-2.5 left-2.5 w-12 h-12 rounded-lg overflow-hidden bg-white shadow-card ring-1 ring-black/5">
                           <Image
                             src={school.logoUrl}
                             alt={`Logo de ${school.name}`}
@@ -123,37 +123,37 @@ export default function CityPageClient({ city, schools }: CityPageClientProps) {
                       )}
                       
                       {school.isFeatured && (
-                        <div className="absolute top-2 right-2 bg-yellow-500 text-white px-2 py-1 rounded-full text-xs font-medium">
+                        <div className="absolute top-2.5 right-2.5 bg-signal text-signal-foreground px-2 py-1 rounded-full text-xs font-bold shadow-sm">
                           Destacada
                         </div>
                       )}
                     </div>
                     
                     <CardContent className="p-4 sm:p-6">
-                      <h3 className="font-semibold text-lg mb-2 group-hover:text-primary transition-colors">
+                      <h3 className="font-bold text-lg leading-snug mb-2 group-hover:text-primary transition-colors">
                         {school.name}
                       </h3>
                       
                       <div className="flex items-center space-x-1 mb-2">
-                        <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                        <span className="text-sm font-medium">{formatRating(school.rating)}</span>
-                        <span className="text-sm text-gray-500">({formatReviews(school.reviewsCount)})</span>
+                        <Star className="h-4 w-4 fill-signal text-signal" />
+                        <span className="text-sm font-bold">{formatRating(school.rating)}</span>
+                        <span className="text-sm text-muted-foreground">({formatReviews(school.reviewsCount)})</span>
                       </div>
                       
-                      <div className="flex items-center text-sm text-gray-600 mb-2">
-                        <MapPin className="h-4 w-4 mr-1" />
+                      <div className="flex items-center text-sm text-muted-foreground mb-2">
+                        <MapPin className="h-4 w-4 mr-1 text-primary" />
                         <span>{school.city}, {school.province}</span>
                       </div>
                       
                       {school.description && (
-                        <p className="text-sm text-gray-600 mb-3 line-clamp-2">
+                        <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
                           {school.description}
                         </p>
                       )}
                       
                       {school.priceMin && school.priceMax && (
                         <div className="flex items-center justify-between">
-                          <span className="text-sm font-medium text-green-600">
+                          <span className="rounded-md bg-accent px-2 py-0.5 text-sm font-semibold text-primary">
                             {formatPrice(school.priceMin)} - {formatPrice(school.priceMax)}
                           </span>
                           {school.isVerified && (
@@ -170,13 +170,13 @@ export default function CityPageClient({ city, schools }: CityPageClientProps) {
             </div>
           ) : (
             <div className="text-center py-12">
-              <div className="w-24 h-24 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
+              <div className="w-24 h-24 mx-auto mb-4 bg-muted rounded-full flex items-center justify-center">
                 <span className="text-4xl">🚗</span>
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">
+              <h3 className="text-xl font-bold text-foreground mb-2">
                 No hay autoescuelas disponibles
               </h3>
-              <p className="text-gray-600 mb-6">
+              <p className="text-muted-foreground mb-6">
                 No se encontraron autoescuelas en {city.name} en este momento.
               </p>
               <Link href="/autoescuelas">

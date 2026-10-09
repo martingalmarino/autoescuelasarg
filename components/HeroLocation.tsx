@@ -113,15 +113,16 @@ export default function HeroLocation() {
       />
       
       {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-black/30 sm:bg-black/40" />
+      <div className="absolute inset-0 bg-gradient-to-b from-navy/70 via-navy/45 to-navy/80" />
+      <div className="lane-divider absolute inset-x-0 bottom-0" />
       
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 text-center py-6 sm:py-8 md:py-0">
         <div className="max-w-4xl mx-auto">
           {/* Main Heading */}
-          <h1 className="mb-3 sm:mb-4 md:mb-6 lg:mb-8 text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tight text-white leading-tight">
+          <h1 className="mb-3 sm:mb-4 md:mb-6 lg:mb-8 text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-extrabold tracking-tight text-white leading-tight drop-shadow-sm">
             Encontrá tu autoescuela{' '}
-            <span className="text-yellow-400">estés donde estés</span>
+            <span className="text-signal">estés donde estés</span>
             <span className="text-white/80">…</span>
           </h1>
 
@@ -131,7 +132,7 @@ export default function HeroLocation() {
               <button
                 ref={buttonRef}
                 onClick={handleDropdownToggle}
-                className="flex items-center justify-center space-x-2 bg-white/10 backdrop-blur-sm rounded-lg px-3 sm:px-4 md:px-6 py-2 sm:py-3 border border-white/20 hover:bg-white/20 transition-colors min-w-[140px] sm:min-w-[180px] md:min-w-[200px] lg:min-w-[250px]"
+                className="flex items-center justify-center space-x-2 bg-white/10 backdrop-blur-md rounded-xl px-3 sm:px-4 md:px-6 py-2 sm:py-3 border border-white/25 hover:bg-white/20 hover:border-signal/70 transition-colors min-w-[140px] sm:min-w-[180px] md:min-w-[200px] lg:min-w-[250px]"
               >
                 <span className="text-white font-medium text-xs sm:text-sm md:text-base">{selectedProvince}</span>
                 <ChevronDown className={`h-3 w-3 sm:h-4 sm:w-4 text-white transition-transform flex-shrink-0 ${isDropdownOpen ? 'rotate-180' : ''}`} />
@@ -141,7 +142,7 @@ export default function HeroLocation() {
               {isDropdownOpen && (
                 <div 
                   ref={dropdownRef}
-                  className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 bg-white rounded-lg shadow-2xl border border-gray-200 w-[350px] sm:w-[400px] max-w-[85vw] max-h-[350px] z-50"
+                  className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 bg-card rounded-xl shadow-card-hover border border-border w-[350px] sm:w-[400px] max-w-[85vw] max-h-[350px] z-50"
                   style={{
                     // Asegurar que no se corte en pantallas pequeñas
                     maxHeight: 'calc(100vh - 200px)',
@@ -157,10 +158,10 @@ export default function HeroLocation() {
                             <button
                               key={province}
                               onClick={() => handleProvinceSelect(province)}
-                              className={`text-left px-2 py-2 text-xs transition-colors hover:bg-gray-50 rounded ${
+                              className={`text-left px-2 py-2 text-xs transition-colors hover:bg-accent rounded-md ${
                                 selectedProvince === province
-                                  ? 'text-black font-medium underline bg-blue-50'
-                                  : 'text-gray-600 hover:text-gray-900'
+                                  ? 'text-primary font-semibold bg-accent'
+                                  : 'text-muted-foreground hover:text-foreground'
                               }`}
                               title={`${index + 1}. ${province}`}
                             >
@@ -170,7 +171,7 @@ export default function HeroLocation() {
                         </div>
                       </div>
                     ) : (
-                      <div className="p-6 text-center text-gray-500">
+                      <div className="p-6 text-center text-muted-foreground">
                         <p className="text-sm">No hay provincias disponibles</p>
                       </div>
                     )}
@@ -184,8 +185,9 @@ export default function HeroLocation() {
           <div className="space-y-2 sm:space-y-3 md:space-y-4">
             <Button
               size="lg"
+              variant="signal"
               onClick={handleViewAll}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg font-semibold rounded-lg shadow-lg transition-all duration-200 hover:shadow-xl w-full sm:w-auto"
+              className="px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg font-bold tracking-wide rounded-xl shadow-lg hover:shadow-xl w-full sm:w-auto"
             >
               <MapPin className="mr-1 sm:mr-2 h-3 w-3 sm:h-4 sm:w-4 md:h-5 md:w-5" />
               VER TODAS
