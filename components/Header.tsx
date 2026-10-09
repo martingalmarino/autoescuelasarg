@@ -3,7 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Car, Search } from "lucide-react";
+import { Search } from "lucide-react";
+import Logo from "@/components/Logo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
@@ -33,14 +34,8 @@ export default function Header() {
     <header className="sticky top-0 z-50 w-full border-b border-border/70 bg-card/90 backdrop-blur-md supports-[backdrop-filter]:bg-card/75">
       <div className="container flex h-14 sm:h-16 items-center justify-between px-4 sm:px-6">
         {/* Logo */}
-        <Link href="/" className="group flex items-center space-x-2.5">
-          <div className="relative flex h-7 w-7 sm:h-9 sm:w-9 items-center justify-center rounded-lg bg-navy shadow-sm">
-            <Car className="h-4 w-4 sm:h-5 sm:w-5 text-signal" />
-            <span className="absolute -bottom-0.5 left-1.5 right-1.5 h-0.5 rounded-full bg-signal" />
-          </div>
-          <span className="font-display text-lg sm:text-xl font-extrabold tracking-tight text-navy">
-            Autoescuelas<span className="text-primary">.ar</span>
-          </span>
+        <Link href="/" className="flex items-center">
+          <Logo />
         </Link>
 
         {/* Navigation */}
