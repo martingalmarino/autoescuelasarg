@@ -23,6 +23,7 @@
     "check:duplicates": "tsx scripts/check-duplicate-schools.ts",
     "diagnose:schools": "tsx scripts/diagnose-deleted-schools.ts",
     "normalize:slugs": "tsx scripts/normalize-slugs.ts",
+    "check:tests": "tsx scripts/check-driving-tests.ts",
     "update:counts": "tsx scripts/update-school-counts.ts"
   },
   "dependencies": {

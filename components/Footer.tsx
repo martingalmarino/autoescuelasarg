@@ -49,6 +49,14 @@ export default function Footer() {
               </li>
               <li>
                 <Link 
+                  href="/test-de-conducir" 
+                  className="text-navy-foreground/70 hover:text-signal transition-colors"
+                >
+                  Test de conducir
+                </Link>
+              </li>
+              <li>
+                <Link 
                   href="/contacto" 
                   className="text-navy-foreground/70 hover:text-signal transition-colors"
                 >
