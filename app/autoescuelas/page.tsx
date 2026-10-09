@@ -5,21 +5,8 @@ import {
   getCityNamesWithSchools,
   getSchoolsPage,
 } from '@/lib/database'
+import { buildMetadata } from '@/lib/seo'
 import SchoolsPageClient from './SchoolsPageClient'
-
-export const metadata: Metadata = {
-  title: 'Las mejores Autoescuelas de Argentina',
-  description: 'Encuentra todas las autoescuelas de Argentina. Filtra por provincia, ciudad y calificación. Compara precios y lee reseñas de estudiantes.',
-  keywords: 'autoescuelas, Argentina, escuela de manejo, licencia de conducir, clases de manejo, todas las autoescuelas',
-  alternates: {
-    canonical: '/autoescuelas',
-  },
-  openGraph: {
-    title: 'Las mejores Autoescuelas de Argentina',
-    description: 'Encuentra todas las autoescuelas de Argentina. Filtra por provincia, ciudad y calificación.',
-    url: 'https://www.autoescuelas.ar/autoescuelas',
-  },
-}
 
 interface SchoolsPageProps {
   searchParams: {
@@ -33,6 +20,37 @@ interface SchoolsPageProps {
 
 function activeFilter(value?: string) {
   return value && value !== 'all' ? value : undefined
+}
+
+export async function generateMetadata({ searchParams }: SchoolsPageProps): Promise<Metadata> {
+  const page = Math.max(1, parseInt(searchParams.page || '1') || 1)
+  const isFiltered = Boolean(
+    activeFilter(searchParams.province) ||
+      activeFilter(searchParams.city) ||
+      searchParams.sort ||
+      searchParams.search?.trim()
+  )
+  const totalSchools = await getActiveSchoolsCount().catch(() => 0)
+  const countText = totalSchools > 0 ? `${totalSchools} autoescuelas` : 'Autoescuelas'
+  const description = `${countText} y escuelas de manejo de Argentina. Filtrá por provincia y ciudad, compará precios y opiniones y elegí dónde aprender a manejar.`
+
+  if (!isFiltered && page > 1) {
+    return buildMetadata({
+      titleVariants: [
+        `Todas las autoescuelas de Argentina – Página ${page}`,
+        `Autoescuelas de Argentina – Página ${page}`,
+      ],
+      description: `Página ${page}: ${description}`,
+      path: `/autoescuelas?page=${page}`,
+    })
+  }
+
+  return buildMetadata({
+    titleVariants: ['Todas las autoescuelas de Argentina'],
+    description,
+    path: '/autoescuelas',
+    noindex: isFiltered,
+  })
 }
 
 export default async function SchoolsPage({ searchParams }: SchoolsPageProps) {

@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getCityBySlugFromDB, getSchoolsByCitySlug } from '@/lib/database'
+import { buildMetadata, notFoundMetadata, seoPlaceName } from '@/lib/seo'
 import CityPageClient from './CityPageClient'
 
 // ISR: 24 h. Las ciudades se generan en la primera visita y quedan cacheadas.
@@ -21,24 +22,34 @@ export async function generateMetadata({ params }: CityPageProps): Promise<Metad
   const city = await getCityBySlugFromDB(params.slug, params.city)
   
   if (!city) {
-    return {
-      title: 'Ciudad no encontrada',
-    }
+    return notFoundMetadata
   }
 
-  return {
-    title: `Aprende a Manejar en ${city.name}, ${city.province.name} | Autoescuelas.ar`,
-    description: `Aprendé a manejar en ${city.name} con autoescuelas que ofrecen instructores capacitados, autos doble comando y clases prácticas adaptadas a tu ritmo. ${city.schoolsCount} escuelas de manejo disponibles.`,
-    keywords: `autoescuelas, ${city.name}, ${city.province.name}, escuela de manejo, licencia de conducir, clases de manejo, instructores capacitados, autos doble comando`,
-    alternates: {
-      canonical: `/provincias/${city.province.slug}/${city.slug}`,
-    },
-    openGraph: {
-      title: `Aprende a Manejar en ${city.name}, ${city.province.name} | Autoescuelas.ar`,
-      description: `Aprendé a manejar en ${city.name} con autoescuelas que ofrecen instructores capacitados, autos doble comando y clases prácticas adaptadas a tu ritmo.`,
-      url: `https://www.autoescuelas.ar/provincias/${city.province.slug}/${city.slug}`,
-    },
-  }
+  const cityName = seoPlaceName(city.name, city.slug)
+  const provinceName = seoPlaceName(city.province.name, city.province.slug)
+  const sameName = cityName.toLocaleLowerCase('es-AR') === provinceName.toLocaleLowerCase('es-AR')
+  const place = sameName ? cityName : `${cityName}, ${provinceName}`
+  const count = city.schoolsCount
+
+  const countText = count === 1 ? '1 autoescuela' : `${count} autoescuelas`
+  const description =
+    count === 0
+      ? `Autoescuelas y escuelas de manejo en ${cityName}: muy pronto vas a poder comparar precios, opiniones y cursos de manejo para sacar tu registro.`
+      : [
+          `${countText} en ${cityName}: compará precios, opiniones y cursos de manejo con autos doble comando. Elegí tu escuela de manejo y sacá el registro.`,
+          `${countText} en ${cityName}: compará precios, opiniones y cursos de manejo. Elegí tu escuela de manejo y sacá el registro.`,
+        ]
+
+  return buildMetadata({
+    titleVariants: [
+      `Autoescuelas en ${place}: precios y opiniones`,
+      `Autoescuelas en ${place}`,
+      `Autoescuelas en ${cityName}`,
+    ],
+    description,
+    path: `/provincias/${city.province.slug}/${city.slug}`,
+    noindex: count === 0,
+  })
 }
 
 export default async function CityPage({ params }: CityPageProps) {

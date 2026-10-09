@@ -7,9 +7,11 @@ import Footer from '@/components/Footer'
 const inter = Inter({ subsets: ['latin'], display: 'swap' })
 
 export const metadata: Metadata = {
-  title: 'Autoescuelas.ar - Encontrá tu escuela de manejo en Argentina',
-  description: 'El directorio más completo de escuelas de manejo en Argentina. Encontrá la autoescuela perfecta para obtener tu licencia de conducir. Buscá por provincia, ciudad y calificaciones.',
-  keywords: 'autoescuelas, escuela de manejo, licencia de conducir, Argentina, aprender a manejar, clases de manejo',
+  title: {
+    default: 'Autoescuelas en Argentina: escuelas de manejo cerca tuyo',
+    template: '%s | Autoescuelas.ar',
+  },
+  description: 'Compará autoescuelas y escuelas de manejo de todo el país: precios, reseñas y clases para sacar tu registro de conducir. Buscá por provincia o ciudad.',
   authors: [{ name: 'Autoescuelas.ar' }],
   creator: 'Autoescuelas.ar',
   publisher: 'Autoescuelas.ar',
@@ -19,9 +21,6 @@ export const metadata: Metadata = {
     telephone: false,
   },
   metadataBase: new URL('https://www.autoescuelas.ar'),
-  alternates: {
-    canonical: '/',
-  },
   icons: {
     icon: [
       { url: '/favicon.svg', type: 'image/svg+xml' },
@@ -33,9 +32,6 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: 'Autoescuelas.ar - Encontrá tu escuela de manejo en Argentina',
-    description: 'El directorio más completo de escuelas de manejo en Argentina. Encontrá la autoescuela perfecta para obtener tu licencia de conducir.',
-    url: 'https://www.autoescuelas.ar',
     siteName: 'Autoescuelas.ar',
     locale: 'es_AR',
     type: 'website',
@@ -50,8 +46,6 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Autoescuelas.ar - Encontrá tu escuela de manejo en Argentina',
-    description: 'El directorio más completo de escuelas de manejo en Argentina. Encontrá la autoescuela perfecta para obtener tu licencia de conducir.',
     images: ['/og-image.jpg'],
   },
   robots: {

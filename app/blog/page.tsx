@@ -1,33 +1,16 @@
-import { Metadata } from "next";
 import { prisma } from "@/lib/database";
+import { buildMetadata } from "@/lib/seo";
 import BlogArticleList from "./BlogArticleList";
 
 // ISR: 24 h. El admin invalida la caché al publicar o editar artículos.
 export const revalidate = 86400;
 
-export const metadata: Metadata = {
-  title: "Blog - Autoescuelas.ar | Consejos y guías para obtener tu licencia",
+export const metadata = buildMetadata({
+  titleVariants: ["Blog: consejos para aprender a manejar"],
   description:
-    "Descubrí consejos, guías y noticias sobre autoescuelas, licencias de conducir y todo lo que necesitás saber para aprender a manejar en Argentina.",
-  keywords:
-    "blog autoescuelas, consejos manejo, guía licencia conducir, tips autoescuela, Argentina",
-  openGraph: {
-    title: "Blog - Autoescuelas.ar | Consejos y guías para obtener tu licencia",
-    description:
-      "Descubrí consejos, guías y noticias sobre autoescuelas, licencias de conducir y todo lo que necesitás saber para aprender a manejar en Argentina.",
-    url: "https://www.autoescuelas.ar/blog",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Blog - Autoescuelas.ar | Consejos y guías para obtener tu licencia",
-    description:
-      "Descubrí consejos, guías y noticias sobre autoescuelas, licencias de conducir y todo lo que necesitás saber para aprender a manejar en Argentina.",
-  },
-  alternates: {
-    canonical: "/blog",
-  },
-};
+    "Guías y consejos para aprender a manejar, perderle el miedo al tránsito, elegir autoescuela y aprobar el examen para sacar tu registro de conducir.",
+  path: "/blog",
+});
 
 export default async function BlogPage() {
   const articles = await prisma.blogArticle.findMany({

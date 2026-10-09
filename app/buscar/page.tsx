@@ -1,7 +1,16 @@
 import { prisma } from '@/lib/db'
 import AdvancedSearch from '@/components/AdvancedSearch'
+import { buildMetadata } from '@/lib/seo'
 
 export const dynamic = 'force-dynamic'
+
+export const metadata = buildMetadata({
+  titleVariants: ['Búsqueda avanzada de autoescuelas'],
+  description:
+    'Buscá autoescuelas y escuelas de manejo en Argentina por provincia, ciudad, precio y calificación, y encontrá la que mejor se adapta a vos.',
+  path: '/buscar',
+  noindex: true,
+})
 
 export default async function SearchPage() {
   // Datos mock para que funcione sin base de datos
