@@ -74,7 +74,20 @@ export default function Header() {
         </nav>
 
         {/* Search */}
-        <div className="flex items-center">
+        <div className="flex items-center gap-1.5 sm:gap-2 lg:gap-3">
+          <Link
+            href="/para-autoescuelas"
+            className={cn(
+              "inline-flex max-[359px]:hidden md:hidden xl:inline-flex items-center whitespace-nowrap rounded-full border px-2.5 sm:px-3 py-1.5 text-[11px] sm:text-xs xl:text-sm font-semibold transition-colors",
+              pathname.startsWith("/para-autoescuelas")
+                ? "border-signal bg-signal text-signal-foreground"
+                : "border-signal/70 text-foreground hover:bg-signal hover:text-signal-foreground"
+            )}
+          >
+            <span className="sm:hidden">Soy autoescuela</span>
+            <span className="hidden sm:inline 2xl:hidden">Para autoescuelas</span>
+            <span className="hidden 2xl:inline">¿Tenés una autoescuela?</span>
+          </Link>
           {/* Mobile: Icon only, Desktop: Full search */}
           <div className="hidden lg:block">
             <form

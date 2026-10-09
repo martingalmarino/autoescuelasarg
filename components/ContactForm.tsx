@@ -11,19 +11,24 @@ import { Send, CheckCircle, AlertCircle } from 'lucide-react'
 interface ContactFormProps {
   schoolName: string
   schoolId: string
+  demo?: boolean
 }
 
-export default function ContactForm({ schoolName, schoolId }: ContactFormProps) {
+export default function ContactForm({ schoolName, schoolId, demo = false }: ContactFormProps) {
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
     message: `Hola ${schoolName}! Quisiera saber más sobre los cursos de manejo disponibles!`
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error' | 'demo'>('idle')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (demo) {
+      setSubmitStatus('demo')
+      return
+    }
     setIsSubmitting(true)
     setSubmitStatus('idle')
 
@@ -123,6 +128,15 @@ export default function ContactForm({ schoolName, schoolId }: ContactFormProps) 
               <CheckCircle className="h-4 w-4 text-green-600" />
               <p className="text-sm text-green-700">
                 ¡Mensaje enviado correctamente! Te contactaremos pronto.
+              </p>
+            </div>
+          )}
+
+          {submitStatus === 'demo' && (
+            <div className="flex items-start gap-2 p-3 bg-accent border border-primary/20 rounded-md">
+              <CheckCircle className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+              <p className="text-sm text-foreground">
+                Ejemplo: en tu ficha, esta consulta te llega con el nombre y el teléfono del interesado para que lo contactes.
               </p>
             </div>
           )}
