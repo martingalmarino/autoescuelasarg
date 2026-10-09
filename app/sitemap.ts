@@ -40,6 +40,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'monthly',
       priority: 0.4,
     },
+    ...['/terminos', '/privacidad', '/cookies'].map(path => ({
+      url: `${baseUrl}${path}`,
+      lastModified: new Date('2026-10-09'),
+      changeFrequency: 'yearly' as const,
+      priority: 0.2,
+    })),
   ]
 
   try {
