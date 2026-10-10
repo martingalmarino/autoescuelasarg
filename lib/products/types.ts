@@ -25,4 +25,6 @@ export interface Product {
   badge?: ProductBadge
   /** Por qué lo recomendamos, en una o dos oraciones. */
   note?: string
+  /** false cuando la publicación no muestra precio (pausada o sin stock): el producto se oculta. */
+  available?: boolean
 }

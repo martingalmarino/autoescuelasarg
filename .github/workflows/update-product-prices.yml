@@ -1,0 +1,41 @@
+name: Actualizar precios de productos
+
+on:
+  schedule:
+    # Lunes 9:00 en Argentina (12:00 UTC).
+    - cron: '0 12 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: update-product-prices
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Revisar precios en Mercado Libre
+        run: node scripts/update-product-prices.mjs
+        env:
+          REPORT_PATH: ${{ runner.temp }}/report.md
+
+      - name: Abrir PR con los cambios
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: bot/actualizar-precios
+          delete-branch: true
+          add-paths: lib/products/data/products.json
+          commit-message: Actualizar precios de productos recomendados
+          title: Actualizar precios de productos recomendados
+          body-path: ${{ runner.temp }}/report.md
