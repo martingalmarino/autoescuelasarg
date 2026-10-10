@@ -13,7 +13,6 @@ const navLinks = [
   { href: "/autoescuelas", label: "Todas las autoescuelas", shortLabel: "Autoescuelas" },
   { href: "/provincias", label: "Por provincia" },
   { href: "/test-de-conducir", label: "Test de conducir", badge: "Nuevo" },
-  { href: "/blog", label: "Blog" },
 ];
 
 export default function Header() {

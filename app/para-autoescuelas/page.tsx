@@ -25,7 +25,7 @@ const tiers = [
     features: [
       "Insignia de autoescuela verificada",
       "Corrección de teléfono, dirección, horarios y descripción",
-      "Te reenviamos las consultas que recibe tu ficha",
+      "Te reenviamos las consultas que recibe tu ficha durante un tiempo limitado",
     ],
     cta: { label: "Reclamar mi ficha", href: "#reclamar" },
   },
