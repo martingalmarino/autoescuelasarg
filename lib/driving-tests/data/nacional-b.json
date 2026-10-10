@@ -1,0 +1,2185 @@
+{
+  "schemaVersion": "1.0.0",
+  "bankId": "ar-nacional-categoria-b-original-2026-10",
+  "title": "Práctica de conducción — categoría B — normativa nacional argentina",
+  "language": "es-AR",
+  "reviewedAt": "2026-10-10",
+  "questionCount": 80,
+  "authorship": "Preguntas originales de práctica redactadas a partir de normativa pública. No extraídas de testdeconducir.com.ar.",
+  "scope": "Selección de 80 preguntas de práctica sobre normas nacionales relevantes para categoría B. No constituye un banco oficial ni agota todos los temas posibles del examen.",
+  "publicNotice": "Material de práctica basado en normativa nacional. No es un examen oficial. Verificá los requisitos y las normas aplicables en tu jurisdicción.",
+  "sources": [
+    {
+      "id": "ley-24449",
+      "title": "Ley 24.449 — texto actualizado",
+      "url": "https://www.argentina.gob.ar/normativa/nacional/norma-818/actualizacion"
+    },
+    {
+      "id": "decreto-779-anexo1",
+      "title": "Decreto 779/1995 — Anexo 1, texto actualizado",
+      "url": "https://www.argentina.gob.ar/normativa/recurso/30389/texactdto779-1995-anexo1/htm"
+    }
+  ],
+  "questions": [
+    {
+      "id": "AR-NAC-B-001",
+      "category": "B",
+      "topic": "Licencia y documentación",
+      "question": "¿Qué peso total máximo contempla la licencia B1 para los vehículos incluidos en esa subclase?",
+      "options": [
+        {
+          "id": "a",
+          "text": "7.500 kg."
+        },
+        {
+          "id": "b",
+          "text": "3.500 kg."
+        },
+        {
+          "id": "c",
+          "text": "4.500 kg."
+        }
+      ],
+      "correctOptionId": "b",
+      "explanation": "La subclase B1 comprende los vehículos enumerados por la reglamentación hasta 3.500 kg de peso total; no se refiere solamente al peso de la carga.",
+      "sourceId": "decreto-779-anexo1",
+      "legalReference": "Art. 16, clase B1.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-002",
+      "category": "B",
+      "topic": "Licencia y documentación",
+      "question": "¿Qué antigüedad previa en B1 exige la reglamentación para obtener B2?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Seis meses."
+        },
+        {
+          "id": "b",
+          "text": "Un año."
+        },
+        {
+          "id": "c",
+          "text": "No exige antigüedad."
+        }
+      ],
+      "correctOptionId": "b",
+      "explanation": "La B2 requiere un año previo en B1 y contempla los conjuntos definidos para esa subclase.",
+      "sourceId": "decreto-779-anexo1",
+      "legalReference": "Art. 16, clase B2.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-003",
+      "category": "B",
+      "topic": "Licencia y documentación",
+      "question": "Según la regla general de la ley nacional, ¿cuál es la edad mínima para conducir con clase B?",
+      "options": [
+        {
+          "id": "a",
+          "text": "17 años."
+        },
+        {
+          "id": "b",
+          "text": "16 años."
+        },
+        {
+          "id": "c",
+          "text": "21 años."
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": "La edad general para las clases distintas de C, D, E y ciclomotores es 17 años. Las excepciones jurisdiccionales tienen alcance local.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 11, inciso b.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-004",
+      "category": "B",
+      "topic": "Licencia y documentación",
+      "question": "¿Qué autorización necesita una persona menor de edad para solicitar la licencia conforme a la ley nacional?",
+      "options": [
+        {
+          "id": "a",
+          "text": "La de su representante legal."
+        },
+        {
+          "id": "b",
+          "text": "Ninguna si sabe conducir."
+        },
+        {
+          "id": "c",
+          "text": "La de cualquier conductor mayor de edad."
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": "La solicitud de licencia de una persona menor de edad requiere autorización de su representante legal.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 17.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-005",
+      "category": "B",
+      "topic": "Licencia y documentación",
+      "question": "¿Es suficiente tener cualquier licencia vigente para manejar cualquier vehículo?",
+      "options": [
+        {
+          "id": "a",
+          "text": "No: la habilitación debe corresponder al tipo de vehículo."
+        },
+        {
+          "id": "b",
+          "text": "Sí, siempre que no se transporte carga."
+        },
+        {
+          "id": "c",
+          "text": "Sí, si el vehículo es prestado."
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": "Además de llevar la licencia, el conductor debe estar habilitado específicamente para el vehículo que conduce.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 40, inciso a.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-006",
+      "category": "B",
+      "topic": "Licencia y documentación",
+      "question": "¿Cómo puede exhibirse el comprobante del seguro vigente según la ley nacional?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Sólo con el recibo del último pago de patente."
+        },
+        {
+          "id": "b",
+          "text": "En papel impreso o en formato digital mediante un dispositivo electrónico."
+        },
+        {
+          "id": "c",
+          "text": "Únicamente mediante una copia certificada en papel."
+        }
+      ],
+      "correctOptionId": "b",
+      "explanation": "La ley admite ambas formas para el comprobante de seguro. Esta pregunta se refiere al seguro, no a todos los documentos exigibles.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 40, inciso c.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-007",
+      "category": "B",
+      "topic": "Licencia y documentación",
+      "question": "¿Qué riesgo debe cubrir el seguro obligatorio de un automotor?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Sólo las fallas mecánicas del propio vehículo."
+        },
+        {
+          "id": "b",
+          "text": "Únicamente el robo del vehículo."
+        },
+        {
+          "id": "c",
+          "text": "Los daños que pueda causar a terceros, transportados o no."
+        }
+      ],
+      "correctOptionId": "c",
+      "explanation": "El seguro obligatorio debe cubrir eventuales daños a terceros conforme a las condiciones de la autoridad aseguradora.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 68.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-008",
+      "category": "B",
+      "topic": "Licencia y documentación",
+      "question": "¿Cómo deben estar las placas de dominio para circular?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Cubiertas por elementos que oculten algunos caracteres."
+        },
+        {
+          "id": "b",
+          "text": "Colocadas reglamentariamente, legibles y sin aditamentos."
+        },
+        {
+          "id": "c",
+          "text": "Guardadas en la guantera para evitar robos."
+        }
+      ],
+      "correctOptionId": "b",
+      "explanation": "La identificación debe poder leerse y respetar las características y ubicaciones reglamentarias.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 40, inciso d.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-009",
+      "category": "B",
+      "topic": "Seguridad de los ocupantes",
+      "question": "En un automóvil equipado reglamentariamente con cinturones, ¿quiénes deben utilizarlos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Todos los ocupantes."
+        },
+        {
+          "id": "b",
+          "text": "Sólo quienes viajan adelante."
+        },
+        {
+          "id": "c",
+          "text": "Sólo el conductor cuando circula en ruta."
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": "El uso de los correajes de seguridad alcanza a los ocupantes de los vehículos que deben poseerlos.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 40, inciso k.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-010",
+      "category": "B",
+      "topic": "Seguridad de los ocupantes",
+      "question": "¿Cómo debe viajar un niño de 7 años en un automóvil con asientos traseros, bajo la normativa nacional?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Atrás, con un sistema de retención infantil homologado adecuado a su peso y tamaño."
+        },
+        {
+          "id": "b",
+          "text": "Atrás, sin sujeción si el trayecto es corto."
+        },
+        {
+          "id": "c",
+          "text": "Adelante, si un adulto lo sostiene."
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": "Los menores de 10 años deben ir en el asiento trasero con el dispositivo infantil homologado correspondiente a su peso y tamaño.",
+      "sourceId": "decreto-779-anexo1",
+      "legalReference": "Arts. 40, inciso g, y 77, inciso u.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-011",
+      "category": "B",
+      "topic": "Equipamiento y condiciones",
+      "question": "¿Qué elementos de emergencia exige la ley para circular en un automóvil?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Únicamente una linterna."
+        },
+        {
+          "id": "b",
+          "text": "Matafuego y balizas portátiles normalizados."
+        },
+        {
+          "id": "c",
+          "text": "Un bidón de combustible y una soga."
+        }
+      ],
+      "correctOptionId": "b",
+      "explanation": "La ley exige matafuego y balizas portátiles normalizados; éstos no se reemplazan por accesorios improvisados.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 40, inciso f.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-012",
+      "category": "B",
+      "topic": "Equipamiento y condiciones",
+      "question": "Antes de ingresar a la vía pública, ¿qué debe verificar el conductor?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Únicamente que el motor arranque."
+        },
+        {
+          "id": "b",
+          "text": "Sólo que haya combustible suficiente."
+        },
+        {
+          "id": "c",
+          "text": "Que tanto él como el vehículo estén en condiciones adecuadas de seguridad."
+        }
+      ],
+      "correctOptionId": "c",
+      "explanation": "La verificación previa comprende las condiciones personales y las del vehículo, conforme a los requisitos legales.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 39, inciso a.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-013",
+      "category": "B",
+      "topic": "Prioridades de paso",
+      "question": "Un agente competente ordena detenerse aunque el semáforo esté verde. ¿Qué corresponde hacer?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Obedecer la indicación del agente."
+        },
+        {
+          "id": "b",
+          "text": "Elegir la indicación que permita circular más rápido."
+        },
+        {
+          "id": "c",
+          "text": "Seguir porque el verde siempre tiene prioridad."
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": "El orden de prioridad es: indicaciones de la autoridad, señales del tránsito y normas legales.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 36.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-014",
+      "category": "B",
+      "topic": "Prioridades de paso",
+      "question": "En un cruce sin señalización, entre dos calles pavimentadas y sin ninguna excepción aplicable, ¿a quién debés ceder el paso?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Al que cruza desde tu izquierda."
+        },
+        {
+          "id": "b",
+          "text": "Al vehículo de mayor tamaño."
+        },
+        {
+          "id": "c",
+          "text": "Al vehículo que cruza desde tu derecha."
+        }
+      ],
+      "correctOptionId": "c",
+      "explanation": "La prioridad general corresponde al que viene por la derecha, con las excepciones expresas del artículo 41.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 41.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-015",
+      "category": "B",
+      "topic": "Prioridades de paso",
+      "question": "Aunque otro vehículo venga desde tu izquierda, ¿debés cederle el paso si una señal te lo exige?",
+      "options": [
+        {
+          "id": "a",
+          "text": "No, la derecha prevalece sobre cualquier señal."
+        },
+        {
+          "id": "b",
+          "text": "Sí, la señalización específica modifica la prioridad general."
+        },
+        {
+          "id": "c",
+          "text": "Sólo si el otro vehículo es un camión."
+        }
+      ],
+      "correctOptionId": "b",
+      "explanation": "La señalización específica en contrario es una excepción expresa a la prioridad de la derecha.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 41, inciso a.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-016",
+      "category": "B",
+      "topic": "Prioridades de paso",
+      "question": "¿Quién tiene prioridad frente a un automóvil en un cruce ferroviario?",
+      "options": [
+        {
+          "id": "a",
+          "text": "El automóvil si viene por la derecha."
+        },
+        {
+          "id": "b",
+          "text": "El automóvil si llega primero."
+        },
+        {
+          "id": "c",
+          "text": "El vehículo ferroviario."
+        }
+      ],
+      "correctOptionId": "c",
+      "explanation": "Los vehículos ferroviarios son una excepción a la prioridad general de la derecha.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 41, inciso b.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-017",
+      "category": "B",
+      "topic": "Prioridades de paso",
+      "question": "¿Qué corresponde ante un vehículo del servicio público de urgencia que está cumpliendo su misión?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Cederle el paso."
+        },
+        {
+          "id": "b",
+          "text": "Acelerar para circular delante de él."
+        },
+        {
+          "id": "c",
+          "text": "Mantener la prioridad por venir desde su derecha."
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": "El servicio público de urgencia en cumplimiento de su misión tiene prioridad según la ley.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 41, inciso c.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-018",
+      "category": "B",
+      "topic": "Prioridades de paso",
+      "question": "Al desembocar desde un camino de tierra en una vía pavimentada, ¿qué prioridad se aplica?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Tiene prioridad quien sale del camino de tierra."
+        },
+        {
+          "id": "b",
+          "text": "Se debe ceder el paso a quienes circulan por la pavimentada."
+        },
+        {
+          "id": "c",
+          "text": "Siempre tiene prioridad quien viene por la derecha, sin excepciones."
+        }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Desembocar desde tierra a pavimento hace perder la prioridad general de la derecha.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 41, inciso g.1.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-019",
+      "category": "B",
+      "topic": "Prioridades de paso",
+      "question": "¿Qué debés hacer si un peatón cruza lícitamente por la senda y tu avance lo pone en peligro?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Detener el vehículo y respetar su prioridad."
+        },
+        {
+          "id": "b",
+          "text": "Seguir si llegaste antes a la esquina."
+        },
+        {
+          "id": "c",
+          "text": "Tocar bocina para que termine más rápido."
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": "La prioridad del peatón que cruza lícitamente exige detenerse cuando el avance del vehículo lo pone en peligro.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 41, inciso e.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-020",
+      "category": "B",
+      "topic": "Prioridades de paso",
+      "question": "Sin señalización en contrario, ¿quién tiene prioridad entre un vehículo que ya circula por una rotonda y otro que intenta ingresar?",
+      "options": [
+        {
+          "id": "a",
+          "text": "El de mayor porte."
+        },
+        {
+          "id": "b",
+          "text": "El que intenta ingresar."
+        },
+        {
+          "id": "c",
+          "text": "El que ya circula por la rotonda."
+        }
+      ],
+      "correctOptionId": "c",
+      "explanation": "La regla especial de rotondas da prioridad al que circula sobre el que ingresa; también exige ceder al que egresa.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 43, inciso e.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-021",
+      "category": "B",
+      "topic": "Semáforos",
+      "question": "¿Dónde debés detenerte ante una luz roja?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Sobre la senda, para ver mejor."
+        },
+        {
+          "id": "b",
+          "text": "Antes de la línea de detención o de la senda peatonal."
+        },
+        {
+          "id": "c",
+          "text": "Después del cruce, si no vienen vehículos."
+        }
+      ],
+      "correctOptionId": "b",
+      "explanation": "La detención debe realizarse antes de la línea correspondiente o de la senda peatonal.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 44, inciso a.2.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-022",
+      "category": "B",
+      "topic": "Semáforos",
+      "question": "Ante luz amarilla fija, si estimás que no llegarás a atravesar la encrucijada antes de la roja, ¿qué corresponde?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Detenerte."
+        },
+        {
+          "id": "b",
+          "text": "Acelerar para intentar pasar."
+        },
+        {
+          "id": "c",
+          "text": "Continuar porque la amarilla equivale a verde."
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": "La ley dispone detenerse cuando se estima que no se alcanzará a transponer el cruce antes de la roja.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 44, inciso a.3.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-023",
+      "category": "B",
+      "topic": "Semáforos",
+      "question": "¿Qué indica una luz amarilla intermitente en un cruce?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Que siempre se tiene prioridad absoluta."
+        },
+        {
+          "id": "b",
+          "text": "Que está prohibido circular hasta que aparezca verde."
+        },
+        {
+          "id": "c",
+          "text": "Que se debe cruzar con precaución por tratarse de un cruce riesgoso."
+        }
+      ],
+      "correctOptionId": "c",
+      "explanation": "La amarilla intermitente advierte un cruce riesgoso y exige precaución.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 44, inciso a.4.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-024",
+      "category": "B",
+      "topic": "Semáforos",
+      "question": "¿Qué exige una luz roja intermitente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Pasar antes de que termine la intermitencia."
+        },
+        {
+          "id": "b",
+          "text": "Reducir un poco la velocidad, sin detenerse."
+        },
+        {
+          "id": "c",
+          "text": "Detenerse y reiniciar la marcha sólo al comprobar que no hay riesgo."
+        }
+      ],
+      "correctOptionId": "c",
+      "explanation": "La roja intermitente obliga a detener la marcha y a verificar que el cruce sea seguro antes de continuar.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 44, inciso a.5.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-025",
+      "category": "B",
+      "topic": "Semáforos",
+      "question": "Tenés luz verde, pero no hay lugar para tu vehículo del otro lado del cruce. ¿Qué hacés?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Esperás sin ingresar a la encrucijada."
+        },
+        {
+          "id": "b",
+          "text": "Ocupás la senda peatonal hasta que haya lugar."
+        },
+        {
+          "id": "c",
+          "text": "Avanzás y esperás en medio del cruce."
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": "Ni siquiera con luz verde se puede iniciar un cruce si no hay espacio suficiente para despejarlo.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 44, inciso e.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-026",
+      "category": "B",
+      "topic": "Semáforos",
+      "question": "En una vía de doble mano regulada por semáforos, ¿cuándo se permite girar a la izquierda?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Siempre que se coloque el giro."
+        },
+        {
+          "id": "b",
+          "text": "Cuando una señal lo permite."
+        },
+        {
+          "id": "c",
+          "text": "Siempre que no se vea tránsito de frente."
+        }
+      ],
+      "correctOptionId": "b",
+      "explanation": "En vías semaforizadas de doble mano, el giro a la izquierda requiere señal que lo permita.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 44, inciso f.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-027",
+      "category": "B",
+      "topic": "Semáforos",
+      "question": "¿La prioridad común de la derecha decide el paso en un cruce regulado por semáforos en funcionamiento?",
+      "options": [
+        {
+          "id": "a",
+          "text": "No: rigen las indicaciones semafóricas y las reglas correspondientes."
+        },
+        {
+          "id": "b",
+          "text": "Sí: permite avanzar incluso con rojo."
+        },
+        {
+          "id": "c",
+          "text": "Sólo si el vehículo de la derecha toca bocina."
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": "En las vías semaforizadas no rigen las normas comunes sobre el paso de encrucijada.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 44, inciso c.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-028",
+      "category": "B",
+      "topic": "Semáforos",
+      "question": "Si tu semáforo cambia a verde y otra persona todavía está finalizando lícitamente el cruce, ¿qué corresponde?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Tocar bocina y pasar por delante."
+        },
+        {
+          "id": "b",
+          "text": "Permitirle terminar de cruzar."
+        },
+        {
+          "id": "c",
+          "text": "Avanzar de inmediato para obligarla a salir."
+        }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Se debe permitir finalizar el cruce que otro está realizando antes de iniciar el propio.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 44, inciso e.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-029",
+      "category": "B",
+      "topic": "Maniobras y adelantamiento",
+      "question": "Como regla general, ¿por qué lado se adelanta a otro vehículo?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Por cualquiera de los dos indistintamente."
+        },
+        {
+          "id": "b",
+          "text": "Por la izquierda."
+        },
+        {
+          "id": "c",
+          "text": "Por la derecha."
+        }
+      ],
+      "correctOptionId": "b",
+      "explanation": "El adelantamiento se realiza por la izquierda, salvo las excepciones previstas legalmente.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 42.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-030",
+      "category": "B",
+      "topic": "Maniobras y adelantamiento",
+      "question": "Antes de adelantarte, ¿qué debés comprobar respecto del tránsito que viene detrás?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Que ningún conductor que te sigue ya esté sobrepasándote."
+        },
+        {
+          "id": "b",
+          "text": "Que no sea un vehículo de mayor tamaño."
+        },
+        {
+          "id": "c",
+          "text": "Que el vehículo de atrás haya encendido las luces bajas."
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": "Además de tener vía libre suficiente, hay que verificar que nadie haya iniciado un sobrepaso desde atrás.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 42, inciso a.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-031",
+      "category": "B",
+      "topic": "Maniobras y adelantamiento",
+      "question": "¿Podés iniciar un adelantamiento al aproximarte a una curva con visibilidad insuficiente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "No."
+        },
+        {
+          "id": "b",
+          "text": "Sí, si encendés las balizas."
+        },
+        {
+          "id": "c",
+          "text": "Sí, si el vehículo de adelante circula lento."
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": "La maniobra requiere visibilidad suficiente y no debe iniciarse al aproximarse a curvas u otros lugares peligrosos.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 42, inciso b.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-032",
+      "category": "B",
+      "topic": "Maniobras y adelantamiento",
+      "question": "¿Qué señal corresponde al desplazarte hacia la izquierda para comenzar un sobrepaso?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Las balizas en reemplazo del giro."
+        },
+        {
+          "id": "b",
+          "text": "El indicador de giro derecho."
+        },
+        {
+          "id": "c",
+          "text": "El indicador de giro izquierdo."
+        }
+      ],
+      "correctOptionId": "c",
+      "explanation": "El giro izquierdo debe mantenerse durante el desplazamiento lateral de salida para adelantar.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 42, inciso c.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-033",
+      "category": "B",
+      "topic": "Maniobras y adelantamiento",
+      "question": "Después de sobrepasar, ¿cómo debés regresar a tu lugar a la derecha?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Cerrándote delante del otro vehículo para terminar rápido."
+        },
+        {
+          "id": "b",
+          "text": "Sin interferir al vehículo sobrepasado y señalizando con el giro derecho."
+        },
+        {
+          "id": "c",
+          "text": "Sin señalizar, porque la maniobra ya comenzó."
+        }
+      ],
+      "correctOptionId": "b",
+      "explanation": "El retorno debe realizarse sin interferir la marcha del vehículo adelantado y con el giro derecho activado.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 42, inciso d.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-034",
+      "category": "B",
+      "topic": "Maniobras y adelantamiento",
+      "question": "Si otro vehículo te está sobrepasando, ¿qué conducta corresponde?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Desplazarse a la izquierda para cerrar el espacio."
+        },
+        {
+          "id": "b",
+          "text": "Facilitar la maniobra, mantenerse a la derecha y conservar o reducir la velocidad."
+        },
+        {
+          "id": "c",
+          "text": "Acelerar para que el otro no pueda pasar."
+        }
+      ],
+      "correctOptionId": "b",
+      "explanation": "El conductor sobrepasado debe facilitar el adelantamiento y no aumentar la dificultad de la maniobra.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 42, inciso e.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-035",
+      "category": "B",
+      "topic": "Maniobras y adelantamiento",
+      "question": "¿Cuál de estas situaciones permite excepcionalmente adelantar por la derecha, si puede hacerse con seguridad?",
+      "options": [
+        {
+          "id": "a",
+          "text": "El vehículo precedente indicó que girará o se detendrá a su izquierda."
+        },
+        {
+          "id": "b",
+          "text": "Se quiere evitar una fila usando la banquina."
+        },
+        {
+          "id": "c",
+          "text": "El conductor de adelante circula al límite de velocidad."
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": "La intención indicada de girar o detenerse a la izquierda es una de las excepciones legales al sobrepaso por la izquierda.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 42, inciso h.1.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-036",
+      "category": "B",
+      "topic": "Maniobras y adelantamiento",
+      "question": "Como regla nacional para un giro, ¿desde qué distancia previa debés circular por el costado más próximo al giro?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Desde 30 metros antes."
+        },
+        {
+          "id": "b",
+          "text": "Desde 5 metros antes."
+        },
+        {
+          "id": "c",
+          "text": "Sólo al llegar al centro de la esquina."
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": "El artículo 43 exige ubicarse desde 30 metros antes por el costado más próximo al giro, respetando la señalización.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 43, inciso b.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-037",
+      "category": "B",
+      "topic": "Maniobras y adelantamiento",
+      "question": "¿Cómo debés ajustar la velocidad antes y durante un giro?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Reducirla progresivamente y girar a marcha moderada."
+        },
+        {
+          "id": "b",
+          "text": "Mantenerla y frenar bruscamente en mitad del giro."
+        },
+        {
+          "id": "c",
+          "text": "Aumentarla para permanecer menos tiempo en el cruce."
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": "La reducción debe ser paulatina y el giro debe realizarse a marcha moderada.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 43, inciso c.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-038",
+      "category": "B",
+      "topic": "Maniobras y adelantamiento",
+      "question": "En una vía multicarril, ¿qué debés hacer antes de cambiar de carril?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Activar el giro sólo después de cambiar."
+        },
+        {
+          "id": "b",
+          "text": "Advertir anticipadamente con el giro correspondiente y maniobrar con precaución."
+        },
+        {
+          "id": "c",
+          "text": "Cambiar sin aviso si el carril parece libre."
+        }
+      ],
+      "correctOptionId": "b",
+      "explanation": "La intención debe señalizarse anticipadamente; además, toda maniobra debe ejecutarse sin crear riesgos.",
+      "sourceId": "ley-24449",
+      "legalReference": "Arts. 45, inciso c, y 39, inciso b.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-039",
+      "category": "B",
+      "topic": "Velocidades",
+      "question": "En una calle urbana, sin señalización ni circunstancia especial que establezca otro límite, ¿cuál es la máxima general?",
+      "options": [
+        {
+          "id": "a",
+          "text": "60 km/h."
+        },
+        {
+          "id": "b",
+          "text": "40 km/h."
+        },
+        {
+          "id": "c",
+          "text": "80 km/h."
+        }
+      ],
+      "correctOptionId": "b",
+      "explanation": "La ley fija 40 km/h como máxima general en calles urbanas; los límites especiales y la señalización pueden modificarla.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 51, inciso a.1.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-040",
+      "category": "B",
+      "topic": "Velocidades",
+      "question": "En una avenida urbana, sin señalización ni situación especial que establezca otro límite, ¿cuál es la máxima general?",
+      "options": [
+        {
+          "id": "a",
+          "text": "60 km/h."
+        },
+        {
+          "id": "b",
+          "text": "80 km/h."
+        },
+        {
+          "id": "c",
+          "text": "40 km/h."
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": "El límite general para avenidas es 60 km/h, sujeto a señalización y límites especiales aplicables.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 51, inciso a.2.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-041",
+      "category": "B",
+      "topic": "Velocidades",
+      "question": "Para un automóvil en una ruta rural convencional, sin un límite especial señalizado, ¿cuál es la máxima general?",
+      "options": [
+        {
+          "id": "a",
+          "text": "130 km/h."
+        },
+        {
+          "id": "b",
+          "text": "110 km/h."
+        },
+        {
+          "id": "c",
+          "text": "120 km/h."
+        }
+      ],
+      "correctOptionId": "b",
+      "explanation": "En zona rural, automóviles, motocicletas y camionetas tienen un máximo general de 110 km/h.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 51, inciso b.1.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-042",
+      "category": "B",
+      "topic": "Velocidades",
+      "question": "Para un automóvil en una semiautopista, sin un límite especial señalizado, ¿cuál es la máxima general?",
+      "options": [
+        {
+          "id": "a",
+          "text": "130 km/h."
+        },
+        {
+          "id": "b",
+          "text": "110 km/h."
+        },
+        {
+          "id": "c",
+          "text": "120 km/h."
+        }
+      ],
+      "correctOptionId": "c",
+      "explanation": "La excepción para automóviles y motocicletas en semiautopista eleva su máximo general a 120 km/h.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 51, inciso c.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-043",
+      "category": "B",
+      "topic": "Velocidades",
+      "question": "Para un automóvil en una autopista, sin un límite especial señalizado, ¿cuál es la máxima general?",
+      "options": [
+        {
+          "id": "a",
+          "text": "130 km/h."
+        },
+        {
+          "id": "b",
+          "text": "140 km/h."
+        },
+        {
+          "id": "c",
+          "text": "110 km/h."
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": "El máximo general de automóviles y motocicletas en autopistas es 130 km/h; no obliga a circular a esa velocidad.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 51, inciso d.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-044",
+      "category": "B",
+      "topic": "Velocidades",
+      "question": "Para una camioneta, definida como vehículo de carga de hasta 3.500 kg, ¿cuál es la máxima general nacional en autopista sin otro límite señalizado?",
+      "options": [
+        {
+          "id": "a",
+          "text": "120 km/h."
+        },
+        {
+          "id": "b",
+          "text": "130 km/h."
+        },
+        {
+          "id": "c",
+          "text": "110 km/h."
+        }
+      ],
+      "correctOptionId": "c",
+      "explanation": "La excepción de 130 km/h corresponde a automóviles y motocicletas. Para las camionetas se conserva el límite rural de 110 km/h; no se debe inferir la clasificación sólo por la apariencia del vehículo.",
+      "sourceId": "ley-24449",
+      "legalReference": "Arts. 5, inciso k, y 51, incisos b.1 y d.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-045",
+      "category": "B",
+      "topic": "Velocidades",
+      "question": "Al atravesar una encrucijada urbana sin semáforo, ¿qué velocidad exige la ley?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Siempre 40 km/h."
+        },
+        {
+          "id": "b",
+          "text": "Una velocidad precautoria que no supere 30 km/h."
+        },
+        {
+          "id": "c",
+          "text": "Hasta 60 km/h si se tiene prioridad."
+        }
+      ],
+      "correctOptionId": "b",
+      "explanation": "El límite especial es 30 km/h como máximo, y puede ser necesario ir más despacio para mantener la seguridad.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 51, inciso e.1.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-046",
+      "category": "B",
+      "topic": "Velocidades",
+      "question": "En un paso a nivel sin barrera ni semáforo, ¿qué límite especial rige?",
+      "options": [
+        {
+          "id": "a",
+          "text": "60 km/h si no se escucha una bocina."
+        },
+        {
+          "id": "b",
+          "text": "40 km/h sin necesidad de verificar las vías."
+        },
+        {
+          "id": "c",
+          "text": "Velocidad precautoria de hasta 20 km/h, después de verificar que no viene un tren."
+        }
+      ],
+      "correctOptionId": "c",
+      "explanation": "El máximo especial es 20 km/h y sólo puede cruzarse tras comprobar que no se aproxima un tren.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 51, inciso e.2.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-047",
+      "category": "B",
+      "topic": "Velocidades",
+      "question": "En proximidad de una escuela durante su funcionamiento, ¿qué máximo especial establece la ley nacional?",
+      "options": [
+        {
+          "id": "a",
+          "text": "40 km/h en todos los casos."
+        },
+        {
+          "id": "b",
+          "text": "20 km/h, manteniendo velocidad precautoria."
+        },
+        {
+          "id": "c",
+          "text": "60 km/h si no hay semáforo."
+        }
+      ],
+      "correctOptionId": "b",
+      "explanation": "La proximidad de establecimientos escolares, deportivos o de gran afluencia durante su funcionamiento exige hasta 20 km/h.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 51, inciso e.3.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-048",
+      "category": "B",
+      "topic": "Velocidades",
+      "question": "En una ruta que atraviesa una zona urbana, ¿cuál es el máximo general si no hay señalización en contrario?",
+      "options": [
+        {
+          "id": "a",
+          "text": "90 km/h."
+        },
+        {
+          "id": "b",
+          "text": "110 km/h."
+        },
+        {
+          "id": "c",
+          "text": "60 km/h."
+        }
+      ],
+      "correctOptionId": "c",
+      "explanation": "La ley prevé 60 km/h para rutas que atraviesan zonas urbanas, salvo señalización en contrario.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 51, inciso e.4.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-049",
+      "category": "B",
+      "topic": "Velocidades",
+      "question": "Una señal establece 80 km/h en un tramo donde el máximo general sería mayor. ¿Qué límite debés respetar?",
+      "options": [
+        {
+          "id": "a",
+          "text": "El máximo general, porque siempre prevalece."
+        },
+        {
+          "id": "b",
+          "text": "Un promedio de ambos límites."
+        },
+        {
+          "id": "c",
+          "text": "80 km/h, o menos si las condiciones requieren reducirlo."
+        }
+      ],
+      "correctOptionId": "c",
+      "explanation": "Se respetan los límites señalizados por la autoridad y, además, la velocidad debe ser segura para las condiciones reales.",
+      "sourceId": "ley-24449",
+      "legalReference": "Arts. 36, 50 y 52, inciso b.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-050",
+      "category": "B",
+      "topic": "Velocidades",
+      "question": "Si la lluvia o la visibilidad impiden controlar el vehículo a la máxima permitida, ¿qué corresponde?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Mantener la máxima porque es legal."
+        },
+        {
+          "id": "b",
+          "text": "Reducir a una velocidad que permita mantener el dominio del vehículo."
+        },
+        {
+          "id": "c",
+          "text": "Seguir al vehículo de adelante a menor distancia."
+        }
+      ],
+      "correctOptionId": "b",
+      "explanation": "La máxima es un techo, no una velocidad obligatoria. La velocidad precautoria debe adaptarse a la vía, el clima, la visibilidad y el tránsito.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 50.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-051",
+      "category": "B",
+      "topic": "Velocidades",
+      "question": "Para un automóvil que remolca una casa rodante, ¿cuál es el máximo general en zona rural sin señalización especial?",
+      "options": [
+        {
+          "id": "a",
+          "text": "110 km/h."
+        },
+        {
+          "id": "b",
+          "text": "80 km/h."
+        },
+        {
+          "id": "c",
+          "text": "120 km/h."
+        }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Los automotores con casa rodante acoplada tienen un límite general de 80 km/h en zona rural.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 51, inciso b.3.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-052",
+      "category": "B",
+      "topic": "Luces",
+      "question": "En una ruta nacional, de día y con buena visibilidad, ¿qué luces exige como regla el artículo 47, inciso a?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Ninguna luz si hay sol."
+        },
+        {
+          "id": "b",
+          "text": "Sólo luces de posición."
+        },
+        {
+          "id": "c",
+          "text": "Luces bajas o luces diurnas DRL."
+        }
+      ],
+      "correctOptionId": "c",
+      "explanation": "En rutas nacionales la ley admite bajas o DRL para esta obligación. Las luces de posición solas no cumplen esa función.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 47, inciso a.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-053",
+      "category": "B",
+      "topic": "Luces",
+      "question": "Si la luz natural es insuficiente, ¿basta con dejar encendidas únicamente las DRL?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Sí, las DRL reemplazan siempre a todas las demás luces."
+        },
+        {
+          "id": "b",
+          "text": "Sí, si se circula por una zona conocida."
+        },
+        {
+          "id": "c",
+          "text": "No: deben utilizarse las luces bajas, de posición y de patente que exige la norma."
+        }
+      ],
+      "correctOptionId": "c",
+      "explanation": "El inciso c exige bajas, posición y patente con luz natural insuficiente; la admisión de DRL no elimina esa obligación.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 47, inciso c.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-054",
+      "category": "B",
+      "topic": "Luces",
+      "question": "¿Deben utilizarse las luces de giro y freno durante el día cuando corresponde señalizar?",
+      "options": [
+        {
+          "id": "a",
+          "text": "No, sólo son obligatorias de noche."
+        },
+        {
+          "id": "b",
+          "text": "Sí, aunque la luz natural sea suficiente."
+        },
+        {
+          "id": "c",
+          "text": "Sólo si llueve."
+        }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Las luces de señalización deben activarse conforme a su función aunque haya buena iluminación natural.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 47, inciso g.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-055",
+      "category": "B",
+      "topic": "Luces",
+      "question": "¿Qué función tienen las luces de retroceso?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Reemplazar a las luces bajas si se queman."
+        },
+        {
+          "id": "b",
+          "text": "Iluminar el camino detrás durante la marcha hacia adelante."
+        },
+        {
+          "id": "c",
+          "text": "Advertir la maniobra de marcha atrás."
+        }
+      ],
+      "correctOptionId": "c",
+      "explanation": "Las luces de retroceso, como las de giro y freno, deben emplearse únicamente para su finalidad propia.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 47, inciso f.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-056",
+      "category": "B",
+      "topic": "Luces",
+      "question": "¿Qué señal luminosa prevé la ley para advertir una detención en una estación de peaje?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Únicamente la luz alta."
+        },
+        {
+          "id": "b",
+          "text": "El giro izquierdo."
+        },
+        {
+          "id": "c",
+          "text": "Las luces intermitentes de emergencia."
+        }
+      ],
+      "correctOptionId": "c",
+      "explanation": "Las intermitentes de emergencia se utilizan para indicar detenciones en peajes, zonas peligrosas o maniobras riesgosas.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 47, inciso e.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-057",
+      "category": "B",
+      "topic": "Luces",
+      "question": "¿Encender las balizas vuelve lícito estacionar en un lugar prohibido?",
+      "options": [
+        {
+          "id": "a",
+          "text": "No, la señalización de emergencia no elimina la prohibición."
+        },
+        {
+          "id": "b",
+          "text": "Sí, durante cinco minutos."
+        },
+        {
+          "id": "c",
+          "text": "Sí, si el conductor permanece dentro."
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": "Las luces cumplen una función de advertencia y no sustituyen las reglas que prohíben estacionar o detenerse.",
+      "sourceId": "ley-24449",
+      "legalReference": "Arts. 47, inciso e, y 49.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-058",
+      "category": "B",
+      "topic": "Conductas y prohibiciones",
+      "question": "Bajo la ley nacional, ¿qué nivel de alcohol en sangre permite conducir?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Hasta 0,5 g/l en automóviles particulares."
+        },
+        {
+          "id": "b",
+          "text": "Cero."
+        },
+        {
+          "id": "c",
+          "text": "Hasta 0,2 g/l si el trayecto es corto."
+        }
+      ],
+      "correctOptionId": "b",
+      "explanation": "El artículo 48, modificado por la Ley 27.714, prohíbe conducir con alcoholemia superior a cero.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 48, inciso a, texto según Ley 27.714.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-059",
+      "category": "B",
+      "topic": "Conductas y prohibiciones",
+      "question": "¿Podés conducir después de consumir un medicamento que disminuye tu aptitud para manejar?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Sí, si fue comprado con receta."
+        },
+        {
+          "id": "b",
+          "text": "Sí, si sólo vas a circular de día."
+        },
+        {
+          "id": "c",
+          "text": "No."
+        }
+      ],
+      "correctOptionId": "c",
+      "explanation": "La prohibición comprende medicamentos que reduzcan la aptitud para conducir; tener receta no elimina ese efecto.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 48, inciso a.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-060",
+      "category": "B",
+      "topic": "Conductas y prohibiciones",
+      "question": "¿Está permitido prestar el vehículo para que circule alguien sin habilitación para conducirlo?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Sí, cuando se trata de un familiar."
+        },
+        {
+          "id": "b",
+          "text": "Sí, si quien presta el vehículo viaja de acompañante."
+        },
+        {
+          "id": "c",
+          "text": "No."
+        }
+      ],
+      "correctOptionId": "c",
+      "explanation": "Está prohibido ceder o permitir la conducción a personas sin habilitación.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 48, inciso b.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-061",
+      "category": "B",
+      "topic": "Conductas y prohibiciones",
+      "question": "¿Podés usar la banquina para avanzar más rápido que una fila de vehículos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Sí, cuando el tránsito está detenido."
+        },
+        {
+          "id": "b",
+          "text": "Sí, con las balizas encendidas."
+        },
+        {
+          "id": "c",
+          "text": "No, la banquina no es un carril de adelantamiento."
+        }
+      ],
+      "correctOptionId": "c",
+      "explanation": "La ley prohíbe circular fuera de la calzada y sólo contempla usar la banquina por emergencia.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 48, inciso c.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-062",
+      "category": "B",
+      "topic": "Conductas y prohibiciones",
+      "question": "Según la reglamentación, ¿qué separación temporal mínima corresponde entre automóviles en el mismo carril, sin perjuicio de ampliarla si las condiciones lo requieren?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Por lo menos 2 segundos."
+        },
+        {
+          "id": "b",
+          "text": "Medio segundo."
+        },
+        {
+          "id": "c",
+          "text": "La necesaria para que quepa una bicicleta."
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": "La separación debe ser prudente para la velocidad, la calzada y el clima, con un mínimo de 2 segundos. No es una garantía suficiente bajo cualquier condición.",
+      "sourceId": "decreto-779-anexo1",
+      "legalReference": "Art. 48, inciso g.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-063",
+      "category": "B",
+      "topic": "Conductas y prohibiciones",
+      "question": "Si pasaste la calle por la que querías doblar, ¿podés retroceder por la calzada para volver a ella?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Sí, si el recorrido es menor a una cuadra."
+        },
+        {
+          "id": "b",
+          "text": "No; perder un giro no es una excepción habilitada para circular marcha atrás."
+        },
+        {
+          "id": "c",
+          "text": "Sí, siempre que uses la bocina."
+        }
+      ],
+      "correctOptionId": "b",
+      "explanation": "La marcha atrás se admite para estacionar, salir de un garaje o de una calle sin salida; no para recuperar una esquina pasada.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 48, inciso h.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-064",
+      "category": "B",
+      "topic": "Conductas y prohibiciones",
+      "question": "¿Podés cruzar un paso a nivel mientras las barreras están en movimiento?",
+      "options": [
+        {
+          "id": "a",
+          "text": "No."
+        },
+        {
+          "id": "b",
+          "text": "Sí, si todavía queda espacio para pasar."
+        },
+        {
+          "id": "c",
+          "text": "Sí, cuando no se ve el tren desde el vehículo."
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": "Está prohibido cruzar con barreras bajas o en movimiento, aunque parezca posible pasar.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 48, inciso k.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-065",
+      "category": "B",
+      "topic": "Conductas y prohibiciones",
+      "question": "Aunque la barrera esté levantada, ¿podés cruzar si la salida del paso a nivel está bloqueada?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Sí, y esperar sobre las vías."
+        },
+        {
+          "id": "b",
+          "text": "No."
+        },
+        {
+          "id": "c",
+          "text": "Sí, si el vehículo de adelante promete avanzar."
+        }
+      ],
+      "correctOptionId": "b",
+      "explanation": "No se debe ingresar al cruce ferroviario sin salida expedita, para evitar quedar detenido sobre los rieles.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 48, inciso k.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-066",
+      "category": "B",
+      "topic": "Equipamiento y condiciones",
+      "question": "¿Cuál es la profundidad mínima reglamentaria de los canales de la banda de rodamiento de los neumáticos de un automóvil?",
+      "options": [
+        {
+          "id": "a",
+          "text": "1,6 mm."
+        },
+        {
+          "id": "b",
+          "text": "1 mm."
+        },
+        {
+          "id": "c",
+          "text": "0,5 mm."
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": "La reglamentación fija 1,6 mm para automóviles; los valores menores previstos para otros vehículos no se trasladan al auto.",
+      "sourceId": "decreto-779-anexo1",
+      "legalReference": "Art. 48, inciso l.2.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-067",
+      "category": "B",
+      "topic": "Conductas y prohibiciones",
+      "question": "¿Está permitido conducir escribiendo mensajes en un teléfono sostenido con la mano?",
+      "options": [
+        {
+          "id": "a",
+          "text": "No."
+        },
+        {
+          "id": "b",
+          "text": "Sí, si se usa una sola mano."
+        },
+        {
+          "id": "c",
+          "text": "Sí, si se circula despacio."
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": "La ley prohíbe conducir utilizando sistemas de comunicación de operación manual continua, además de exigir conducción atenta y preventiva.",
+      "sourceId": "ley-24449",
+      "legalReference": "Arts. 48, inciso x, y 39, inciso b.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-068",
+      "category": "B",
+      "topic": "Conductas y prohibiciones",
+      "question": "¿Está permitido conducir utilizando auriculares?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Sí, si el volumen es bajo."
+        },
+        {
+          "id": "b",
+          "text": "Sí, si el trayecto es urbano."
+        },
+        {
+          "id": "c",
+          "text": "No, la ley lo prohíbe."
+        }
+      ],
+      "correctOptionId": "c",
+      "explanation": "El artículo 48 incluye expresamente el uso de auriculares durante la conducción entre las prohibiciones.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 48, inciso x.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-069",
+      "category": "B",
+      "topic": "Conductas y prohibiciones",
+      "question": "En una calle urbana sin una situación de peligro, ¿podés tocar bocina para saludar?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Sí, si es un toque corto."
+        },
+        {
+          "id": "b",
+          "text": "No."
+        },
+        {
+          "id": "c",
+          "text": "Sí, si el tránsito está detenido."
+        }
+      ],
+      "correctOptionId": "b",
+      "explanation": "El uso de bocina está restringido: la ley contempla la excepción por peligro o en zona rural, no el saludo urbano.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 48, inciso v.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-070",
+      "category": "B",
+      "topic": "Conductas y prohibiciones",
+      "question": "¿Podés transportar objetos que tapen las luces o perturben la visibilidad del conductor?",
+      "options": [
+        {
+          "id": "a",
+          "text": "No."
+        },
+        {
+          "id": "b",
+          "text": "Sí, si están atados."
+        },
+        {
+          "id": "c",
+          "text": "Sí, en recorridos de menos de diez cuadras."
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": "La carga no debe perturbar la visibilidad ni ocultar luces o indicadores, entre otras restricciones.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 48, inciso q.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-071",
+      "category": "B",
+      "topic": "Estacionamiento",
+      "question": "Como regla general urbana, ¿cómo se estaciona y qué espacio mínimo se deja entre vehículos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Paralelo al cordón, con al menos 50 cm entre vehículos."
+        },
+        {
+          "id": "b",
+          "text": "En diagonal siempre, sin separación mínima."
+        },
+        {
+          "id": "c",
+          "text": "Paralelo al cordón, pegando ambos paragolpes."
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": "La regla nacional es estacionar paralelo al cordón y dejar al menos 50 cm entre vehículos; la autoridad local puede establecer otras formas.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 49, inciso a.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-072",
+      "category": "B",
+      "topic": "Estacionamiento",
+      "question": "¿Se permite detenerse voluntariamente sobre una senda peatonal para bajar a un pasajero?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Sí, si no se apaga el motor."
+        },
+        {
+          "id": "b",
+          "text": "No."
+        },
+        {
+          "id": "c",
+          "text": "Sí, si demora menos de un minuto."
+        }
+      ],
+      "correctOptionId": "b",
+      "explanation": "La prohibición en la senda peatonal comprende también la detención voluntaria.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 49, inciso b.3.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-073",
+      "category": "B",
+      "topic": "Estacionamiento",
+      "question": "En zona rural, ¿dónde corresponde estacionar bajo la regla general?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Sobre la banquina para quedar más cerca del tránsito."
+        },
+        {
+          "id": "b",
+          "text": "Lo más lejos posible de la calzada y de la banquina, en zonas adyacentes y sin afectar la visibilidad."
+        },
+        {
+          "id": "c",
+          "text": "En cualquier lugar si se dejan las luces de posición."
+        }
+      ],
+      "correctOptionId": "b",
+      "explanation": "El estacionamiento rural debe realizarse fuera de la calzada y alejado de la banquina, sin perjudicar la visibilidad.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 49, párrafo sobre zona rural.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-074",
+      "category": "B",
+      "topic": "Autopistas",
+      "question": "¿Se puede detener un automóvil en la calzada de una autopista para que baje un pasajero?",
+      "options": [
+        {
+          "id": "a",
+          "text": "No; sólo en las dársenas construidas para ese fin, si existen."
+        },
+        {
+          "id": "b",
+          "text": "Sí, si se colocan las balizas."
+        },
+        {
+          "id": "c",
+          "text": "Sí, usando el carril derecho."
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": "En autopistas no se admite detenerse para ascenso o descenso de pasajeros fuera de las dársenas destinadas a ello.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 46, inciso c.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-075",
+      "category": "B",
+      "topic": "Siniestros y controles",
+      "question": "Si participás en un siniestro de tránsito, ¿cuál es una obligación inmediata?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Detenerte."
+        },
+        {
+          "id": "b",
+          "text": "Retirarte y esperar a que te llamen."
+        },
+        {
+          "id": "c",
+          "text": "Continuar si tu vehículo todavía puede circular."
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": "La ley exige detenerse inmediatamente a quienes participan de un siniestro.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 65, inciso a.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-076",
+      "category": "B",
+      "topic": "Siniestros y controles",
+      "question": "¿Qué datos debés suministrar a la otra parte y a la autoridad interviniente después de un siniestro?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Sólo un número de teléfono."
+        },
+        {
+          "id": "b",
+          "text": "Únicamente la marca del vehículo."
+        },
+        {
+          "id": "c",
+          "text": "Los de la licencia de conducir y del seguro obligatorio."
+        }
+      ],
+      "correctOptionId": "c",
+      "explanation": "El artículo 65 exige proporcionar los datos de licencia y seguro; si la otra parte no está, prevé adjuntarlos al vehículo dañado.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 65, inciso b.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-077",
+      "category": "B",
+      "topic": "Siniestros y controles",
+      "question": "¿Debe denunciarse un siniestro de tránsito ante una autoridad de aplicación?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Sólo si lo pide la compañía de seguros."
+        },
+        {
+          "id": "b",
+          "text": "Sí."
+        },
+        {
+          "id": "c",
+          "text": "No, si los conductores se conocen."
+        }
+      ],
+      "correctOptionId": "b",
+      "explanation": "Denunciar el hecho ante una autoridad de aplicación integra las obligaciones legales de quienes participan.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 65, inciso c.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-078",
+      "category": "B",
+      "topic": "Siniestros y controles",
+      "question": "¿Podés negarte sin consecuencias a una prueba de alcoholemia legalmente autorizada?",
+      "options": [
+        {
+          "id": "a",
+          "text": "No, la negativa constituye una falta."
+        },
+        {
+          "id": "b",
+          "text": "Sí, si tenés la documentación en regla."
+        },
+        {
+          "id": "c",
+          "text": "Sí, si afirmás que no tomaste alcohol."
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": "Todo conductor debe someterse a las pruebas autorizadas para determinar intoxicación; la negativa constituye una falta.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 73.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-079",
+      "category": "B",
+      "topic": "Conceptos de circulación",
+      "question": "¿Qué diferencia a una semiautopista de una autopista en la definición legal?",
+      "options": [
+        {
+          "id": "a",
+          "text": "La semiautopista puede tener cruces a nivel con otra calle o ferrocarril."
+        },
+        {
+          "id": "b",
+          "text": "La autopista admite cruces ferroviarios a nivel y la semiautopista no."
+        },
+        {
+          "id": "c",
+          "text": "La semiautopista es siempre de tierra."
+        }
+      ],
+      "correctOptionId": "a",
+      "explanation": "La semiautopista es similar a la autopista, pero tiene cruces a nivel; la autopista carece de ellos.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 5, incisos b y s.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    },
+    {
+      "id": "AR-NAC-B-080",
+      "category": "B",
+      "topic": "Conceptos de circulación",
+      "question": "Si la senda peatonal no está pintada, ¿qué sector contempla la definición de la ley?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Cualquier punto de la mitad de cuadra."
+        },
+        {
+          "id": "b",
+          "text": "Sólo los lugares donde haya un semáforo peatonal."
+        },
+        {
+          "id": "c",
+          "text": "La prolongación longitudinal de la acera sobre la calzada."
+        }
+      ],
+      "correctOptionId": "c",
+      "explanation": "La falta de pintura no elimina la senda: la ley la define, en ese caso, como prolongación longitudinal de la acera.",
+      "sourceId": "ley-24449",
+      "legalReference": "Art. 5, inciso t.",
+      "jurisdiction": "AR-nacional",
+      "reviewedAt": "2026-10-10",
+      "requiresImage": false
+    }
+  ]
+}

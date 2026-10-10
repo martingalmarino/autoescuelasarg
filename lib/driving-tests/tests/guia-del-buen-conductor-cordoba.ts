@@ -59,6 +59,7 @@ const pool: TestQuestion[] = rawQuestions.filter(isScored).map(question => {
     correctOptionId: question.correct_option_id as string,
     explanation: question.explanation || null,
     category: question.category,
+    legal: null,
   }
 })
 
@@ -88,6 +89,7 @@ const test: DrivingTest = {
   ],
   tags: ['Córdoba Capital', 'Examen teórico'],
   notice: bank.quiz_config.non_official_notice,
+  reviewedAt: null,
   sources: [
     { label: 'Mi Licencia — Municipalidad de Córdoba', url: bank.quiz_config.official_source_url },
     {
@@ -101,12 +103,15 @@ const test: DrivingTest = {
   ],
   quiz: {
     storageKey: 'autoescuelas:cordoba-general:v1',
+    bankName: 'Córdoba Capital · Normativa general',
     questions: pool,
     categories,
     studyBlocks,
     simulationSizes: bank.quiz_config.simulation_question_counts,
     defaultSimulationSize: bank.quiz_config.default_simulation_count,
     passingPercentage: null,
+    practiceTarget: null,
+    shuffleStudy: false,
   },
 }
 

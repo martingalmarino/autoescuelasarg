@@ -29,6 +29,11 @@ export function generateMetadata({ params }: PageProps) {
   });
 }
 
+function formatReviewDate(isoDate: string) {
+  const [year, month, day] = isoDate.split("-");
+  return `${day}/${month}/${year}`;
+}
+
 function listSizes(sizes: number[]) {
   return sizes.length > 1 ? `${sizes.slice(0, -1).join(", ")} o ${sizes[sizes.length - 1]}` : `${sizes[0]}`;
 }
@@ -100,22 +105,27 @@ export default function DrivingTestPage({ params }: PageProps) {
             {test.notice && (
               <div className="flex items-start gap-3 rounded-lg border border-border bg-muted/50 p-4 text-sm text-muted-foreground">
                 <Info className="h-5 w-5 shrink-0 text-primary" aria-hidden="true" />
-                <p>
-                  {test.notice}
-                  {test.sources[0] && (
-                    <>
-                      {" "}
-                      <a
-                        href={test.sources[0].url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="font-medium text-primary underline-offset-4 hover:underline"
-                      >
-                        Ir a {test.sources[0].label}
-                      </a>
-                    </>
+                <div className="space-y-1">
+                  <p>
+                    {test.notice}
+                    {test.sources[0] && (
+                      <>
+                        {" "}
+                        <a
+                          href={test.sources[0].url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="font-medium text-primary underline-offset-4 hover:underline"
+                        >
+                          Ir a {test.sources[0].label}
+                        </a>
+                      </>
+                    )}
+                  </p>
+                  {test.reviewedAt && (
+                    <p className="font-medium text-foreground">Contenido revisado: {formatReviewDate(test.reviewedAt)}</p>
                   )}
-                </p>
+                </div>
               </div>
             )}
 

@@ -17,7 +17,7 @@ interface QuizMenuProps {
   onResume: () => void;
   onDiscard: () => void;
   onStudy: (label: string, questions: TestQuestion[]) => void;
-  onSimulation: (size: number) => void;
+  onSimulation: (size: number, categoryId: string | null) => void;
   onReview: () => void;
   onClear: () => void;
 }
@@ -38,12 +38,24 @@ export default function QuizMenu({
   onReview,
   onClear,
 }: QuizMenuProps) {
-  const sizes = simulationOptions(quiz.simulationSizes, quiz.questions.length);
-  const [size, setSize] = useState(
-    sizes.indexOf(Math.min(quiz.defaultSimulationSize, quiz.questions.length)) !== -1
-      ? Math.min(quiz.defaultSimulationSize, quiz.questions.length)
-      : sizes[sizes.length - 1]
-  );
+  const [simulationCategory, setSimulationCategory] = useState<string>("");
+  const simulationPool = simulationCategory
+    ? quiz.questions.filter(question => question.category === simulationCategory)
+    : quiz.questions;
+  const sizes = simulationOptions(quiz.simulationSizes, simulationPool.length);
+  const defaultSize = (available: number) => {
+    const options = simulationOptions(quiz.simulationSizes, available);
+    const preferred = Math.min(quiz.defaultSimulationSize, available);
+    return options.indexOf(preferred) !== -1 ? preferred : options[options.length - 1];
+  };
+  const [size, setSize] = useState(() => defaultSize(quiz.questions.length));
+  const chooseCategory = (categoryId: string) => {
+    setSimulationCategory(categoryId);
+    const available = categoryId
+      ? quiz.questions.filter(question => question.category === categoryId).length
+      : quiz.questions.length;
+    setSize(defaultSize(available));
+  };
   const byId: Record<string, TestQuestion> = {};
   quiz.questions.forEach(question => {
     byId[question.id] = question;
@@ -70,7 +82,8 @@ export default function QuizMenu({
       });
     });
   });
-  const largestRequested = Math.max(...quiz.simulationSizes);
+  const largestRequested = Math.max.apply(null, quiz.simulationSizes);
+  const selectedCategory = quiz.categories.find(category => category.id === simulationCategory);
 
   return (
     <div className="space-y-5">
@@ -110,6 +123,16 @@ export default function QuizMenu({
             </div>
           </div>
           <div className="grid gap-2 grid-cols-1 min-[400px]:grid-cols-2 sm:grid-cols-3">
+            {quiz.questions.length > STUDY_BLOCK_SIZE && (
+              <button
+                type="button"
+                className={cn(chipClass, "border-primary/40")}
+                onClick={() => onStudy("Todas las preguntas", quiz.questions)}
+              >
+                <span>Todas las preguntas</span>
+                <span className="text-xs text-muted-foreground">{quiz.questions.length} preg.</span>
+              </button>
+            )}
             {blocks.map(block => (
               <button key={block.id} type="button" className={chipClass} onClick={() => onStudy(block.name, block.questions)}>
                 <span>{block.name}</span>
@@ -152,6 +175,26 @@ export default function QuizMenu({
               </p>
             </div>
           </div>
+          {quiz.categories.length > 1 && (
+            <div className="mb-4">
+              <label htmlFor="tema-simulacro" className="mb-2 block text-sm font-semibold text-foreground">
+                Tema
+              </label>
+              <select
+                id="tema-simulacro"
+                value={simulationCategory}
+                onChange={event => chooseCategory(event.target.value)}
+                className="h-11 w-full rounded-lg border-2 border-border bg-card px-3 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 sm:w-auto sm:min-w-[280px]"
+              >
+                <option value="">Todos los temas ({quiz.questions.length} preguntas)</option>
+                {quiz.categories.map(category => (
+                  <option key={category.id} value={category.id}>
+                    {category.name} ({quiz.questions.filter(question => question.category === category.id).length})
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
           <fieldset>
             <legend className="mb-2 text-sm font-semibold text-foreground">Cantidad de preguntas</legend>
             <div className="flex flex-wrap gap-2">
@@ -177,12 +220,24 @@ export default function QuizMenu({
               ))}
             </div>
           </fieldset>
-          {largestRequested > quiz.questions.length && (
+          {largestRequested > simulationPool.length && (
             <p className="mt-2 text-xs text-muted-foreground">
-              El banco tiene {quiz.questions.length} preguntas, así que el simulacro más largo usa todas.
+              {selectedCategory ? `Este tema tiene ${simulationPool.length}` : `El banco tiene ${simulationPool.length}`} preguntas,
+              así que el simulacro más largo usa todas, sin repetir.
             </p>
           )}
-          <Button variant="signal" size="lg" className="mt-5 w-full sm:w-auto" onClick={() => onSimulation(size)}>
+          {quiz.practiceTarget !== null && (
+            <p className="mt-3 text-xs text-muted-foreground">
+              Objetivo de práctica: {quiz.practiceTarget}% de respuestas correctas. Es una referencia para entrenar, no el
+              puntaje oficial del examen. Sin límite de tiempo.
+            </p>
+          )}
+          <Button
+            variant="signal"
+            size="lg"
+            className="mt-5 w-full sm:w-auto"
+            onClick={() => onSimulation(size, simulationCategory || null)}
+          >
             <PlayCircle className="mr-2 h-4 w-4" />
             Empezar simulacro
           </Button>
