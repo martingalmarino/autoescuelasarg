@@ -1,17 +1,23 @@
 "use client";
 
-import { CheckCircle2, CircleDashed, ListChecks, RotateCcw, XCircle } from "lucide-react";
+import { useState } from "react";
+import { CheckCircle2, CircleDashed, ListChecks, RotateCcw, Target, XCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import type { AttemptResult, QuestionStatus } from "@/lib/driving-tests/quiz";
+import { practiceTargetCount, type AttemptResult, type QuestionStatus } from "@/lib/driving-tests/quiz";
 import { cn } from "@/lib/utils";
+import LegalBasisDetails from "./LegalBasisDetails";
 
 interface QuizResultProps {
   result: AttemptResult;
   passingPercentage: number | null;
+  practiceTarget: number | null;
   onRetryMistakes: () => void;
-  onNewTest: () => void;
+  onNewAttempt: (() => void) | null;
+  onMenu: () => void;
 }
+
+type ReviewFilter = "all" | "incorrect" | "unanswered";
 
 const STATUS: Record<QuestionStatus, { label: string; plural: string; icon: typeof CheckCircle2; className: string }> = {
   correct: { label: "Correcta", plural: "Correctas", icon: CheckCircle2, className: "text-emerald-700" },
@@ -19,9 +25,30 @@ const STATUS: Record<QuestionStatus, { label: string; plural: string; icon: type
   unanswered: { label: "Sin responder", plural: "Sin responder", icon: CircleDashed, className: "text-muted-foreground" },
 };
 
-export default function QuizResult({ result, passingPercentage, onRetryMistakes, onNewTest }: QuizResultProps) {
+export default function QuizResult({
+  result,
+  passingPercentage,
+  practiceTarget,
+  onRetryMistakes,
+  onNewAttempt,
+  onMenu,
+}: QuizResultProps) {
+  const [filter, setFilter] = useState<ReviewFilter>("all");
   const mistakes = result.incorrect + result.unanswered;
   const passed = passingPercentage !== null && result.percentage >= passingPercentage;
+  const target =
+    practiceTarget !== null && result.mode === "simulation" && result.total > 0
+      ? practiceTargetCount(practiceTarget, result.total)
+      : null;
+  const reachedTarget = target !== null && result.correct >= target;
+  const filters: { id: ReviewFilter; label: string; count: number }[] = [
+    { id: "all", label: "Todas", count: result.total },
+    { id: "incorrect", label: "Incorrectas", count: result.incorrect },
+    { id: "unanswered", label: "Sin responder", count: result.unanswered },
+  ];
+  const reviewItems = result.items
+    .map((item, index) => ({ item, number: index + 1 }))
+    .filter(({ item }) => filter === "all" || item.status === filter);
 
   return (
     <div className="space-y-6">
@@ -44,6 +71,19 @@ export default function QuizResult({ result, passingPercentage, onRetryMistakes,
             <span className="text-2xl sm:text-3xl text-muted-foreground font-bold">/{result.total}</span>
           </p>
           <p className="mt-1 text-lg font-semibold text-foreground">{result.percentage}% de respuestas correctas</p>
+
+          {target !== null && (
+            <p
+              className={cn(
+                "mt-3 inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-semibold",
+                reachedTarget ? "bg-emerald-50 text-emerald-700" : "bg-muted text-foreground"
+              )}
+            >
+              <Target className="h-4 w-4 shrink-0" aria-hidden="true" />
+              Objetivo de práctica: {practiceTarget}% ({target} de {result.total}) ·{" "}
+              {reachedTarget ? "alcanzado" : "todavía no alcanzado"}
+            </p>
+          )}
 
           <dl className="mt-6 grid grid-cols-3 gap-2 sm:gap-4 max-w-md mx-auto">
             {(["correct", "incorrect", "unanswered"] as const).map(status => {
@@ -68,19 +108,26 @@ export default function QuizResult({ result, passingPercentage, onRetryMistakes,
 
           {passingPercentage === null && (
             <p className="mt-5 text-sm text-muted-foreground max-w-md mx-auto">
-              Es un puntaje de práctica: no hay un puntaje oficial de aprobación publicado para comparar.
+              {target !== null
+                ? "El objetivo de práctica es una referencia para entrenar, no el puntaje oficial de aprobación de ninguna jurisdicción."
+                : "Es un puntaje de práctica: no hay un puntaje oficial de aprobación publicado para comparar."}
             </p>
           )}
 
-          <div className="mt-6 flex flex-col gap-2 sm:flex-row sm:justify-center">
+          <div className="mt-6 flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:justify-center">
             {mistakes > 0 && (
               <Button variant="signal" size="lg" onClick={onRetryMistakes}>
                 <RotateCcw className="mr-2 h-4 w-4" />
-                Repasar {mistakes === 1 ? "el error" : `los ${mistakes} errores`}
+                {result.unanswered > 0 ? `Repetir incorrectas y sin responder (${mistakes})` : `Repetir incorrectas (${mistakes})`}
               </Button>
             )}
-            <Button variant={mistakes > 0 ? "outline" : "signal"} size="lg" onClick={onNewTest}>
-              Hacer otro test
+            {onNewAttempt && (
+              <Button variant={mistakes > 0 ? "outline" : "signal"} size="lg" onClick={onNewAttempt}>
+                Nuevo intento
+              </Button>
+            )}
+            <Button variant="outline" size="lg" onClick={onMenu}>
+              Volver al menú
             </Button>
           </div>
         </CardContent>
@@ -114,8 +161,31 @@ export default function QuizResult({ result, passingPercentage, onRetryMistakes,
           <ListChecks className="h-5 w-5 text-primary" aria-hidden="true" />
           Repaso de tus respuestas
         </h2>
+        {mistakes > 0 && (
+          <div role="group" aria-label="Filtrar el repaso" className="mb-4 flex flex-wrap gap-2">
+            {filters
+              .filter(option => option.id === "all" || option.count > 0)
+              .map(option => (
+                <button
+                  key={option.id}
+                  type="button"
+                  aria-pressed={filter === option.id}
+                  onClick={() => setFilter(option.id)}
+                  className={cn(
+                    "min-h-[44px] rounded-full border-2 px-4 text-sm font-semibold transition-colors",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+                    filter === option.id
+                      ? "border-primary bg-accent text-primary"
+                      : "border-border bg-card text-foreground hover:border-primary/50"
+                  )}
+                >
+                  {option.label} ({option.count})
+                </button>
+              ))}
+          </div>
+        )}
         <ol className="space-y-3">
-          {result.items.map((item, index) => {
+          {reviewItems.map(({ item, number }) => {
             const { label, icon: Icon, className } = STATUS[item.status];
             const selectedText = item.question.options.find(option => option.id === item.selectedOptionId)?.text;
             const correctText = item.question.options.find(option => option.id === item.question.correctOptionId)?.text;
@@ -128,7 +198,7 @@ export default function QuizResult({ result, passingPercentage, onRetryMistakes,
                       {label}
                     </p>
                     <p className="font-semibold text-foreground mb-2">
-                      {index + 1}. {item.question.question}
+                      {number}. {item.question.question}
                     </p>
                     <div className="space-y-1 text-sm">
                       {item.status === "incorrect" && (
@@ -136,11 +206,13 @@ export default function QuizResult({ result, passingPercentage, onRetryMistakes,
                           Tu respuesta: <span className="text-destructive font-medium">{selectedText}</span>
                         </p>
                       )}
+                      {item.status === "unanswered" && <p className="text-muted-foreground">No respondiste esta pregunta.</p>}
                       <p className="text-muted-foreground">
                         Respuesta correcta: <span className="font-medium text-emerald-700">{correctText}</span>
                       </p>
                       {item.question.explanation && <p className="text-muted-foreground">{item.question.explanation}</p>}
                     </div>
+                    {item.question.legal && <LegalBasisDetails legal={item.question.legal} />}
                   </CardContent>
                 </Card>
               </li>

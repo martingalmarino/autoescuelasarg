@@ -3,6 +3,12 @@ export interface QuestionOption {
   text: string
 }
 
+export interface LegalBasis {
+  /** Artículo o inciso, tal como figura en el banco (por ejemplo "Art. 51, inciso a.1."). */
+  reference: string
+  source: TestSource
+}
+
 export interface TestQuestion {
   id: string
   question: string
@@ -10,6 +16,7 @@ export interface TestQuestion {
   correctOptionId: string
   explanation: string | null
   category: string | null
+  legal: LegalBasis | null
 }
 
 export interface TestCategory {
@@ -32,6 +39,8 @@ export interface TestSource {
 export interface QuizData {
   /** Clave para el progreso guardado en el navegador; cambiar la versión descarta el progreso anterior. */
   storageKey: string
+  /** Nombre del banco que se muestra durante el test. */
+  bankName: string
   questions: TestQuestion[]
   categories: TestCategory[]
   studyBlocks: StudyBlock[]
@@ -39,6 +48,10 @@ export interface QuizData {
   defaultSimulationSize: number
   /** Solo si existe un puntaje oficial verificado; si es null no se informa aprobado o desaprobado. */
   passingPercentage: number | null
+  /** Porcentaje orientativo para los simulacros; se muestra como "Objetivo de práctica", nunca como aprobado. */
+  practiceTarget: number | null
+  /** Mezcla el orden de preguntas y opciones también en modo estudio y repaso. */
+  shuffleStudy: boolean
 }
 
 export interface DrivingTest {
@@ -53,6 +66,8 @@ export interface DrivingTest {
   intro: string[]
   tags: string[]
   notice: string | null
+  /** Fecha de revisión editorial (AAAA-MM-DD); no implica que el contenido siga vigente. */
+  reviewedAt: string | null
   sources: TestSource[]
   quiz: QuizData
 }

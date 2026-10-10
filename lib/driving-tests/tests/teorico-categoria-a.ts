@@ -12,15 +12,19 @@ const test: DrivingTest = {
   ],
   tags: ['Motos', 'Examen teórico'],
   notice: null,
+  reviewedAt: null,
   sources: [],
   quiz: {
     storageKey: 'autoescuelas:teorico-categoria-a:v1',
+    bankName: 'Categoría A',
     questions: [],
     categories: [],
     studyBlocks: [],
     simulationSizes: [10, 20, 40],
     defaultSimulationSize: 20,
     passingPercentage: null,
+    practiceTarget: null,
+    shuffleStudy: false,
   },
 }
 

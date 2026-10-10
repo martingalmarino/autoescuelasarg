@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { trackEvent } from "@/lib/analytics";
 import {
+  answerQuestion,
   clearProgress,
   createAttempt,
   emptyProgress,
@@ -40,6 +41,7 @@ export default function DrivingQuiz({ testSlug, quiz }: DrivingQuizProps) {
   const [draft, setDraft] = useState<string | null>(null);
   const [submitNotice, setSubmitNotice] = useState(false);
   const topRef = useRef<HTMLDivElement>(null);
+  const lastAttemptFactory = useRef<(() => Attempt) | null>(null);
 
   const attempt = progress.attempt;
   const question = attempt ? byId[attempt.questionIds[attempt.index]] : null;
@@ -63,11 +65,13 @@ export default function DrivingQuiz({ testSlug, quiz }: DrivingQuizProps) {
   const updateAttempt = (update: (current: Attempt) => Attempt) =>
     setProgress(previous => (previous.attempt ? { ...previous, attempt: update(previous.attempt) } : previous));
 
-  const start = (next: Attempt) => {
+  const start = (factory: () => Attempt) => {
     const unfinished = progress.attempt && Object.keys(progress.attempt.answers).length > 0;
     if (unfinished && !window.confirm("Tenés un test sin terminar. Si empezás otro, se descartan esas respuestas. ¿Querés seguir?")) {
       return;
     }
+    lastAttemptFactory.current = factory;
+    const next = factory();
     setProgress(previous => ({ ...previous, attempt: next }));
     setDraft(null);
     setSubmitNotice(false);
@@ -77,32 +81,40 @@ export default function DrivingQuiz({ testSlug, quiz }: DrivingQuizProps) {
   };
 
   const startStudy = (label: string, questions: TestQuestion[]) =>
-    start(createAttempt({ mode: "study", label: `Estudio · ${label}`, questions }));
-
-  const startSimulation = (size: number) =>
-    start(
+    start(() =>
       createAttempt({
-        mode: "simulation",
-        label: `Simulacro de ${Math.min(size, quiz.questions.length)} preguntas`,
-        questions: quiz.questions,
-        sample: size,
-        shuffleOptions: true,
+        mode: "study",
+        label: `Estudio · ${label}`,
+        questions,
+        shuffleQuestions: quiz.shuffleStudy,
+        shuffleOptions: quiz.shuffleStudy,
       })
     );
 
-  const startReview = (ids: string[]) =>
-    start(
+  const startSimulation = (size: number, categoryId: string | null) => {
+    const category = categoryId ? quiz.categories.find(item => item.id === categoryId) : undefined;
+    const pool = category ? quiz.questions.filter(item => item.category === category.id) : quiz.questions;
+    const label = `Simulacro de ${Math.min(size, pool.length)} preguntas${category ? ` · ${category.name}` : ""}`;
+    start(() => createAttempt({ mode: "simulation", label, questions: pool, sample: size, shuffleOptions: true }));
+  };
+
+  const startReview = (ids: string[]) => {
+    const questions = ids.filter(id => byId[id]).map(id => byId[id]);
+    start(() =>
       createAttempt({
         mode: "review",
         label: "Repaso de errores",
-        questions: ids.filter(id => byId[id]).map(id => byId[id]),
+        questions,
+        shuffleQuestions: quiz.shuffleStudy,
+        shuffleOptions: quiz.shuffleStudy,
       })
     );
+  };
 
   const select = (optionId: string) => {
     if (!attempt || !question) return;
     if (attempt.mode === "simulation") {
-      updateAttempt(current => ({ ...current, answers: { ...current.answers, [question.id]: optionId } }));
+      updateAttempt(current => answerQuestion(current, question.id, optionId));
     } else if (attempt.answers[question.id] === undefined) {
       setDraft(optionId);
     }
@@ -110,11 +122,7 @@ export default function DrivingQuiz({ testSlug, quiz }: DrivingQuizProps) {
 
   const confirm = () => {
     if (!question || draft === null) return;
-    updateAttempt(current =>
-      current.answers[question.id] !== undefined
-        ? current
-        : { ...current, answers: { ...current.answers, [question.id]: draft } }
-    );
+    updateAttempt(current => answerQuestion(current, question.id, draft));
     setDraft(null);
   };
 
@@ -174,6 +182,7 @@ export default function DrivingQuiz({ testSlug, quiz }: DrivingQuizProps) {
     <div ref={topRef} className="scroll-mt-20">
       {view === "attempt" && attempt && question ? (
         <QuestionView
+          bankName={quiz.bankName}
           attempt={attempt}
           question={question}
           draft={draft}
@@ -190,10 +199,12 @@ export default function DrivingQuiz({ testSlug, quiz }: DrivingQuizProps) {
         <QuizResult
           result={result}
           passingPercentage={quiz.passingPercentage}
+          practiceTarget={quiz.practiceTarget}
           onRetryMistakes={() =>
             startReview(result.items.filter(item => item.status !== "correct").map(item => item.question.id))
           }
-          onNewTest={() => setView("menu")}
+          onNewAttempt={lastAttemptFactory.current ? () => start(lastAttemptFactory.current as () => Attempt) : null}
+          onMenu={() => setView("menu")}
         />
       ) : (
         <QuizMenu

@@ -109,6 +109,8 @@ interface CreateAttemptOptions {
   questions: TestQuestion[]
   /** Si se indica, toma esa cantidad al azar sin repetir; nunca más que las disponibles. */
   sample?: number
+  /** Mezcla el orden aunque no se tome una muestra; con `sample` el orden siempre es al azar. */
+  shuffleQuestions?: boolean
   shuffleOptions?: boolean
   random?: () => number
 }
@@ -118,18 +120,39 @@ export function createAttempt({
   label,
   questions,
   sample,
+  shuffleQuestions = false,
   shuffleOptions = false,
   random = Math.random,
 }: CreateAttemptOptions): Attempt {
   const unique = uniqueIds(questions.map(question => question.id))
   const byId = indexQuestions(questions)
-  const selected = sample === undefined ? unique : shuffle(unique, random).slice(0, Math.min(sample, unique.length))
+  const selected =
+    sample !== undefined
+      ? shuffle(unique, random).slice(0, Math.min(sample, unique.length))
+      : shuffleQuestions
+        ? shuffle(unique, random)
+        : unique
   const optionOrder: Record<string, string[]> = {}
   selected.forEach(id => {
     const ids = byId[id].options.map(option => option.id)
     optionOrder[id] = shuffleOptions ? shuffle(ids, random) : ids
   })
   return { mode, label, questionIds: selected, optionOrder, answers: {}, index: 0 }
+}
+
+/**
+ * Registra una respuesta. En estudio y repaso la primera respuesta confirmada queda fija;
+ * en simulacro se puede cambiar hasta entregar.
+ */
+export function answerQuestion(attempt: Attempt, questionId: string, optionId: string): Attempt {
+  if (attempt.questionIds.indexOf(questionId) === -1) return attempt
+  if (attempt.mode !== 'simulation' && attempt.answers[questionId] !== undefined) return attempt
+  return { ...attempt, answers: { ...attempt.answers, [questionId]: optionId } }
+}
+
+/** Respuestas correctas necesarias para alcanzar el objetivo de práctica en una sesión de `total` preguntas. */
+export function practiceTargetCount(percentage: number, total: number) {
+  return Math.ceil((percentage * total) / 100)
 }
 
 export function scoreAttempt(

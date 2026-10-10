@@ -7,8 +7,10 @@ import { Card, CardContent } from "@/components/ui/card";
 import type { Attempt } from "@/lib/driving-tests/quiz";
 import type { TestQuestion } from "@/lib/driving-tests/types";
 import { cn } from "@/lib/utils";
+import LegalBasisDetails from "./LegalBasisDetails";
 
 interface QuestionViewProps {
+  bankName: string;
   attempt: Attempt;
   question: TestQuestion;
   draft: string | null;
@@ -23,6 +25,7 @@ interface QuestionViewProps {
 }
 
 export default function QuestionView({
+  bankName,
   attempt,
   question,
   draft,
@@ -63,7 +66,10 @@ export default function QuestionView({
     <Card className="surface-card">
       <CardContent className="p-4 sm:p-8">
         <div className="flex items-center justify-between gap-3 mb-4">
-          <p className="min-w-0 text-sm font-semibold text-primary">{attempt.label}</p>
+          <div className="min-w-0">
+            <p className="text-xs font-medium text-muted-foreground">{bankName}</p>
+            <p className="text-sm font-semibold text-primary">{attempt.label}</p>
+          </div>
           <Button variant="ghost" size="sm" onClick={onExit} className="shrink-0 text-muted-foreground">
             <LogOut className="mr-1.5 h-4 w-4" />
             Salir
@@ -75,8 +81,9 @@ export default function QuestionView({
             <p ref={statusRef} tabIndex={-1} className="font-semibold text-foreground outline-none">
               Pregunta {attempt.index + 1} de {total}
             </p>
-            <span className="text-muted-foreground">
+            <span className="text-right text-muted-foreground">
               {answeredCount} {answeredCount === 1 ? "respondida" : "respondidas"}
+              {isSimulation && ` · ${unanswered} sin responder`}
             </span>
           </div>
           <div
@@ -180,6 +187,7 @@ export default function QuestionView({
                 </p>
               )}
               {question.explanation && <p className="mt-1">{question.explanation}</p>}
+              {question.legal && <LegalBasisDetails legal={question.legal} />}
             </div>
           )}
         </div>
@@ -190,7 +198,7 @@ export default function QuestionView({
               <AlertTriangle className="h-5 w-5 shrink-0 text-signal-foreground" aria-hidden="true" />
               {unanswered === 1 ? "Te queda 1 pregunta sin responder." : `Te quedan ${unanswered} preguntas sin responder.`}
             </p>
-            <p className="mt-1 text-sm text-muted-foreground">Las preguntas sin responder no suman puntos.</p>
+            <p className="mt-1 text-sm text-muted-foreground">Las preguntas sin responder no suman puntos y cuentan como no acertadas.</p>
             <div className="mt-4 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
               <Button variant="outline" onClick={onCancelSubmit}>
                 Volver a responder
