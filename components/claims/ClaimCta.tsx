@@ -13,14 +13,14 @@ export default function ClaimCta({ slug, isClaimed, isPremium }: ClaimCtaProps) 
   const content = isClaimed
     ? {
         icon: Crown,
-        title: "¿Sos responsable de esta autoescuela?",
+        title: "¿Sos responsable de esta escuela de manejo?",
         text: "Destacala con Premium: primera en tu ciudad, WhatsApp, fotos y reporte de consultas.",
         link: `/para-autoescuelas?escuela=${slug}&plan=premium#reclamar`,
         label: "Conocer Premium",
       }
     : {
         icon: BadgeCheck,
-        title: "¿Es tu autoescuela?",
+        title: "¿Es tu escuela de manejo?",
         text: "Reclamá esta ficha gratis para verificar y corregir sus datos.",
         link: `/para-autoescuelas?escuela=${slug}#reclamar`,
         label: "Reclamar ficha",

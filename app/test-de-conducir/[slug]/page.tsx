@@ -180,7 +180,7 @@ export default function DrivingTestPage({ params }: PageProps) {
               <CardContent className="relative p-6 sm:p-8">
                 <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">¿Te preparás para sacar el registro?</h2>
                 <p className="text-white/85 mb-5">
-                  Encontrá una autoescuela cerca tuyo para practicar con un instructor antes del examen.
+                  Encontrá una escuela de manejo cerca tuyo para practicar con un instructor antes del examen.
                 </p>
                 <Link
                   href="/autoescuelas"

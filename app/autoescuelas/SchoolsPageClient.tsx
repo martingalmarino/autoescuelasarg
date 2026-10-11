@@ -27,7 +27,7 @@ import {
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { Province, SchoolsPage } from "@/lib/types";
-import { formatPrice, formatRating, formatReviews } from "@/lib/utils";
+import { formatPrice, formatRating, formatReviews, schoolsCountText } from "@/lib/utils";
 import { analyticsEvents } from "@/lib/analytics";
 
 interface SchoolsPageClientProps {
@@ -175,16 +175,16 @@ export default function SchoolsPageClient({
         <div className="container mx-auto px-4 sm:px-6">
           <div className="text-center text-white">
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold mb-3">
-              Todas las autoescuelas de Argentina
+              Escuelas de manejo en Argentina
             </h1>
             <p className="text-lg sm:text-xl text-white/90 max-w-3xl mx-auto mb-6">
-              Encontrá la autoescuela perfecta para obtener tu licencia de
-              conducir. Filtra por ubicación, calificación y precio.
+              Encontrá la autoescuela ideal para obtener tu licencia de
+              conducir. Filtrá por ubicación, calificación y precio.
             </p>
             <div className="flex items-center justify-center space-x-6 text-white/80">
               <div className="flex items-center space-x-2">
                 <MapPin className="h-5 w-5 text-signal" />
-                <span>{totalSchools} autoescuelas</span>
+                <span>{schoolsCountText(totalSchools)}</span>
               </div>
               <div className="flex items-center space-x-2">
                 <Users className="h-5 w-5 text-signal" />
@@ -206,7 +206,7 @@ export default function SchoolsPageClient({
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                   <Input
-                    placeholder="Buscar autoescuelas..."
+                    placeholder="Buscar escuelas de manejo..."
                     value={searchTerm}
                     onChange={(e) => handleSearch(e.target.value)}
                     className="pl-10 w-full"
@@ -391,7 +391,7 @@ export default function SchoolsPageClient({
           {/* Results Header */}
           <div className="mb-4 sm:mb-6">
             <h2 className="text-lg sm:text-xl md:text-2xl font-bold mb-1">
-              {total} autoescuelas encontradas
+              {total === 1 ? '1 escuela de manejo encontrada' : `${total} escuelas de manejo encontradas`}
             </h2>
             <p className="text-sm sm:text-base text-muted-foreground">
               Página {currentPage} de {totalPages}
@@ -612,10 +612,10 @@ export default function SchoolsPageClient({
             <div className="text-center py-12">
               <div className="text-6xl mb-4">🔍</div>
               <h3 className="text-xl font-semibold mb-2">
-                No se encontraron autoescuelas
+                No se encontraron escuelas de manejo
               </h3>
               <p className="text-muted-foreground mb-6">
-                Intenta ajustar tus filtros de búsqueda
+                Probá ajustar tus filtros de búsqueda
               </p>
               <Button onClick={clearFilters}>Limpiar filtros</Button>
             </div>

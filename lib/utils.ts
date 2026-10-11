@@ -24,6 +24,10 @@ export function formatPrice(price: number): string {
   }).format(price)
 }
 
+export function schoolsCountText(count: number): string {
+  return count === 1 ? '1 escuela de manejo' : `${count} escuelas de manejo`
+}
+
 export function createSlug(text: string): string {
   return text
     .toLowerCase()

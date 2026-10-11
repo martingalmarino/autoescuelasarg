@@ -9,8 +9,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
-const navLinks = [
-  { href: "/autoescuelas", label: "Todas las autoescuelas", shortLabel: "Autoescuelas" },
+const navLinks: { href: string; label: string; shortLabel?: string; badge?: string }[] = [
+  { href: "/autoescuelas", label: "Escuelas de manejo" },
   { href: "/provincias", label: "Por provincia" },
   { href: "/test-de-conducir", label: "Test de conducir", badge: "Nuevo" },
 ];
@@ -95,7 +95,7 @@ export default function Header() {
             >
               <Input
                 type="text"
-                placeholder="Buscar autoescuelas..."
+                placeholder="Buscar escuelas de manejo..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-48 xl:w-64 h-9 rounded-full bg-muted/60 border-transparent px-4 focus-visible:bg-card"
@@ -112,7 +112,7 @@ export default function Header() {
               variant="ghost"
               size="sm"
               className="h-9 w-9 p-0"
-              aria-label="Buscar autoescuelas"
+              aria-label="Buscar escuelas de manejo"
               onClick={() => router.push("/autoescuelas")}
             >
               <Search className="h-4 w-4" />

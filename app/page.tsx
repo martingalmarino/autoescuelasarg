@@ -12,9 +12,9 @@ import { buildMetadata } from "@/lib/seo";
 export const revalidate = 86400;
 
 export const metadata = buildMetadata({
-  titleVariants: ["Autoescuelas en Argentina: escuelas de manejo cerca tuyo"],
+  titleVariants: ["Escuelas de manejo en Argentina: compará autoescuelas"],
   description:
-    "Compará autoescuelas y escuelas de manejo de todo el país: precios, reseñas y clases para sacar tu registro de conducir. Buscá por provincia o ciudad.",
+    "Compará escuelas de manejo de todo el país: precios, reseñas y clases para sacar tu registro de conducir. Buscá autoescuelas por provincia o ciudad.",
   path: "/",
 });
 
@@ -28,13 +28,13 @@ const faqData: FAQ[] = [
   },
   {
     id: "faq-2",
-    question: "¿Qué requisitos necesito para inscribirme en una autoescuela?",
+    question: "¿Qué requisitos necesito para inscribirme en una escuela de manejo?",
     answer:
       "Generalmente se piden: DNI actualizado, certificado de apto médico (otorgado en el municipio), foto carnet, comprobante de domicilio y, en el caso de menores de 18 años, autorización firmada por madre, padre o tutor. Cada municipio puede tener pequeñas variaciones en los requisitos.",
   },
   {
     id: "faq-3",
-    question: "¿Cuánto dura el curso en una escuela de conducir?",
+    question: "¿Cuánto dura el curso en una escuela de manejo?",
     answer:
       "La duración depende de la autoescuela y del paquete contratado. En promedio: clases prácticas entre 5 y 15 clases de 40 a 60 minutos y curso teórico dictado en 2 o 3 jornadas intensivas, o complementado con material online.",
   },
@@ -71,9 +71,9 @@ export default async function HomePage() {
       <section className="py-10 sm:py-16">
         <div className="container px-4 sm:px-6">
           <div className="text-center mb-8 sm:mb-12">
-            <h3 className="section-title mx-auto max-w-3xl text-2xl sm:text-3xl lg:text-4xl">
-              Descubrí tu próxima escuela de conducción cercana a tu ubicación
-            </h3>
+            <h2 className="section-title mx-auto max-w-3xl text-2xl sm:text-3xl lg:text-4xl">
+              Escuelas de manejo por provincia
+            </h2>
           </div>
           <ProvincesIndex provinces={provinces} />
         </div>

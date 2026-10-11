@@ -28,7 +28,7 @@ const defaultFAQs: FAQ[] = [
   },
   {
     id: "3",
-    question: "¿Cómo sé si una autoescuela es confiable?",
+    question: "¿Cómo sé si una escuela de manejo es confiable?",
     answer:
       "Todas las autoescuelas en nuestra plataforma están verificadas y cuentan con las licencias correspondientes. Además, puedes leer las reseñas de otros estudiantes y ver las calificaciones para tomar la mejor decisión.",
   },

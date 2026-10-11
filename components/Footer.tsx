@@ -15,7 +15,7 @@ export default function Footer() {
             </Link>
             <p className="text-xs sm:text-sm text-navy-foreground/70">
               El directorio más completo de escuelas de manejo en Argentina. 
-              Encuentra la autoescuela perfecta para obtener tu licencia de conducir.
+              Encontrá la autoescuela ideal para obtener tu licencia de conducir.
             </p>
           </div>
 
@@ -28,7 +28,7 @@ export default function Footer() {
                   href="/autoescuelas" 
                   className="text-navy-foreground/70 hover:text-signal transition-colors"
                 >
-                  Todas las autoescuelas
+                  Escuelas de manejo
                 </Link>
               </li>
               <li>
@@ -76,7 +76,7 @@ export default function Footer() {
                   href="/para-autoescuelas" 
                   className="text-navy-foreground/70 hover:text-signal transition-colors"
                 >
-                  ¿Tenés una autoescuela?
+                  ¿Tenés una escuela de manejo?
                 </Link>
               </li>
               <li>

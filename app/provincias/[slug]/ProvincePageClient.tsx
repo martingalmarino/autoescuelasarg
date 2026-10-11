@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { formatPrice, formatRating, formatReviews } from "@/lib/utils";
+import { formatPrice, formatRating, formatReviews, schoolsCountText } from "@/lib/utils";
 import { analyticsEvents } from "@/lib/analytics";
 import { SchoolSummary } from "@/lib/types";
 import ForSchoolsBanner from "@/components/claims/ForSchoolsBanner";
@@ -77,17 +77,17 @@ export default function ProvincePageClient({
               Volver a provincias
             </Link>
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold mb-2 sm:mb-3 leading-tight">
-              Autoescuelas en {province.name}
+              Escuelas de manejo en {province.name}
             </h1>
             <p className="text-sm sm:text-base md:text-lg lg:text-xl text-white/90 max-w-2xl leading-relaxed mb-3 sm:mb-4">
-              Encontrá las mejores autoescuelas en {province.name} con
-              instructores profesionales, autos doble comando y clases prácticas
-              en ciudad y ruta.
+              Encontrá las mejores escuelas de manejo en {province.name}:
+              autoescuelas con instructores profesionales, autos doble comando y
+              clases prácticas en ciudad y ruta.
             </p>
             <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-6 space-y-2 sm:space-y-0 text-white/80">
               <div className="flex items-center space-x-2 text-sm sm:text-base">
                 <MapPin className="h-4 w-4 sm:h-5 sm:w-5 text-signal" />
-                <span>{province.schoolsCount} autoescuelas</span>
+                <span>{schoolsCountText(province.schoolsCount)}</span>
               </div>
               {cities && cities.length > 0 && (
                 <div className="flex items-center space-x-2 text-sm sm:text-base">
@@ -122,7 +122,7 @@ export default function ProvincePageClient({
                             {city.name}
                           </h3>
                           <p className="text-sm text-muted-foreground mt-1">
-                            {city.schoolsCount} autoescuelas
+                            {schoolsCountText(city.schoolsCount)}
                           </p>
                         </div>
                         <MapPin className="h-5 w-5 text-primary" />
@@ -145,12 +145,12 @@ export default function ProvincePageClient({
                 Autoescuelas en {province.name}
               </h2>
               <p className="text-muted-foreground">
-                {schools?.length || 0} escuelas de manejo disponibles
+                {schoolsCountText(schools?.length || 0)} disponibles
               </p>
             </div>
             <div className="mt-4 sm:mt-0">
               <Button variant="outline" asChild>
-                <Link href="/autoescuelas">Ver todas las autoescuelas</Link>
+                <Link href="/autoescuelas">Ver todas las escuelas de manejo</Link>
               </Button>
             </div>
           </div>
@@ -278,7 +278,7 @@ export default function ProvincePageClient({
             <div className="text-center py-12">
               <div className="text-6xl mb-4">🚗</div>
               <h3 className="text-xl font-semibold mb-2">
-                No hay autoescuelas disponibles
+                No hay escuelas de manejo disponibles
               </h3>
               <p className="text-muted-foreground mb-6">
                 Pronto agregaremos más autoescuelas en {province.name}

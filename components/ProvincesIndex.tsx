@@ -4,6 +4,7 @@ import Link from "next/link";
 import { MapPin } from "lucide-react";
 import { Province } from "@/lib/types";
 import { analyticsEvents } from "@/lib/analytics";
+import { schoolsCountText } from "@/lib/utils";
 
 interface ProvincesIndexProps {
   provinces: Province[];
@@ -71,7 +72,7 @@ export default function ProvincesIndex({
                 {province.name}
               </h3>
               <p className="mt-1 inline-flex rounded-full bg-muted px-2 py-0.5 text-xs font-medium text-muted-foreground transition-colors duration-200 group-hover:bg-accent group-hover:text-primary">
-                {province.schoolsCount} autoescuelas
+                {schoolsCountText(province.schoolsCount)}
               </p>
             </div>
           </div>

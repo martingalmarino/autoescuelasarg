@@ -6,9 +6,9 @@ import ProvincesPageClient from './ProvincesPageClient'
 export const revalidate = 86400
 
 export const metadata = buildMetadata({
-  titleVariants: ['Autoescuelas por provincia en Argentina'],
+  titleVariants: ['Escuelas de manejo por provincia en Argentina'],
   description:
-    'Encontrá autoescuelas en las 24 provincias argentinas: Buenos Aires, CABA, Córdoba, Santa Fe, Mendoza y más. Compará escuelas de manejo cerca tuyo.',
+    'Encontrá escuelas de manejo en las 24 provincias argentinas: Buenos Aires, CABA, Córdoba, Santa Fe, Mendoza y más. Compará autoescuelas cerca tuyo.',
   path: '/provincias',
 })
 

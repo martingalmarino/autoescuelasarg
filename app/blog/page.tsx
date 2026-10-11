@@ -8,7 +8,7 @@ export const revalidate = 86400;
 export const metadata = buildMetadata({
   titleVariants: ["Blog: consejos para aprender a manejar"],
   description:
-    "Guías y consejos para aprender a manejar, perderle el miedo al tránsito, elegir autoescuela y aprobar el examen para sacar tu registro de conducir.",
+    "Guías y consejos para aprender a manejar, perderle el miedo al tránsito, elegir escuela de manejo y aprobar el examen para sacar tu registro de conducir.",
   path: "/blog",
 });
 
@@ -38,11 +38,11 @@ export default async function BlogPage() {
         <div className="container mx-auto px-4 py-16">
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-4">
-              Blog de Autoescuelas
+              Blog de escuelas de manejo
             </h1>
             <p className="text-xl text-white/85 mb-8">
-              Consejos, guías y noticias para ayudarte a obtener tu licencia de
-              conducir
+              Consejos de autoescuelas, guías y noticias para ayudarte a obtener
+              tu licencia de conducir
             </p>
             <div className="flex flex-wrap justify-center gap-2">
               <span className="px-3 py-1 bg-signal text-signal-foreground font-semibold rounded-full text-sm">
