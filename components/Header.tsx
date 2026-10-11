@@ -95,7 +95,8 @@ export default function Header() {
             >
               <Input
                 type="text"
-                placeholder="Buscar escuelas de manejo..."
+                placeholder="Buscar escuelas..."
+                aria-label="Buscar escuelas de manejo"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-48 xl:w-64 h-9 rounded-full bg-muted/60 border-transparent px-4 focus-visible:bg-card"
