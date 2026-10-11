@@ -5,9 +5,9 @@ import { buildMetadata } from '@/lib/seo'
 export const dynamic = 'force-dynamic'
 
 export const metadata = buildMetadata({
-  titleVariants: ['Búsqueda avanzada de autoescuelas'],
+  titleVariants: ['Buscar escuelas de manejo en Argentina'],
   description:
-    'Buscá autoescuelas y escuelas de manejo en Argentina por provincia, ciudad, precio y calificación, y encontrá la que mejor se adapta a vos.',
+    'Buscá escuelas de manejo y autoescuelas en Argentina por provincia, ciudad, precio y calificación, y encontrá la que mejor se adapta a vos.',
   path: '/buscar',
   noindex: true,
 })
@@ -75,10 +75,10 @@ export default async function SearchPage() {
           <div className="bg-card border-b">
             <div className="container mx-auto px-4 py-8">
               <h1 className="text-3xl font-extrabold text-foreground mb-2">
-                Búsqueda Avanzada
+                Búsqueda avanzada de escuelas de manejo
               </h1>
               <p className="text-muted-foreground">
-                Encuentra la autoescuela perfecta con nuestros filtros avanzados
+                Encontrá la autoescuela ideal con nuestros filtros avanzados
               </p>
             </div>
           </div>
@@ -95,14 +95,14 @@ export default async function SearchPage() {
               <div className="surface-card p-6">
                 <h3 className="font-semibold text-lg mb-2">🔍 Búsqueda Inteligente</h3>
                 <p className="text-muted-foreground text-sm">
-                  Nuestra búsqueda encuentra autoescuelas por nombre, ubicación, servicios y más.
+                  Nuestra búsqueda encuentra escuelas de manejo por nombre, ubicación, servicios y más.
                 </p>
               </div>
               
               <div className="surface-card p-6">
                 <h3 className="font-semibold text-lg mb-2">📍 Filtros por Ubicación</h3>
                 <p className="text-muted-foreground text-sm">
-                  Filtra por provincia y ciudad para encontrar autoescuelas cerca de ti.
+                  Filtrá por provincia y ciudad para encontrar autoescuelas cerca tuyo.
                 </p>
               </div>
               
@@ -127,10 +127,10 @@ export default async function SearchPage() {
       <div className="bg-card border-b">
         <div className="container mx-auto px-4 py-8">
           <h1 className="text-3xl font-extrabold text-foreground mb-2">
-            Búsqueda Avanzada
+            Búsqueda avanzada de escuelas de manejo
           </h1>
           <p className="text-muted-foreground">
-            Encuentra la autoescuela perfecta con nuestros filtros avanzados
+            Encontrá la autoescuela ideal con nuestros filtros avanzados
           </p>
         </div>
       </div>
@@ -147,14 +147,14 @@ export default async function SearchPage() {
           <div className="surface-card p-6">
             <h3 className="font-semibold text-lg mb-2">🔍 Búsqueda Inteligente</h3>
             <p className="text-muted-foreground text-sm">
-              Nuestra búsqueda encuentra autoescuelas por nombre, ubicación, servicios y más.
+              Nuestra búsqueda encuentra escuelas de manejo por nombre, ubicación, servicios y más.
             </p>
           </div>
           
           <div className="surface-card p-6">
             <h3 className="font-semibold text-lg mb-2">📍 Filtros por Ubicación</h3>
             <p className="text-muted-foreground text-sm">
-              Filtra por provincia y ciudad para encontrar autoescuelas cerca de ti.
+              Filtrá por provincia y ciudad para encontrar autoescuelas cerca tuyo.
             </p>
           </div>
           

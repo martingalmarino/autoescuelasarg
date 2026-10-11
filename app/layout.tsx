@@ -14,10 +14,10 @@ const display = Plus_Jakarta_Sans({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Autoescuelas en Argentina: escuelas de manejo cerca tuyo',
+    default: 'Escuelas de manejo en Argentina: compará autoescuelas',
     template: '%s | Autoescuelas.ar',
   },
-  description: 'Compará autoescuelas y escuelas de manejo de todo el país: precios, reseñas y clases para sacar tu registro de conducir. Buscá por provincia o ciudad.',
+  description: 'Compará escuelas de manejo de todo el país: precios, reseñas y clases para sacar tu registro de conducir. Buscá autoescuelas por provincia o ciudad.',
   authors: [{ name: 'Autoescuelas.ar' }],
   creator: 'Autoescuelas.ar',
   publisher: 'Autoescuelas.ar',

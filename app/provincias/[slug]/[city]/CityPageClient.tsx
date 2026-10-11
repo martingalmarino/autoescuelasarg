@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { MapPin, Star, Users, ArrowLeft } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import { formatPrice, formatRating, formatReviews } from '@/lib/utils'
+import { formatPrice, formatRating, formatReviews, schoolsCountText } from '@/lib/utils'
 import { analyticsEvents } from '@/lib/analytics'
 import { SchoolSummary } from '@/lib/types'
 import ForSchoolsBanner from '@/components/claims/ForSchoolsBanner'
@@ -50,15 +50,15 @@ export default function CityPageClient({ city, schools }: CityPageClientProps) {
             </Link>
             
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold mb-3 sm:mb-4 leading-tight">
-              Autoescuelas en {city.name}
+              Escuelas de manejo en {city.name}
             </h1>
             <p className="text-sm sm:text-base md:text-lg lg:text-xl text-white/90 mb-4 sm:mb-6 leading-relaxed">
-              Aprendé a manejar en {city.name} con autoescuelas que ofrecen instructores capacitados, autos doble comando y clases prácticas adaptadas a tu ritmo.
+              Aprendé a manejar en {city.name} con escuelas de manejo y autoescuelas que ofrecen instructores capacitados, autos doble comando y clases prácticas adaptadas a tu ritmo.
             </p>
             <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-6 space-y-2 sm:space-y-0 text-white/80">
               <div className="flex items-center space-x-2 text-sm sm:text-base">
                 <MapPin className="h-4 w-4 sm:h-5 sm:w-5 text-signal" />
-                <span>{city.schoolsCount} autoescuelas</span>
+                <span>{schoolsCountText(city.schoolsCount)}</span>
               </div>
               <div className="flex items-center space-x-2 text-sm sm:text-base">
                 <Users className="h-4 w-4 sm:h-5 sm:w-5 text-signal" />
@@ -78,7 +78,7 @@ export default function CityPageClient({ city, schools }: CityPageClientProps) {
             </h2>
             <Link href="/autoescuelas">
               <Button variant="outline">
-                Ver todas las autoescuelas
+                Ver todas las escuelas de manejo
               </Button>
             </Link>
           </div>
@@ -182,14 +182,14 @@ export default function CityPageClient({ city, schools }: CityPageClientProps) {
                 <span className="text-4xl">🚗</span>
               </div>
               <h3 className="text-xl font-bold text-foreground mb-2">
-                No hay autoescuelas disponibles
+                No hay escuelas de manejo disponibles
               </h3>
               <p className="text-muted-foreground mb-6">
                 No se encontraron autoescuelas en {city.name} en este momento.
               </p>
               <Link href="/autoescuelas">
                 <Button>
-                  Ver todas las autoescuelas
+                  Ver todas las escuelas de manejo
                 </Button>
               </Link>
               <ForSchoolsBanner place={city.name} className="mt-10 text-left" />

@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getActiveProvinces, getProvinceBySlugFromDB, getSchoolsByProvinceSlug, getActiveCitiesByProvince } from '@/lib/database'
 import { buildMetadata, notFoundMetadata, seoPlaceName } from '@/lib/seo'
+import { schoolsCountText } from '@/lib/utils'
 import ProvincePageClient from './ProvincePageClient'
 
 // ISR: 24 h. El admin invalida la caché al editar datos.
@@ -39,23 +40,22 @@ export async function generateMetadata({ params }: ProvincePageProps): Promise<M
     .filter((cityName) => cityName.toLocaleLowerCase('es-AR') !== name.toLocaleLowerCase('es-AR'))
     .slice(0, 2)
 
-  const countText = count === 1 ? '1 autoescuela' : `${count} autoescuelas`
+  const countText = schoolsCountText(count)
   const description =
     count === 0
-      ? [`Autoescuelas y escuelas de manejo en ${name}: muy pronto vas a poder comparar precios, opiniones y clases para sacar tu registro de conducir.`]
+      ? [`Escuelas de manejo en ${name}: muy pronto vas a poder comparar autoescuelas, precios, opiniones y clases para sacar tu registro de conducir.`]
       : [
           topCities.length > 1 &&
-            `${countText} en ${name} con precios, opiniones y contacto. Compará escuelas de manejo en ${topCities.join(', ')} y más, y sacá tu registro.`,
+            `${countText} en ${name} con precios, opiniones y contacto. Compará autoescuelas en ${topCities.join(', ')} y más, y sacá tu registro.`,
           topCities.length > 0 &&
-            `${countText} en ${name} con precios, opiniones y contacto. Compará escuelas de manejo en ${topCities[0]} y más, y sacá tu registro.`,
-          `${countText} en ${name} con precios, opiniones y contacto. Compará escuelas de manejo y clases para sacar tu registro de conducir.`,
+            `${countText} en ${name} con precios, opiniones y contacto. Compará autoescuelas en ${topCities[0]} y más, y sacá tu registro.`,
+          `${countText} en ${name} con precios, opiniones y contacto. Compará autoescuelas y clases para sacar tu registro de conducir.`,
         ].filter((variant): variant is string => Boolean(variant))
 
   return buildMetadata({
     titleVariants: [
-      `Autoescuelas en ${name}: escuelas de manejo y clases`,
-      `Autoescuelas en ${name}: escuelas de manejo`,
-      `Autoescuelas en ${name}`,
+      `Escuelas de manejo en ${name}: precios y autoescuelas`,
+      `Escuelas de manejo en ${name}`,
     ],
     description,
     path: `/provincias/${province.slug}`,

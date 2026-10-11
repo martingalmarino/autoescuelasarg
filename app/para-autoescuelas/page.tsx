@@ -8,9 +8,9 @@ import JsonLd from "@/components/SEO/JsonLd";
 import { SITE_URL, buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
-  titleVariants: ["Para autoescuelas: reclamá tu ficha y conseguí más alumnos", "Para autoescuelas: reclamá tu ficha"],
+  titleVariants: ["Para escuelas de manejo: reclamá tu ficha y sumá alumnos", "Para escuelas de manejo: reclamá tu ficha"],
   description:
-    "¿Tenés una autoescuela? Reclamá gratis tu ficha en Autoescuelas.ar para verificar tus datos, o pasate a Premium para destacarte y recibir más consultas.",
+    "¿Tenés una escuela de manejo? Reclamá gratis la ficha de tu autoescuela para verificar tus datos, o pasate a Premium para destacarte y recibir más consultas.",
   path: "/para-autoescuelas",
 });
 
@@ -100,7 +100,7 @@ export default function ForSchoolsPage() {
           <div className="max-w-3xl mx-auto text-center">
             <p className="mb-3 text-sm font-semibold uppercase tracking-wider text-signal">Para autoescuelas</p>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white mb-4">
-              Conseguí más alumnos con tu ficha en Autoescuelas.ar
+              Conseguí más alumnos para tu escuela de manejo
             </h1>
             <p className="text-lg sm:text-xl text-white/85 mb-8">
               Quienes buscan dónde aprender a manejar encuentran acá las autoescuelas de su ciudad. Reclamá tu ficha

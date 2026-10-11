@@ -5,6 +5,7 @@ import { MapPin, Users, ArrowRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Province } from "@/lib/types";
 import { analyticsEvents } from "@/lib/analytics";
+import { schoolsCountText } from "@/lib/utils";
 
 interface ProvincesPageClientProps {
   provinces: Province[];
@@ -24,12 +25,11 @@ export default function ProvincesPageClient({
         <div className="container mx-auto px-4 sm:px-6">
           <div className="text-center text-white">
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold mb-3">
-              Autoescuelas por provincia
+              Escuelas de manejo por provincia
             </h1>
             <p className="text-lg sm:text-xl text-white/90 max-w-3xl mx-auto mb-6">
-              Encontrá autoescuelas en todas las provincias de Argentina. Navega
-              por provincia para encontrar la escuela de manejo más cercana a
-              ti.
+              Encontrá escuelas de manejo en todas las provincias de Argentina.
+              Elegí tu provincia y compará las autoescuelas más cercanas.
             </p>
             <div className="flex items-center justify-center space-x-6 text-white/80">
               <div className="flex items-center space-x-2">
@@ -38,10 +38,7 @@ export default function ProvincesPageClient({
               </div>
               <div className="flex items-center space-x-2">
                 <Users className="h-5 w-5 text-signal" />
-                <span>
-                  {provinces.reduce((total, p) => total + p.schoolsCount, 0)}{" "}
-                  autoescuelas
-                </span>
+                <span>{schoolsCountText(provinces.reduce((total, p) => total + p.schoolsCount, 0))}</span>
               </div>
             </div>
           </div>
@@ -73,7 +70,7 @@ export default function ProvincesPageClient({
                     </h3>
 
                     <p className="mb-3 inline-flex rounded-full bg-muted px-2.5 py-0.5 text-xs font-medium text-muted-foreground group-hover:bg-accent group-hover:text-primary transition-colors">
-                      {province.schoolsCount} autoescuelas
+                      {schoolsCountText(province.schoolsCount)}
                     </p>
 
                     {province.description && (
@@ -96,16 +93,16 @@ export default function ProvincesPageClient({
             ¿No encuentras tu provincia?
           </h2>
           <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-            Estamos constantemente agregando nuevas autoescuelas y provincias.
-            Si no ves tu provincia, contáctanos y te ayudaremos a encontrar la
-            mejor opción.
+            Estamos constantemente agregando nuevas escuelas de manejo y
+            provincias. Si no ves la tuya, contactanos y te ayudamos a
+            encontrar la mejor autoescuela.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/autoescuelas"
               className="inline-flex items-center justify-center px-6 py-3 bg-primary font-semibold text-primary-foreground rounded-lg shadow-sm hover:bg-primary/90 hover:shadow-md transition-all"
             >
-              Ver todas las autoescuelas
+              Ver todas las escuelas de manejo
             </Link>
             <Link
               href="/contacto"

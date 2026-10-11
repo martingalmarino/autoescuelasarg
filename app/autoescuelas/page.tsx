@@ -6,6 +6,7 @@ import {
   getSchoolsPage,
 } from '@/lib/database'
 import { buildMetadata } from '@/lib/seo'
+import { schoolsCountText } from '@/lib/utils'
 import SchoolsPageClient from './SchoolsPageClient'
 
 interface SchoolsPageProps {
@@ -31,22 +32,19 @@ export async function generateMetadata({ searchParams }: SchoolsPageProps): Prom
       searchParams.search?.trim()
   )
   const totalSchools = await getActiveSchoolsCount().catch(() => 0)
-  const countText = totalSchools > 0 ? `${totalSchools} autoescuelas` : 'Autoescuelas'
-  const description = `${countText} y escuelas de manejo de Argentina. Filtrá por provincia y ciudad, compará precios y opiniones y elegí dónde aprender a manejar.`
+  const countText = totalSchools > 0 ? schoolsCountText(totalSchools) : 'Escuelas de manejo'
+  const description = `${countText} y autoescuelas de Argentina. Filtrá por provincia y ciudad, compará precios y opiniones y elegí dónde aprender a manejar.`
 
   if (!isFiltered && page > 1) {
     return buildMetadata({
-      titleVariants: [
-        `Todas las autoescuelas de Argentina – Página ${page}`,
-        `Autoescuelas de Argentina – Página ${page}`,
-      ],
+      titleVariants: [`Escuelas de manejo en Argentina – Página ${page}`],
       description: `Página ${page}: ${description}`,
       path: `/autoescuelas?page=${page}`,
     })
   }
 
   return buildMetadata({
-    titleVariants: ['Todas las autoescuelas de Argentina'],
+    titleVariants: ['Escuelas de manejo en Argentina'],
     description,
     path: '/autoescuelas',
     noindex: isFiltered,

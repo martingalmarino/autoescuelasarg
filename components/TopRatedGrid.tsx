@@ -41,7 +41,7 @@ export default function TopRatedGrid({ schools }: TopRatedGridProps) {
               Escuelas de manejo más valoradas
             </h2>
             <p className="mt-3 text-base sm:text-lg text-muted-foreground">
-              Las autoescuelas mejor calificadas por nuestros usuarios
+              Las escuelas de manejo mejor calificadas por nuestros usuarios
             </p>
           </div>
           

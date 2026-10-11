@@ -28,21 +28,27 @@ export async function generateMetadata({ params }: SchoolPageProps): Promise<Met
   const name = school.name.replace(/\s+/g, ' ').trim()
   const city = seoPlaceName(school.city, school.citySlug)
   const province = seoPlaceName(school.province, school.provinceSlug)
-  const nameHasKeyword = /autoescuela|escuela de manejo|conductor|conducci[oó]n|manejo/i.test(name)
+  const nameHasPrimaryKeyword = /escuela de manejo|de conducir/i.test(name)
   const inCity = includesPlace(name, city) ? '' : ` en ${city}`
 
-  const titleVariants = nameHasKeyword
+  const titleVariants = nameHasPrimaryKeyword
     ? [`${name}${inCity} – precios y opiniones`, `${name}${inCity}`, name]
     : [
-        `${name}: autoescuela${inCity} – precios y opiniones`,
-        `${name} – autoescuela${inCity}`,
+        `${name}: escuela de manejo${inCity} – precios y opiniones`,
+        `${name}: escuela de manejo${inCity}`,
+        `${name} – escuela de manejo`,
         `${name}${inCity}`,
         name,
       ]
 
   const place = city.toLocaleLowerCase('es-AR') === province.toLocaleLowerCase('es-AR') ? city : `${city}, ${province}`
+  const category = /escuela de manejo/i.test(name)
+    ? 'autoescuela'
+    : /autoescuela/i.test(name)
+      ? 'escuela de manejo'
+      : 'escuela de manejo y autoescuela'
   const facts = [
-    `${name}: ${/escuela de manejo/i.test(name) ? 'autoescuela' : 'escuela de manejo'} en ${place}.`,
+    `${name}: ${category} en ${place}.`,
     school.reviewsCount > 0 &&
       `${formatRating(school.rating)}★ (${formatReviews(school.reviewsCount)} ${school.reviewsCount === 1 ? 'opinión' : 'opiniones'}).`,
     school.priceMin && `Clases desde ${formatPriceShort(school.priceMin)}.`,

@@ -15,7 +15,7 @@ interface BlogCTAProps {
 }
 
 export default function BlogCTA({
-  title = "¿Buscás una autoescuela cerca tuyo?",
+  title = "¿Buscás una escuela de manejo cerca tuyo?",
   description = "Encontrá la escuela de manejo perfecta en tu ciudad. Miles de opciones con calificaciones reales de estudiantes.",
   buttonText = "Buscar autoescuelas",
   buttonLink = "/autoescuelas",

@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getCityBySlugFromDB, getSchoolsByCitySlug } from '@/lib/database'
 import { buildMetadata, notFoundMetadata, seoPlaceName } from '@/lib/seo'
+import { schoolsCountText } from '@/lib/utils'
 import CityPageClient from './CityPageClient'
 
 // ISR: 24 h. Las ciudades se generan en la primera visita y quedan cacheadas.
@@ -31,20 +32,20 @@ export async function generateMetadata({ params }: CityPageProps): Promise<Metad
   const place = sameName ? cityName : `${cityName}, ${provinceName}`
   const count = city.schoolsCount
 
-  const countText = count === 1 ? '1 autoescuela' : `${count} autoescuelas`
+  const countText = schoolsCountText(count)
   const description =
     count === 0
-      ? `Autoescuelas y escuelas de manejo en ${cityName}: muy pronto vas a poder comparar precios, opiniones y cursos de manejo para sacar tu registro.`
+      ? `Escuelas de manejo en ${cityName}: muy pronto vas a poder comparar autoescuelas, precios, opiniones y cursos de manejo para sacar tu registro.`
       : [
-          `${countText} en ${cityName}: compará precios, opiniones y cursos de manejo con autos doble comando. Elegí tu escuela de manejo y sacá el registro.`,
-          `${countText} en ${cityName}: compará precios, opiniones y cursos de manejo. Elegí tu escuela de manejo y sacá el registro.`,
+          `${countText} en ${cityName}: compará autoescuelas por precio, opiniones y cursos con autos doble comando, y sacá tu registro de conducir.`,
+          `${countText} en ${cityName}: compará autoescuelas por precio, opiniones y cursos, y sacá tu registro.`,
         ]
 
   return buildMetadata({
     titleVariants: [
-      `Autoescuelas en ${place}: precios y opiniones`,
-      `Autoescuelas en ${place}`,
-      `Autoescuelas en ${cityName}`,
+      `Escuelas de manejo en ${place}: precios y opiniones`,
+      `Escuelas de manejo en ${place}`,
+      `Escuelas de manejo en ${cityName}`,
     ],
     description,
     path: `/provincias/${city.province.slug}/${city.slug}`,

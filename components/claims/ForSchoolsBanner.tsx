@@ -24,7 +24,7 @@ export default function ForSchoolsBanner({ place, className }: ForSchoolsBannerP
         </div>
         <div>
           <p className="font-display text-lg font-bold leading-snug">
-            {place ? `¿Tenés una autoescuela en ${place}?` : "¿Tenés una autoescuela?"}
+            {place ? `¿Tenés una escuela de manejo en ${place}?` : "¿Tenés una escuela de manejo?"}
           </p>
           <p className="mt-1 text-sm text-white/80">
             {place

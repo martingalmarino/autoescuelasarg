@@ -44,10 +44,10 @@ export default function RelatedSchools({ schools, city, citySlug, provinceSlug }
       <div className="container mx-auto px-4 sm:px-6">
         <div className="text-center mb-8">
           <h2 className="section-title inline-block text-2xl sm:text-3xl mb-3">
-            Otras Autoescuelas en {city}
+            Otras escuelas de manejo en {city}
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Explora otras opciones de escuelas de manejo en tu zona. 
+            Explorá otras autoescuelas en tu zona. 
             Compará precios, calificaciones y servicios para encontrar la mejor opción.
           </p>
         </div>
@@ -131,7 +131,7 @@ export default function RelatedSchools({ schools, city, citySlug, provinceSlug }
             href={`/provincias/${provinceSlug}/${citySlug}`}
             className="inline-flex items-center text-primary hover:text-primary/80 font-medium transition-colors duration-300"
           >
-            Ver todas las autoescuelas en {city}
+            Ver todas las escuelas de manejo en {city}
             <ChevronRight className="h-4 w-4 ml-1" />
           </Link>
         </div>
