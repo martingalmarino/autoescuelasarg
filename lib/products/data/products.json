@@ -1,5 +1,5 @@
 {
-  "checkedOn": "2026-10-09",
+  "checkedOn": "2026-10-12",
   "products": [
     {
       "id": "compresor-gadnic",
@@ -8,12 +8,12 @@
       "url": "https://meli.la/2YLHPCi",
       "image": "https://http2.mlstatic.com/D_NQ_NP_888368-MLA110992831005_042026-O.webp",
       "seller": "Gadnic",
-      "price": 53721,
-      "originalPrice": 114799,
-      "discount": 53,
+      "price": 53149,
+      "originalPrice": 105599,
+      "discount": 49,
       "installments": {
         "count": 6,
-        "amount": 12086
+        "amount": 11957
       },
       "badge": "Más vendido",
       "note": "Para controlar y corregir la presión en casa o en la ruta, sin depender de una estación de servicio."
@@ -58,9 +58,7 @@
       "category": "limpieza",
       "url": "https://meli.la/2t8ypc1",
       "image": "https://http2.mlstatic.com/D_NQ_NP_622390-MLA115077354443_072026-O.webp",
-      "price": 40999,
-      "originalPrice": 59899,
-      "discount": 31,
+      "price": 37427,
       "badge": "Más vendido",
       "note": "Inalámbrica y recargable por USB: práctica para limpiar asientos y alfombras entre lavado y lavado."
     },
