@@ -1,5 +1,5 @@
 {
-  "checkedOn": "2026-10-09",
+  "checkedOn": "2026-10-26",
   "products": [
     {
       "id": "compresor-gadnic",
@@ -8,12 +8,12 @@
       "url": "https://meli.la/2YLHPCi",
       "image": "https://http2.mlstatic.com/D_NQ_NP_888368-MLA110992831005_042026-O.webp",
       "seller": "Gadnic",
-      "price": 53721,
-      "originalPrice": 114799,
-      "discount": 53,
+      "price": 57449,
+      "originalPrice": 105599,
+      "discount": 45,
       "installments": {
         "count": 6,
-        "amount": 12086
+        "amount": 12811
       },
       "badge": "Más vendido",
       "note": "Para controlar y corregir la presión en casa o en la ruta, sin depender de una estación de servicio."
@@ -25,12 +25,12 @@
       "url": "https://meli.la/1NJN5qE",
       "image": "https://http2.mlstatic.com/D_NQ_NP_953033-MLA105900826976_022026-O.webp",
       "seller": "SmartBit",
-      "price": 184290,
+      "price": 179991,
       "originalPrice": 199990,
-      "discount": 7,
+      "discount": 10,
       "installments": {
         "count": 6,
-        "amount": 41462
+        "amount": 40137
       },
       "badge": "Más vendido",
       "note": "Te permite arrancar con la batería descargada sin necesitar otro auto, y además infla neumáticos y carga el celular."
@@ -42,12 +42,12 @@
       "url": "https://meli.la/1CUxxH9",
       "image": "https://http2.mlstatic.com/D_NQ_NP_738912-MLA116940999494_092026-O.webp",
       "seller": "Herman Repuestos",
-      "price": 68742,
+      "price": 74412,
       "originalPrice": 101250,
-      "discount": 32,
+      "discount": 26,
       "installments": {
         "count": 6,
-        "amount": 15466
+        "amount": 16593
       },
       "badge": "Más vendido",
       "note": "Reúne en un solo kit los productos para lavar y cuidar el auto en casa."
@@ -58,9 +58,9 @@
       "category": "limpieza",
       "url": "https://meli.la/2t8ypc1",
       "image": "https://http2.mlstatic.com/D_NQ_NP_622390-MLA115077354443_072026-O.webp",
-      "price": 40999,
+      "price": 40299,
       "originalPrice": 59899,
-      "discount": 31,
+      "discount": 32,
       "badge": "Más vendido",
       "note": "Inalámbrica y recargable por USB: práctica para limpiar asientos y alfombras entre lavado y lavado."
     },
