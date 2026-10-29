@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getCityBySlugFromDB, getSchoolsByCitySlug } from '@/lib/database'
-import { buildMetadata, notFoundMetadata, seoPlaceName } from '@/lib/seo'
+import { buildMetadata, seoPlaceName } from '@/lib/seo'
 import { schoolsCountText } from '@/lib/utils'
 import CityPageClient from './CityPageClient'
 
@@ -22,8 +22,8 @@ interface CityPageProps {
 export async function generateMetadata({ params }: CityPageProps): Promise<Metadata> {
   const city = await getCityBySlugFromDB(params.slug, params.city)
   
-  if (!city) {
-    return notFoundMetadata
+  if (!city || city.schoolsCount === 0) {
+    notFound()
   }
 
   const cityName = seoPlaceName(city.name, city.slug)
@@ -33,13 +33,10 @@ export async function generateMetadata({ params }: CityPageProps): Promise<Metad
   const count = city.schoolsCount
 
   const countText = schoolsCountText(count)
-  const description =
-    count === 0
-      ? `Escuelas de manejo en ${cityName}: muy pronto vas a poder comparar autoescuelas, precios, opiniones y cursos de manejo para sacar tu registro.`
-      : [
-          `${countText} en ${cityName}: compará autoescuelas por precio, opiniones y cursos con autos doble comando, y sacá tu registro de conducir.`,
-          `${countText} en ${cityName}: compará autoescuelas por precio, opiniones y cursos, y sacá tu registro.`,
-        ]
+  const description = [
+    `${countText} en ${cityName}: compará autoescuelas por precio, opiniones y cursos con autos doble comando, y sacá tu registro de conducir.`,
+    `${countText} en ${cityName}: compará autoescuelas por precio, opiniones y cursos, y sacá tu registro.`,
+  ]
 
   return buildMetadata({
     titleVariants: [
@@ -49,7 +46,6 @@ export async function generateMetadata({ params }: CityPageProps): Promise<Metad
     ],
     description,
     path: `/provincias/${city.province.slug}/${city.slug}`,
-    noindex: count === 0,
   })
 }
 
@@ -59,7 +55,7 @@ export default async function CityPage({ params }: CityPageProps) {
     getSchoolsByCitySlug(params.slug, params.city)
   ])
 
-  if (!city) {
+  if (!city || city.schoolsCount === 0) {
     notFound()
   }
 

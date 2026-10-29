@@ -62,7 +62,7 @@ export default async function HomePage() {
   return (
     <main className="min-h-screen">
       {/* Hero Section */}
-      <HeroLocation />
+      <HeroLocation provinces={provinces} />
 
       {/* Top Rated Schools */}
       <TopRatedGrid schools={featuredSchools} />

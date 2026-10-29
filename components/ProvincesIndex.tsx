@@ -54,9 +54,11 @@ export default function ProvincesIndex({
     analyticsEvents.provinceLinkClick(province.name);
   };
 
+  const publishedProvinces = provinces.filter((province) => province.schoolsCount > 0)
+
   return (
     <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-      {provinces.map((province) => (
+      {publishedProvinces.map((province) => (
         <Link
           key={province.id}
           href={`/provincias/${province.slug}`}
@@ -64,8 +66,8 @@ export default function ProvincesIndex({
           className="surface-card surface-card-hover group relative flex items-center justify-between overflow-hidden p-4 sm:p-5"
         >
           <div className="relative flex items-center space-x-3 sm:space-x-4">
-            <div className={`flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-lg shadow-sm transition-colors duration-200 group-hover:bg-primary ${province.schoolsCount === 0 ? "bg-muted" : "bg-navy"}`}>
-              <MapPin className={`h-5 w-5 sm:h-6 sm:w-6 transition-transform duration-200 group-hover:scale-110 group-hover:text-signal ${province.schoolsCount === 0 ? "text-muted-foreground" : "text-signal"}`} />
+            <div className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-lg bg-navy shadow-sm transition-colors duration-200 group-hover:bg-primary">
+              <MapPin className="h-5 w-5 sm:h-6 sm:w-6 text-signal transition-transform duration-200 group-hover:scale-110 group-hover:text-signal" />
             </div>
             <div className="flex-1">
               <h3 className="font-display font-bold text-sm sm:text-base text-foreground group-hover:text-primary transition-colors duration-200">

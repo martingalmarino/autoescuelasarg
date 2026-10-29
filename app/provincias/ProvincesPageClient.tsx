@@ -14,6 +14,8 @@ interface ProvincesPageClientProps {
 export default function ProvincesPageClient({
   provinces,
 }: ProvincesPageClientProps) {
+  const publishedProvinces = provinces.filter((province) => province.schoolsCount > 0);
+
   const handleProvinceClick = (province: Province) => {
     analyticsEvents.provinceLinkClick(province.name);
   };
@@ -28,17 +30,17 @@ export default function ProvincesPageClient({
               Escuelas de manejo por provincia
             </h1>
             <p className="text-lg sm:text-xl text-white/90 max-w-3xl mx-auto mb-6">
-              Encontrá escuelas de manejo en todas las provincias de Argentina.
-              Elegí tu provincia y compará las autoescuelas más cercanas.
+              Elegí una provincia con autoescuelas publicadas y compará
+              precios, opiniones y clases cerca tuyo.
             </p>
             <div className="flex items-center justify-center space-x-6 text-white/80">
               <div className="flex items-center space-x-2">
                 <MapPin className="h-5 w-5 text-signal" />
-                <span>{provinces.length} provincias</span>
+                <span>{publishedProvinces.length} provincias</span>
               </div>
               <div className="flex items-center space-x-2">
                 <Users className="h-5 w-5 text-signal" />
-                <span>{schoolsCountText(provinces.reduce((total, p) => total + p.schoolsCount, 0))}</span>
+                <span>{schoolsCountText(publishedProvinces.reduce((total, p) => total + p.schoolsCount, 0))}</span>
               </div>
             </div>
           </div>
@@ -49,7 +51,7 @@ export default function ProvincesPageClient({
       <section className="py-12 sm:py-16">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {provinces.map((province) => (
+            {publishedProvinces.map((province) => (
               <Link
                 key={province.id}
                 href={`/provincias/${province.slug}`}
@@ -59,8 +61,8 @@ export default function ProvincesPageClient({
                 <Card className="surface-card-hover h-full">
                   <CardContent className="p-4 sm:p-6">
                     <div className="flex items-center justify-between mb-3">
-                      <div className={`flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-lg shadow-sm group-hover:bg-primary transition-colors ${province.schoolsCount === 0 ? "bg-muted" : "bg-navy"}`}>
-                        <MapPin className={`h-5 w-5 sm:h-6 sm:w-6 group-hover:text-signal ${province.schoolsCount === 0 ? "text-muted-foreground" : "text-signal"}`} />
+                      <div className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-lg bg-navy shadow-sm group-hover:bg-primary transition-colors">
+                        <MapPin className="h-5 w-5 sm:h-6 sm:w-6 text-signal group-hover:text-signal" />
                       </div>
                       <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-0.5 transition-all" />
                     </div>

@@ -11,7 +11,7 @@ export default function ProvinceNotFound() {
         <div className="text-6xl mb-4">🗺️</div>
         <h1 className="section-title text-center text-4xl font-extrabold text-navy mb-4">Provincia no encontrada</h1>
         <h2 className="text-xl font-bold text-foreground mb-4">
-          La provincia que buscas no existe
+          La provincia que buscas no está disponible
         </h2>
         <p className="text-muted-foreground max-w-md">
           Es posible que la URL esté incorrecta o que la provincia no esté disponible en nuestro directorio.

@@ -8,7 +8,7 @@ export const revalidate = 86400
 export const metadata = buildMetadata({
   titleVariants: ['Escuelas de manejo por provincia en Argentina'],
   description:
-    'Encontrá escuelas de manejo en las 24 provincias argentinas: Buenos Aires, CABA, Córdoba, Santa Fe, Mendoza y más. Compará autoescuelas cerca tuyo.',
+    'Encontrá escuelas de manejo por provincia en Argentina. Elegí tu provincia y compará autoescuelas, precios y opiniones cerca tuyo.',
   path: '/provincias',
 })
 

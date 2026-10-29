@@ -48,6 +48,8 @@ export default function ProvincePageClient({
   schools,
   cities,
 }: ProvincePageClientProps) {
+  const publishedCities = cities.filter((city) => city.schoolsCount > 0);
+
   const handleSchoolClick = (schoolId: string, schoolName: string) => {
     analyticsEvents.clickSchoolCard(schoolId, schoolName);
   };
@@ -89,10 +91,10 @@ export default function ProvincePageClient({
                 <MapPin className="h-4 w-4 sm:h-5 sm:w-5 text-signal" />
                 <span>{schoolsCountText(province.schoolsCount)}</span>
               </div>
-              {cities && cities.length > 0 && (
+              {publishedCities.length > 0 && (
                 <div className="flex items-center space-x-2 text-sm sm:text-base">
                   <Users className="h-4 w-4 sm:h-5 sm:w-5 text-signal" />
-                  <span>{cities.length} ciudades</span>
+                  <span>{publishedCities.length} ciudades</span>
                 </div>
               )}
             </div>
@@ -101,14 +103,14 @@ export default function ProvincePageClient({
       </section>
 
       {/* Cities Section */}
-      {cities && cities.length > 0 && (
+      {publishedCities.length > 0 && (
         <section className="py-12 sm:py-16 bg-muted/50">
           <div className="container mx-auto px-4 sm:px-6">
             <h2 className="section-title text-center text-2xl sm:text-3xl mb-8">
               Ciudades en {province.name}
             </h2>
             <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-4xl mx-auto">
-              {cities.map((city) => (
+              {publishedCities.map((city) => (
                 <Link
                   key={city.id}
                   href={`/provincias/${province.slug}/${city.slug}`}

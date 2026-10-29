@@ -34,6 +34,7 @@ export default async function SearchPage() {
   try {
     const [provinces, cities] = await Promise.all([
       prisma.province.findMany({
+        where: { isActive: true, schools: { some: { isActive: true } } },
         select: {
           name: true,
           slug: true
@@ -43,6 +44,7 @@ export default async function SearchPage() {
         }
       }),
       prisma.city.findMany({
+        where: { isActive: true, schools: { some: { isActive: true } } },
         select: {
           name: true,
           province: {

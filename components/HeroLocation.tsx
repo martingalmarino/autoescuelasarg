@@ -7,36 +7,17 @@ import { MapPin, ChevronDown } from 'lucide-react'
 import heroImage from '@/public/images/hero-image.jpg'
 import { Button } from '@/components/ui/button'
 import { analyticsEvents } from '@/lib/analytics'
-import { createSlug } from '@/lib/utils'
 
-const PROVINCES = [
-  'Buenos Aires',
-  'Catamarca',
-  'Chaco',
-  'Chubut',
-  'Córdoba',
-  'Corrientes',
-  'Entre Ríos',
-  'Formosa',
-  'Jujuy',
-  'La Pampa',
-  'La Rioja',
-  'Mendoza',
-  'Misiones',
-  'Neuquén',
-  'Río Negro',
-  'Salta',
-  'San Juan',
-  'San Luis',
-  'Santa Cruz',
-  'Santa Fe',
-  'Santiago del Estero',
-  'Tierra del Fuego',
-  'Tucumán',
-  'CABA'
-]
+interface HeroProvince {
+  name: string
+  slug: string
+}
 
-export default function HeroLocation() {
+interface HeroLocationProps {
+  provinces: HeroProvince[]
+}
+
+export default function HeroLocation({ provinces }: HeroLocationProps) {
   const [selectedProvince, setSelectedProvince] = useState<string>('Argentina')
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
@@ -74,25 +55,16 @@ export default function HeroLocation() {
   }, [isDropdownOpen])
 
   const handleViewAll = () => {
-    if (selectedProvince && selectedProvince !== 'Argentina') {
-      const provinceSlug = createSlug(selectedProvince)
-      router.push(`/provincias/${provinceSlug}`)
-    } else {
-      router.push('/provincias')
-    }
+    const province = provinces.find((item) => item.name === selectedProvince)
+    router.push(province ? `/provincias/${province.slug}` : '/provincias')
     analyticsEvents.ctaViewAll('hero')
   }
 
-  const handleProvinceSelect = (province: string) => {
-    setSelectedProvince(province)
+  const handleProvinceSelect = (province: HeroProvince) => {
+    setSelectedProvince(province.name)
     setIsDropdownOpen(false)
-    analyticsEvents.selectLocation(province)
-    
-    // Navegar directamente a la provincia seleccionada
-    if (province !== 'Argentina') {
-      const provinceSlug = createSlug(province)
-      router.push(`/provincias/${provinceSlug}`)
-    }
+    analyticsEvents.selectLocation(province.name)
+    router.push(`/provincias/${province.slug}`)
   }
 
   const handleDropdownToggle = () => {
@@ -151,21 +123,21 @@ export default function HeroLocation() {
                 >
                   {/* Provinces List */}
                   <div className="max-h-[300px] overflow-y-auto">
-                    {PROVINCES.length > 0 ? (
+                    {provinces.length > 0 ? (
                       <div className="p-4">
                         <div className="grid grid-cols-3 gap-2">
-                          {PROVINCES.map((province, index) => (
+                          {provinces.map((province, index) => (
                             <button
-                              key={province}
+                              key={province.slug}
                               onClick={() => handleProvinceSelect(province)}
                               className={`text-left px-2 py-2 text-xs transition-colors hover:bg-accent rounded-md ${
-                                selectedProvince === province
+                                selectedProvince === province.name
                                   ? 'text-primary font-semibold bg-accent'
                                   : 'text-muted-foreground hover:text-foreground'
                               }`}
-                              title={`${index + 1}. ${province}`}
+                              title={`${index + 1}. ${province.name}`}
                             >
-                              {province}
+                              {province.name}
                             </button>
                           ))}
                         </div>

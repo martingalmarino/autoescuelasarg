@@ -107,9 +107,11 @@ function toSchoolSummary(school: SchoolSummaryRow): SchoolSummary {
   }
 }
 
+const publishedSchools = { some: { isActive: true } } as const
+
 export const getActiveProvinces = cache(async () => {
   const provinces = await prisma.province.findMany({
-    where: { isActive: true },
+    where: { isActive: true, schools: publishedSchools },
     orderBy: { sortOrder: 'asc' },
     select: {
       id: true,
@@ -141,7 +143,8 @@ export const getActiveCitiesByProvince = cache(async (provinceId: string) => {
   const cities = await prisma.city.findMany({
     where: {
       provinceId,
-      isActive: true
+      isActive: true,
+      schools: publishedSchools,
     },
     orderBy: { sortOrder: 'asc' },
     select: {
@@ -298,7 +301,7 @@ export const getProvinceBySlugFromDB = cache(async (slug: string) => {
       where: { slug },
       include: {
         cities: {
-          where: { isActive: true },
+          where: { isActive: true, schools: publishedSchools },
           orderBy: { sortOrder: 'asc' },
           select: {
             id: true,

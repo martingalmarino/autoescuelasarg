@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getActiveProvinces, getProvinceBySlugFromDB, getSchoolsByProvinceSlug, getActiveCitiesByProvince } from '@/lib/database'
-import { buildMetadata, notFoundMetadata, seoPlaceName } from '@/lib/seo'
+import { buildMetadata, seoPlaceName } from '@/lib/seo'
 import { schoolsCountText } from '@/lib/utils'
 import ProvincePageClient from './ProvincePageClient'
 
@@ -27,8 +27,8 @@ interface ProvincePageProps {
 export async function generateMetadata({ params }: ProvincePageProps): Promise<Metadata> {
   const province = await getProvinceBySlugFromDB(params.slug)
   
-  if (!province) {
-    return notFoundMetadata
+  if (!province || province.activeSchoolsCount === 0) {
+    notFound()
   }
 
   const name = seoPlaceName(province.name, province.slug)
@@ -41,16 +41,13 @@ export async function generateMetadata({ params }: ProvincePageProps): Promise<M
     .slice(0, 2)
 
   const countText = schoolsCountText(count)
-  const description =
-    count === 0
-      ? [`Escuelas de manejo en ${name}: muy pronto vas a poder comparar autoescuelas, precios, opiniones y clases para sacar tu registro de conducir.`]
-      : [
-          topCities.length > 1 &&
-            `${countText} en ${name} con precios, opiniones y contacto. Compará autoescuelas en ${topCities.join(', ')} y más, y sacá tu registro.`,
-          topCities.length > 0 &&
-            `${countText} en ${name} con precios, opiniones y contacto. Compará autoescuelas en ${topCities[0]} y más, y sacá tu registro.`,
-          `${countText} en ${name} con precios, opiniones y contacto. Compará autoescuelas y clases para sacar tu registro de conducir.`,
-        ].filter((variant): variant is string => Boolean(variant))
+  const description = [
+    topCities.length > 1 &&
+      `${countText} en ${name} con precios, opiniones y contacto. Compará autoescuelas en ${topCities.join(', ')} y más, y sacá tu registro.`,
+    topCities.length > 0 &&
+      `${countText} en ${name} con precios, opiniones y contacto. Compará autoescuelas en ${topCities[0]} y más, y sacá tu registro.`,
+    `${countText} en ${name} con precios, opiniones y contacto. Compará autoescuelas y clases para sacar tu registro de conducir.`,
+  ].filter((variant): variant is string => Boolean(variant))
 
   return buildMetadata({
     titleVariants: [
@@ -60,7 +57,6 @@ export async function generateMetadata({ params }: ProvincePageProps): Promise<M
     description,
     path: `/provincias/${province.slug}`,
     images: province.imageUrl ? [province.imageUrl] : undefined,
-    noindex: count === 0,
   })
 }
 
@@ -70,7 +66,7 @@ export default async function ProvincePage({ params }: ProvincePageProps) {
     getSchoolsByProvinceSlug(params.slug),
   ])
 
-  if (!province) {
+  if (!province || province.activeSchoolsCount === 0) {
     notFound()
   }
 
